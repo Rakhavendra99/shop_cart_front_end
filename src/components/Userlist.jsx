@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Userlist = () => {
   const [users, setUsers] = useState([]);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     getUsers();
@@ -23,7 +25,7 @@ const Userlist = () => {
     <div>
       <h1 className="title">Users</h1>
       <h2 className="subtitle">List of Users</h2>
-      <Link to="/users/add" className="button is-primary mb-2">
+      <Link to={user?.role === "admin" ? "/admin/users/add" : "/users/add"} className="button is-primary mb-2">
         Add New
       </Link>
       <table className="table is-striped is-fullwidth">
@@ -37,21 +39,21 @@ const Userlist = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
-            <tr key={user.uuid}>
+          {users.map((i, index) => (
+            <tr key={i.uuid}>
               <td>{index + 1}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.role}</td>
+              <td>{i.name}</td>
+              <td>{i.email}</td>
+              <td>{i.role}</td>
               <td>
                 <Link
-                  to={`/users/edit/${user.uuid}`}
+                  to={user?.role === "admin" ? `/admin/users/edit/${i.uuid}` : `/users/edit/${i.uuid}`}
                   className="button is-small is-info"
                 >
                   Edit
                 </Link>
                 <button
-                  onClick={() => deleteUser(user.uuid)}
+                  onClick={() => deleteUser(i.uuid)}
                   className="button is-small is-danger"
                 >
                   Delete

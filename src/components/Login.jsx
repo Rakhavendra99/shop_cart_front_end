@@ -14,7 +14,11 @@ const Login = () => {
 
   useEffect(() => {
     if (user || isSuccess) {
-      navigate("/dashboard");
+      if (user?.role === "admin") {
+        navigate("/admin/dashboard")
+      } else {
+        navigate("/dashboard");
+      }
     }
     dispatch(reset());
   }, [user, isSuccess, dispatch, navigate]);
@@ -31,7 +35,7 @@ const Login = () => {
           <div className="columns is-centered">
             <div className="column is-4">
               <form onSubmit={Auth} className="box">
-                {isError && <p className="has-text-centered">{message}</p>}
+                {isError && <p className="has-text-centered" style={{ color: "red" }}>{message}</p>}
                 <h1 className="title is-2">Sign In</h1>
                 <div className="field">
                   <label className="label">Email</label>

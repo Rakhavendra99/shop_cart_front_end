@@ -12,7 +12,11 @@ const Navbar = () => {
   const logout = () => {
     dispatch(LogOut());
     dispatch(reset());
-    navigate("/");
+    if (user?.role === "admin") {
+      navigate("/admin");
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -23,7 +27,7 @@ const Navbar = () => {
         aria-label="main navigation"
       >
         <div className="navbar-brand">
-          <NavLink to="/dashboard" className="navbar-item">
+          <NavLink to={user?.role === "admin" ? "/admin/dashboard" : "/dashboard"} className="navbar-item">
             <img src={logo} width="112" height="28" alt="logo" />
           </NavLink>
 

@@ -12,47 +12,75 @@ const Sidebar = () => {
   const logout = () => {
     dispatch(LogOut());
     dispatch(reset());
-    navigate("/");
+    if (user?.role === "admin") {
+      navigate('/admin')
+    } else {
+      navigate("/");
+    }
   };
 
   return (
     <div>
-      <aside className="menu pl-2 has-shadow">
-        <p className="menu-label">General</p>
-        <ul className="menu-list">
-          <li>
-            <NavLink to={"/dashboard"}>
-              <IoHome /> Dashboard
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={"/products"}>
-              <IoPricetag /> Products
-            </NavLink>
-          </li>
-        </ul>
-        {user && user.role === "admin" && (
+      {user && user.role === "user" && (
+        <aside className="menu pl-2 has-shadow">
+          <p className="menu-label">General</p>
+          <ul className="menu-list">
+            <li>
+              <NavLink to={"/dashboard"}>
+                <IoHome /> Dashboard
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/products"}>
+                <IoPricetag /> Products
+              </NavLink>
+            </li>
+          </ul>
+          <p className="menu-label">Settings</p>
+          <ul className="menu-list">
+            <li>
+              <button onClick={logout} className="button is-white">
+                <IoLogOut /> Logout
+              </button>
+            </li>
+          </ul>
+        </aside>
+      )}
+      {user && user.role === "admin" && (
+        <aside className="menu pl-2 has-shadow">
+          <p className="menu-label">General</p>
+          <ul className="menu-list">
+            <li>
+              <NavLink to={"/admin/dashboard"}>
+                <IoHome /> Dashboard
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/admin/products"}>
+                <IoPricetag /> Products
+              </NavLink>
+            </li>
+          </ul>
           <div>
             <p className="menu-label">Admin</p>
             <ul className="menu-list">
               <li>
-                <NavLink to={"/users"}>
+                <NavLink to={"/admin/users"}>
                   <IoPerson /> Users
                 </NavLink>
               </li>
             </ul>
           </div>
-        )}
-
-        <p className="menu-label">Settings</p>
-        <ul className="menu-list">
-          <li>
-            <button onClick={logout} className="button is-white">
-              <IoLogOut /> Logout
-            </button>
-          </li>
-        </ul>
-      </aside>
+          <p className="menu-label">Settings</p>
+          <ul className="menu-list">
+            <li>
+              <button onClick={logout} className="button is-white">
+                <IoLogOut /> Logout
+              </button>
+            </li>
+          </ul>
+        </aside>
+      )}
     </div>
   );
 };

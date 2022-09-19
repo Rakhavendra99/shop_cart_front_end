@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const FormAddProduct = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   const saveProduct = async (e) => {
     e.preventDefault();
@@ -15,7 +17,12 @@ const FormAddProduct = () => {
         name: name,
         price: price,
       });
-      navigate("/products");
+      if (user?.role === "admin") {
+        navigate("/admin/products");
+      } else {
+        navigate("/products");
+      }
+
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);

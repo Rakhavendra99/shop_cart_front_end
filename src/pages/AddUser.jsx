@@ -16,7 +16,12 @@ const AddUser = () => {
 
   useEffect(() => {
     if (isError) {
-      navigate("/");
+      if (user?.role === "user") {
+        navigate("/");
+      }
+      else {
+        navigate("/admin")
+      }
     }
     if (user && user.role !== "admin") {
       navigate("/dashboard");

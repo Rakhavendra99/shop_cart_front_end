@@ -21,7 +21,7 @@ const FormAddUser = () => {
         confPassword: confPassword,
         role: role,
       });
-      navigate("/users");
+      navigate("/admin/users");
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);

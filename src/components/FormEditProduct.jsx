@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const FormEditProduct = () => {
   const [name, setName] = useState("");
@@ -8,6 +9,7 @@ const FormEditProduct = () => {
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const getProductById = async () => {
@@ -33,7 +35,11 @@ const FormEditProduct = () => {
         name: name,
         price: price,
       });
-      navigate("/products");
+      if (user?.role === "admin") {
+        navigate("/admin/products");
+      } else {
+        navigate("/products");
+      }
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);

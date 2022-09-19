@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     getProducts();
@@ -23,13 +25,13 @@ const ProductList = () => {
     <div>
       <h1 className="title">Products</h1>
       <h2 className="subtitle">List of Products</h2>
-      <Link to="/products/add" className="button is-primary mb-2">
+      <Link to={user?.role === "admin" ? "/admin/products/add" : "/products/add"} className="button is-primary mb-2">
         Add New
       </Link>
       <table className="table is-striped is-fullwidth">
         <thead>
           <tr>
-            <th>No</th>
+            <th>S.No</th>
             <th>Product Name</th>
             <th>Price</th>
             <th>Created By</th>
@@ -45,7 +47,7 @@ const ProductList = () => {
               <td>{product.user.name}</td>
               <td>
                 <Link
-                  to={`/products/edit/${product.uuid}`}
+                  to={user?.role === "admin" ? `/admin/products/edit/${product.uuid}` : `/products/edit/${product.uuid}`}
                   className="button is-small is-info"
                 >
                   Edit
