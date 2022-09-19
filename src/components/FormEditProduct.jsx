@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Loader from "../util/Loader/Loader";
 
 const FormEditProduct = () => {
   const [name, setName] = useState("");
@@ -10,17 +11,21 @@ const FormEditProduct = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { user } = useSelector((state) => state.auth);
+  const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
     const getProductById = async () => {
+      setLoading(true)
       try {
         const response = await axios.get(
           `http://localhost:5000/products/${id}`
         );
         setName(response.data.name);
         setPrice(response.data.price);
+        setLoading(false)
       } catch (error) {
         if (error.response) {
+          setLoading(false)
           setMsg(error.response.data.msg);
         }
       }
@@ -54,6 +59,9 @@ const FormEditProduct = () => {
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
+            {
+              isLoading && (<Loader />)
+            }
             <form onSubmit={updateProduct}>
               <p className="has-text-centered">{msg}</p>
               <div className="field">

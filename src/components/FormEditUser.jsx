@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import Loader from "../util/Loader/Loader";
 
 const FormEditUser = () => {
   const [name, setName] = useState("");
@@ -11,16 +12,20 @@ const FormEditUser = () => {
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
+  const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
+    setLoading(true)
     const getUserById = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/users/${id}`);
         setName(response.data.name);
         setEmail(response.data.email);
         setRole(response.data.role);
+        setLoading(false)
       } catch (error) {
         if (error.response) {
+          setLoading(false)
           setMsg(error.response.data.msg);
         }
       }
@@ -52,6 +57,9 @@ const FormEditUser = () => {
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
+            {
+              isLoading && (<Loader />)
+            }
             <form onSubmit={updateUser}>
               <p className="has-text-centered">{msg}</p>
               <div className="field">
@@ -111,7 +119,7 @@ const FormEditUser = () => {
                       onChange={(e) => setRole(e.target.value)}
                     >
                       <option value="admin">Admin</option>
-                      <option value="user">User</option>
+                      <option value="vendor">Vendor</option>
                     </select>
                   </div>
                 </div>

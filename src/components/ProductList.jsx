@@ -2,18 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-
+import Loader from "../util/Loader/Loader"
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const { user } = useSelector((state) => state.auth);
+  const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
     getProducts();
   }, []);
 
   const getProducts = async () => {
+    setLoading(true)
     const response = await axios.get("http://localhost:5000/products");
     setProducts(response.data);
+    setLoading(false)
   };
 
   const deleteProduct = async (productId) => {
@@ -23,6 +26,9 @@ const ProductList = () => {
 
   return (
     <div>
+      {
+        isLoading && (<Loader />)
+      }
       <h1 className="title">Products</h1>
       <h2 className="subtitle">List of Products</h2>
       <Link to={user?.role === "admin" ? "/admin/products/add" : "/products/add"} className="button is-primary mb-2">

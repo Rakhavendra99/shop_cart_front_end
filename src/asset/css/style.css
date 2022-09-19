@@ -1,0 +1,17 @@
+.loader {
+  position: fixed;
+  z-index: 999999;
+  background: rgba(255, 255, 255, 0.58);
+  width: 100%;
+  height: 100%;
+}
+
+.loaderAlign {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  text-align: center;
+  margin-left: -35px;
+  margin-top: -35px;
+  z-index: 9999;
+}

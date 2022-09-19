@@ -21,7 +21,7 @@ const Sidebar = () => {
 
   return (
     <div>
-      {user && user.role === "user" && (
+      {user && user.role === "vendor" && (
         <aside className="menu pl-2 has-shadow">
           <p className="menu-label">General</p>
           <ul className="menu-list">

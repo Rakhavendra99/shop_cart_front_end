@@ -7,7 +7,7 @@ import AddUser from "./pages/AddUser";
 import EditUser from "./pages/EditUser";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
-
+import "../src/asset/css/style.css"
 function App() {
   return (
     <div>
