@@ -12,6 +12,7 @@ const FormEditProduct = () => {
   const { id } = useParams();
   const { user } = useSelector((state) => state.auth);
   const [isLoading, setLoading] = useState(true)
+  const [error, setError] = useState({ errorName: null, errorPrice: null })
 
   useEffect(() => {
     const getProductById = async () => {
@@ -34,24 +35,41 @@ const FormEditProduct = () => {
   }, [id]);
 
   const updateProduct = async (e) => {
+    setLoading(true)
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:5000/products/${id}`, {
-        name: name,
-        price: price,
-      });
-      if (user?.role === "admin") {
-        navigate("/admin/products");
+      if (!name) {
+        setLoading(false)
+        setError({ errorName: "Please Enter the Product Name" })
+      } else if (!price) {
+        setLoading(false)
+        setError({ errorPrice: "Please Enter the Product Price" })
       } else {
-        navigate("/products");
+        await axios.patch(`http://localhost:5000/products/${id}`, {
+          name: name,
+          price: price,
+        });
+        if (user?.role === "admin") {
+          navigate("/admin/products");
+        } else {
+          navigate("/products");
+        }
       }
     } catch (error) {
       if (error.response) {
+        setLoading(false)
         setMsg(error.response.data.msg);
       }
     }
   };
-
+  const onChangeProductName = (e) => {
+    setName(e.target.value)
+    setError({ errorName: null })
+  }
+  const onChangeProductPrice = (e) => {
+    setPrice(e.target.value)
+    setError({ errorPrice: null })
+  }
   return (
     <div>
       <h1 className="title">Products</h1>
@@ -71,10 +89,11 @@ const FormEditProduct = () => {
                     type="text"
                     className="input"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => onChangeProductName(e)}
                     placeholder="Product Name"
                   />
                 </div>
+                <p style={{ color: "red" }}>{error.errorName}</p>
               </div>
               <div className="field">
                 <label className="label">Price</label>
@@ -83,10 +102,11 @@ const FormEditProduct = () => {
                     type="text"
                     className="input"
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e) => onChangeProductPrice(e)}
                     placeholder="Price"
                   />
                 </div>
+                <p style={{ color: "red" }}>{error.errorPrice}</p>
               </div>
 
               <div className="field">
