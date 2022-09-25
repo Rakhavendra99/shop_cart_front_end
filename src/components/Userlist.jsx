@@ -3,7 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loader from "../util/Loader/Loader";
-
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 const Userlist = () => {
   const [users, setUsers] = useState([]);
   const { user } = useSelector((state) => state.auth);
@@ -22,9 +23,19 @@ const Userlist = () => {
 
   const deleteUser = async (userId) => {
     setLoading(true)
-    await axios.delete(`http://localhost:5000/users/${userId}`);
-    getUsers();
-    setLoading(false)
+    await axios.delete(`http://localhost:5000/users/${userId}`).then((res) => {
+      setLoading(false)
+      toast.success("Successfully Deleted", {
+        position: toast.POSITION.TOP_RIGHT,
+      })
+      getUsers();
+      setLoading(false)
+    }).catch((err) => {
+      setLoading(false)
+      toast.error(err?.response?.data?.msg, {
+        position: toast.POSITION.TOP_RIGHT,
+      })
+    });
   };
 
   return (

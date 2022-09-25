@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Loader from "../util/Loader/Loader";
-
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 const FormAddUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,6 +31,9 @@ const FormAddUser = () => {
       } else if (!confPassword) {
         setLoading(false)
         setError({ errorCnfPassword: "Please Enter the Conform Password" })
+      } else if (password != confPassword) {
+        setLoading(false)
+        setError({ errorCnfPassword: "Password not match" })
       } else if (!role) {
         setLoading(false)
         setError({ errorRole: "Please Select the Role" })
@@ -40,9 +44,20 @@ const FormAddUser = () => {
           password: password,
           confPassword: confPassword,
           role: role,
-        });
-        setLoading(false)
-        navigate("/admin/users");
+        }).then((res) => {
+          setLoading(false)
+          toast.success("Successfully Added", {
+            position: toast.POSITION.TOP_RIGHT,
+          })
+          setLoading(false)
+          navigate("/admin/users");
+        }).catch((err) => {
+          setLoading(false)
+          toast.error(err?.response?.data?.msg, {
+            position: toast.POSITION.TOP_RIGHT,
+          })
+        });;
+
       }
     } catch (error) {
       if (error.response) {
@@ -67,9 +82,9 @@ const FormAddUser = () => {
     setConfPassword(e.target.value)
     setError({ errorCnfPassword: null })
   }
-  const onchangeRole = (e)=>{
+  const onchangeRole = (e) => {
     setRole(e.target.value)
-    setError({errorRole: null})
+    setError({ errorRole: null })
   }
   return (
     <div>

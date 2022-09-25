@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../util/Loader/Loader";
-
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 const FormEditUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -51,6 +52,9 @@ const FormEditUser = () => {
       } else if (!confPassword) {
         setLoading(false)
         setError({ errorCnfPassword: "Please Enter the Conform Password" })
+      } else if (password != confPassword) {
+        setLoading(false)
+        setError({ errorCnfPassword: "Password not match" })
       } else if (!role) {
         setLoading(false)
         setError({ errorRole: "Please Select the Role" })
@@ -61,9 +65,19 @@ const FormEditUser = () => {
           password: password,
           confPassword: confPassword,
           role: role,
+        }).then((res) => {
+          setLoading(false)
+          toast.success("Successfully Updated", {
+            position: toast.POSITION.TOP_RIGHT,
+          })
+          setLoading(false)
+          navigate("/admin/users");
+        }).catch((err) => {
+          setLoading(false)
+          toast.error(err?.response?.data?.msg, {
+            position: toast.POSITION.TOP_RIGHT,
+          })
         });
-        setLoading(false)
-        navigate("/admin/users");
       }
     } catch (error) {
       if (error.response) {

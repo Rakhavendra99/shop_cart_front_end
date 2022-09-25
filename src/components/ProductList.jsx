@@ -24,7 +24,7 @@ const ProductList = () => {
   const deleteProduct = async (productId) => {
     await axios.delete(`http://localhost:5000/products/${productId}`).then((res) => {
       setLoading(false)
-      toast.success("Successfully Updated", {
+      toast.success("Successfully Deleted", {
         position: toast.POSITION.TOP_RIGHT,
       })
       getProducts();
