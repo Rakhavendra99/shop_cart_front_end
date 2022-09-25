@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Loader from "../util/Loader/Loader"
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const { user } = useSelector((state) => state.auth);
@@ -20,8 +22,18 @@ const ProductList = () => {
   };
 
   const deleteProduct = async (productId) => {
-    await axios.delete(`http://localhost:5000/products/${productId}`);
-    getProducts();
+    await axios.delete(`http://localhost:5000/products/${productId}`).then((res) => {
+      setLoading(false)
+      toast.success("Successfully Updated", {
+        position: toast.POSITION.TOP_RIGHT,
+      })
+      getProducts();
+    }).catch((err) => {
+      setLoading(false)
+      toast.error(err?.response?.data?.msg, {
+        position: toast.POSITION.TOP_RIGHT,
+      })
+    });;
   };
 
   return (

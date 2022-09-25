@@ -8,6 +8,8 @@ import EditUser from "./pages/EditUser";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
 import "../src/asset/css/style.css"
+import { ToastContainer } from 'react-toastify';
+
 function App() {
   return (
     <div>
@@ -29,6 +31,7 @@ function App() {
           <Route path="/admin/users/add" element={<AddUser />} />
           <Route path="/admin/users/edit/:id" element={<EditUser />} />
         </Routes>
+        <ToastContainer />
       </BrowserRouter>
     </div>
   );

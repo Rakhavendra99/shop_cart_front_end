@@ -3,7 +3,8 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loader from "../util/Loader/Loader";
-
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 const FormEditProduct = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -48,12 +49,22 @@ const FormEditProduct = () => {
         await axios.patch(`http://localhost:5000/products/${id}`, {
           name: name,
           price: price,
+        }).then((res) => {
+          setLoading(false)
+          toast.success("Successfully Updated", {
+            position: toast.POSITION.TOP_RIGHT,
+          })
+          if (user?.role === "admin") {
+            navigate("/admin/products");
+          } else {
+            navigate("/products");
+          }
+        }).catch((err) => {
+          setLoading(false)
+          toast.error(err?.response?.data?.msg, {
+            position: toast.POSITION.TOP_RIGHT,
+          })
         });
-        if (user?.role === "admin") {
-          navigate("/admin/products");
-        } else {
-          navigate("/products");
-        }
       }
     } catch (error) {
       if (error.response) {

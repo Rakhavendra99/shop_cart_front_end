@@ -3,7 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Loader from "../util/Loader/Loader"
-
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 const FormAddProduct = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -26,13 +27,23 @@ const FormAddProduct = () => {
         await axios.post("http://localhost:5000/products", {
           name: name,
           price: price,
+        }).then((res) => {
+          setLoading(false)
+          if (user?.role === "admin") {
+            navigate("/admin/products");
+          } else {
+            navigate("/products");
+          }
+          toast.success("Successfully Added", {
+            position: toast.POSITION.TOP_RIGHT,
+          })
+        }).catch((err) => {
+          setLoading(false)
+          toast.error(err?.response?.data?.msg, {
+            position: toast.POSITION.TOP_RIGHT,
+          })
         });
-        setLoading(false)
-        if (user?.role === "admin") {
-          navigate("/admin/products");
-        } else {
-          navigate("/products");
-        }
+
       }
     } catch (error) {
       if (error.response) {
