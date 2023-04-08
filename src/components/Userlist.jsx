@@ -60,20 +60,20 @@ const Userlist = () => {
         </thead>
         <tbody>
           {users.map((i, index) => (
-            <tr key={i.uuid}>
+            <tr key={i.id}>
               <td>{index + 1}</td>
               <td>{i.name}</td>
               <td>{i.email}</td>
               <td>{i.role}</td>
               <td>
                 <Link
-                  to={user?.role === "admin" ? `/admin/users/edit/${i.uuid}` : `/users/edit/${i.uuid}`}
+                  to={user?.role === "admin" ? `/admin/users/edit/${i.id}` : `/users/edit/${i.id}`}
                   className="button is-small is-info"
                 >
                   Edit
                 </Link>
                 <button
-                  onClick={() => deleteUser(i.uuid)}
+                  onClick={() => deleteUser(i.id)}
                   className="button is-small is-danger"
                 >
                   Delete

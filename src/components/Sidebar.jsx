@@ -8,14 +8,15 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-
   const logout = () => {
     dispatch(LogOut());
     dispatch(reset());
     if (user?.role === "admin") {
       navigate('/admin')
+    } else if (user?.role === "vendor") {
+      navigate("/vendor");
     } else {
-      navigate("/");
+      navigate("/")
     }
   };
 

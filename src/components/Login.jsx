@@ -16,11 +16,13 @@ const Login = () => {
     if (user || isSuccess) {
       if (user?.role === "admin") {
         navigate("/admin/dashboard")
-      } else {
+      } else if (user?.role === "vendor") {
         navigate("/dashboard");
+      } else {
+        navigate("/categorys")
       }
     }
-    dispatch(reset());
+    // dispatch(reset());
   }, [user, isSuccess, dispatch, navigate]);
 
   const Auth = (e) => {
