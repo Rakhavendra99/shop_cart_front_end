@@ -62,19 +62,19 @@ export const authSlice = createSlice({
         })
 
         // Get User Login
-        // builder.addCase(getMe.pending, (state) => {
-        //     state.isLoading = true;
-        // });
-        // builder.addCase(getMe.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isSuccess = true;
-        //     state.user = action.payload;
-        // });
-        // builder.addCase(getMe.rejected, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isError = true;
-        //     state.message = action.payload;
-        // })
+        builder.addCase(getMe.pending, (state) => {
+            state.isLoading = true;
+        });
+        builder.addCase(getMe.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isSuccess = true;
+            state.user = action.payload;
+        });
+        builder.addCase(getMe.rejected, (state, action) => {
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload;
+        })
     }
 });
 

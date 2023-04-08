@@ -11,7 +11,7 @@ const AddProduct = () => {
   const { isError, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    // dispatch(getMe());
+    dispatch(getMe());
   }, [dispatch]);
 
   useEffect(() => {

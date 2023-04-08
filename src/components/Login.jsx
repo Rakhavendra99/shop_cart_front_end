@@ -22,7 +22,7 @@ const Login = () => {
         navigate("/categorys")
       }
     }
-    // dispatch(reset());
+    dispatch(reset());
   }, [user, isSuccess, dispatch, navigate]);
 
   const Auth = (e) => {
