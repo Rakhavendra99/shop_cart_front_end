@@ -9,6 +9,9 @@ import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
 import "../src/asset/css/style.css"
 import { ToastContainer } from 'react-toastify';
+import Category from "./pages/Category";
+import AddCategory from "./pages/AddCategory";
+import EditCategory from "./pages/EditCategory";
 
 function App() {
   return (
@@ -20,6 +23,9 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/products/add" element={<AddProduct />} />
           <Route path="/products/edit/:id" element={<EditProduct />} />
+          <Route path="/category" element={<Category />} />
+          <Route path="/category/add" element={<AddCategory />} />
+          <Route path="/category/edit/:id" element={<EditCategory />} />
 
           {/* -------------------ADMIN--------------------------------- */}
           <Route path="/admin" element={<Login />} />
@@ -30,6 +36,9 @@ function App() {
           <Route path="/admin/users" element={<Users />} />
           <Route path="/admin/users/add" element={<AddUser />} />
           <Route path="/admin/users/edit/:id" element={<EditUser />} />
+          <Route path="/admin/category" element={<Category />} />
+          <Route path="/admin/category/add" element={<AddCategory />} />
+          <Route path="/admin/category/edit/:id" element={<EditCategory />} />
         </Routes>
         <ToastContainer />
       </BrowserRouter>

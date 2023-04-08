@@ -16,11 +16,12 @@ const AddUser = () => {
 
   useEffect(() => {
     if (isError) {
-      if (user?.role === "vendor") {
-        navigate("/");
-      }
-      else {
-        navigate("/admin")
+      if (user?.role === "admin") {
+        navigate('/admin')
+      } else if (user?.role === "vendor") {
+        navigate("/vendor");
+      } else {
+        navigate("/")
       }
     }
     if (user && user.role !== "admin") {

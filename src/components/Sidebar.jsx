@@ -14,7 +14,7 @@ const Sidebar = () => {
     if (user?.role === "admin") {
       navigate('/admin')
     } else if (user?.role === "vendor") {
-      navigate("/vendor");
+      navigate("/");
     } else {
       navigate("/")
     }
@@ -29,6 +29,11 @@ const Sidebar = () => {
             <li>
               <NavLink to={"/dashboard"}>
                 <IoHome /> Dashboard
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/category"}>
+                <IoPricetag /> Category
               </NavLink>
             </li>
             <li>

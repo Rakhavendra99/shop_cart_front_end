@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import Layout from "./Layout";
-import Userlist from "../components/Userlist";
+import FormAddProduct from "../components/FormAddProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../features/authSlice";
+import FormAddCategory from "../components/FormAddCategory";
 
-const Users = () => {
+const AddCategory = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isError, user } = useSelector((state) => state.auth);
@@ -24,15 +25,12 @@ const Users = () => {
         navigate("/")
       }
     }
-    if (user && user.role !== "admin") {
-      navigate("/dashboard");
-    }
-  }, [isError, user, navigate]);
+  }, [isError, navigate]);
   return (
     <Layout>
-      <Userlist />
+      <FormAddCategory />
     </Layout>
   );
 };
 
-export default Users;
+export default AddCategory;

@@ -79,6 +79,13 @@ const ProductList = () => {
               </td>
             </tr>
           ))}
+          {products?.length === 0 && (
+            <tr className="tr-shadow">
+              <td colSpan="6" className="text-center">
+                No Data Found
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

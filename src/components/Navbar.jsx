@@ -17,10 +17,13 @@ const Navbar = () => {
     dispatch(reset());
     if (user?.role === "admin") {
       setLoading(false)
-      navigate("/admin");
+      navigate('/admin')
+    } else if (user?.role === "vendor") {
+      setLoading(false)
+      navigate("/vendor");
     } else {
       setLoading(false)
-      navigate("/");
+      navigate("/")
     }
   };
 

@@ -5,8 +5,10 @@ import { useSelector } from "react-redux";
 import Loader from "../util/Loader/Loader"
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-const ProductList = () => {
-  const [products, setProducts] = useState([]);
+import constants from "../util/Constants/constants";
+import PlaceHolderImage from '../asset/image/no_image.png'
+const CategoryList = () => {
+  const [category, setCategory] = useState([]);
   const { user } = useSelector((state) => state.auth);
   const [isLoading, setLoading] = useState(true)
 
@@ -16,13 +18,13 @@ const ProductList = () => {
 
   const getProducts = async () => {
     setLoading(true)
-    const response = await axios.get("http://localhost:5000/products");
-    setProducts(response.data);
+    const response = await axios.get(constants.API_BASE_URL + constants.CATEGORY_LIST);
+    setCategory(response.data);
     setLoading(false)
   };
 
-  const deleteProduct = async (productId) => {
-    await axios.delete(`http://localhost:5000/products/${productId}`).then((res) => {
+  const deleteCategory = async (categoryId) => {
+    await axios.delete(constants.API_BASE_URL + constants.DELETE_CATEGORY + `/${categoryId}`).then((res) => {
       setLoading(false)
       toast.success("Successfully Deleted", {
         position: toast.POSITION.TOP_RIGHT,
@@ -35,43 +37,73 @@ const ProductList = () => {
       })
     });;
   };
-
+  const onloadImage = (e) => {
+    setLoading(false)
+  }
+  const updateActive = async (e, obj) => {
+    setLoading(true)
+    await axios.patch(constants.API_BASE_URL + constants.UPDATE_CATEGORY + `/${obj?.id}`, {
+      id: obj.id,
+      isActive: e
+    }).then((res) => {
+      setLoading(false)
+      toast.success("Successfully Updated", {
+        position: toast.POSITION.TOP_RIGHT,
+      })
+      getProducts()
+    }).catch((err) => {
+      setLoading(false)
+      toast.error(err?.response?.data?.msg, {
+        position: toast.POSITION.TOP_RIGHT,
+      })
+    });
+  }
   return (
     <div>
       {
         isLoading && (<Loader />)
       }
-      <h1 className="title">Products</h1>
-      <h2 className="subtitle">List of Products</h2>
-      <Link to={user?.role === "admin" ? "/admin/products/add" : "/products/add"} className="button is-primary mb-2">
+      <h1 className="title">Categorys</h1>
+      <h2 className="subtitle">List of Categorys</h2>
+      <Link to={user?.role === "admin" ? "/admin/category/add" : "/category/add"} className="button is-primary mb-2">
         Add New
       </Link>
       <table className="table is-striped is-fullwidth">
         <thead>
           <tr>
-            <th>S.No</th>
-            <th>Product Name</th>
-            <th>Price</th>
-            <th>Created By</th>
+            <th>Id</th>
+            <th>Category Name</th>
+            <th>Image</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {products.map((product, index) => (
-            <tr key={product.id}>
-              <td>{index + 1}</td>
-              <td>{product.name}</td>
-              <td>{product.price}</td>
-              <td>{product.user.name}</td>
+          {category?.map((category, index) => (
+            <tr key={category?.id}>
+              <td>{category?.id}</td>
+              <td>{category?.name}</td>
+              <td><img
+                style={{ width: '48px', height: '48px' }} alt="Category"
+                src={category?.image ? category?.image : PlaceHolderImage}
+                onLoad={(e) => onloadImage(e)}
+              /></td>
               <td>
                 <Link
-                  to={user?.role === "admin" ? `/admin/products/edit/${product.id}` : `/products/edit/${product.id}`}
+                  to={user?.role === "admin" ? `/admin/category/edit/${category.id}` : `/category/edit/${category.id}`}
                   className="button is-small is-info"
                 >
                   Edit
                 </Link>
+                &nbsp;&nbsp;
+                <label class="switch">
+                  <input class="switch-input" type="checkbox"
+                    checked={category?.isActive && category?.isActive === 1 ? true : false}
+                    onChange={(e) => updateActive(category?.isActive && category?.isActive === 1 ? 0 : 1, category)} />
+                  <span class="switch-label" data-on="On" data-off="Off"></span>
+                  <span class="switch-handle"></span>
+                </label>
                 <button
-                  onClick={() => deleteProduct(product.id)}
+                  onClick={() => deleteCategory(category.id)}
                   className="button is-small is-danger"
                 >
                   Delete
@@ -79,10 +111,17 @@ const ProductList = () => {
               </td>
             </tr>
           ))}
+          {category?.length === 0 && (
+            <tr className="tr-shadow">
+              <td colSpan="6" className="text-center">
+                No Data Found
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
   );
 };
 
-export default ProductList;
+export default CategoryList;

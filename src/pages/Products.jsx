@@ -17,9 +17,11 @@ const Products = () => {
   useEffect(() => {
     if (isError) {
       if (user?.role === "admin") {
-        navigate("/admin")
+        navigate('/admin')
+      } else if (user?.role === "vendor") {
+        navigate("/vendor");
       } else {
-        navigate("/");
+        navigate("/")
       }
     }
   }, [isError, navigate]);
