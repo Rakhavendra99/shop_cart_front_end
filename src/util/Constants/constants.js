@@ -18,4 +18,11 @@ module.exports = {
     UPDATE_CATEGORY: '/category',
     DELETE_CATEGORY: '/category',
 
+    //product
+    PRODUCT_CATEGORY_LIST:'/products/category',
+    PRODUCT_LIST: '/products',
+    ADD_PRODCUT : '/products',
+    PRODUCT_DETAILS: '/products',
+    UPDATE_PRODUCT: '/products',
+    DELETE_PRODUCT: '/products',
 }
