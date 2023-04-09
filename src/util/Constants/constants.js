@@ -25,4 +25,8 @@ module.exports = {
     PRODUCT_DETAILS: '/products',
     UPDATE_PRODUCT: '/products',
     DELETE_PRODUCT: '/products',
+
+    //Dashboard
+    VENDOR_DASHBOARD: '/vendor/dashboard',
+    ADMIN_DASHBOARD: '/admin/dashboard',
 }
