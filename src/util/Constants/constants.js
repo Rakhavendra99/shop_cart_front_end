@@ -1,16 +1,21 @@
 let API_BASE_URL = "http://localhost:5000"
+let BASE_URL_SOCKET_IO = "http://localhost:5006/"
 
 if (window.location.hostname === "localhost") {
-    API_BASE_URL = "http://localhost:5000"
+    API_BASE_URL = "http://localhost:5000";
+    BASE_URL_SOCKET_IO = "http://localhost:5006/";
 } else if (window.location.hostname === "dev") {
-    API_BASE_URL = "https://api.shopcart.com"
+    API_BASE_URL = "https://api.shopcart.com";
+    BASE_URL_SOCKET_IO = "https://socket.shopcart.com/";
 } else {
     API_BASE_URL = ""
+    BASE_URL_SOCKET_IO = ""
 }
 module.exports = {
     //Api Base url
     API_BASE_URL: API_BASE_URL,
-    
+    BASE_URL_SOCKET_IO: BASE_URL_SOCKET_IO,
+    SOCKET_IO_PATH : "/socket/shop_cart",
     //category
     CATEGORY_LIST: '/category',
     ADD_CATEGORY: '/category',

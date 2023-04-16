@@ -95,12 +95,12 @@ const CategoryList = () => {
                   Edit
                 </Link>
                 &nbsp;&nbsp;
-                <label class="switch">
-                  <input class="switch-input" type="checkbox"
+                <label className="switch">
+                  <input className="switch-input" type="checkbox"
                     checked={category?.isActive && category?.isActive === 1 ? true : false}
                     onChange={(e) => updateActive(category?.isActive && category?.isActive === 1 ? 0 : 1, category)} />
-                  <span class="switch-label" data-on="On" data-off="Off"></span>
-                  <span class="switch-handle"></span>
+                  <span className="switch-label" data-on="On" data-off="Off"></span>
+                  <span className="switch-handle"></span>
                 </label>
                 <button
                   onClick={() => deleteCategory(category.id)}

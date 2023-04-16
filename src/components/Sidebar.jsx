@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { IoPerson, IoPricetag, IoHome, IoLogOut } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../features/authSlice";
-
+import { stopSocketConnect } from '../socket'
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -11,12 +11,16 @@ const Sidebar = () => {
   const logout = () => {
     dispatch(LogOut());
     dispatch(reset());
+    stopSocketConnect()
     if (user?.role === "admin") {
       navigate('/admin')
+      window.location.reload()
     } else if (user?.role === "vendor") {
       navigate("/");
+      window.location.reload()
     } else {
       navigate("/")
+      window.location.reload()
     }
   };
 

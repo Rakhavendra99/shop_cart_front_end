@@ -97,12 +97,12 @@ const ProductList = () => {
                   Edit
                 </Link>
                 &nbsp;&nbsp;
-                <label class="switch">
-                  <input class="switch-input" type="checkbox"
+                <label className="switch">
+                  <input className="switch-input" type="checkbox"
                     checked={product?.isActive && product?.isActive === 1 ? true : false}
                     onChange={(e) => updateActive(product?.isActive && product?.isActive === 1 ? 0 : 1, product)} />
-                  <span class="switch-label" data-on="On" data-off="Off"></span>
-                  <span class="switch-handle"></span>
+                  <span className="switch-label" data-on="On" data-off="Off"></span>
+                  <span className="switch-handle"></span>
                 </label>
                 <button
                   onClick={() => deleteProduct(product.id)}

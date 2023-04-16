@@ -4,6 +4,7 @@ import logo from "../logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../features/authSlice";
 import Loader from "../util/Loader/Loader";
+import { stopSocketConnect } from '../socket'
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Navbar = () => {
     setLoading(true)
     dispatch(LogOut());
     dispatch(reset());
+    stopSocketConnect()
     if (user?.role === "admin") {
       setLoading(false)
       navigate('/admin')

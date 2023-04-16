@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import Category from "./pages/Category";
 import AddCategory from "./pages/AddCategory";
 import EditCategory from "./pages/EditCategory";
+import SocketMessage from "./SocketMessage"
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="/admin/category/add" element={<AddCategory />} />
           <Route path="/admin/category/edit/:id" element={<EditCategory />} />
         </Routes>
+        <SocketMessage />
         <ToastContainer />
       </BrowserRouter>
     </div>
