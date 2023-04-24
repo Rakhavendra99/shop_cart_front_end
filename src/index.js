@@ -5,6 +5,7 @@ import { store } from './app/store';
 import App from './App';
 import "bulma/css/bulma.css";
 import axios from "axios";
+import { BrowserRouter } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
@@ -13,9 +14,11 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

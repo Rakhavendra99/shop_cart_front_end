@@ -52,7 +52,7 @@ const FormEditUser = () => {
       } else if (!confPassword) {
         setLoading(false)
         setError({ errorCnfPassword: "Please Enter the Conform Password" })
-      } else if (password != confPassword) {
+      } else if (password !== confPassword) {
         setLoading(false)
         setError({ errorCnfPassword: "Password not match" })
       } else if (!role) {

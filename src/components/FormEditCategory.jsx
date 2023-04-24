@@ -16,7 +16,6 @@ const FormEditCategory = () => {
   const { id } = useParams();
   const { user } = useSelector((state) => state.auth);
   const [isLoading, setLoading] = useState(true)
-  const [isClickableImage, setClickImage] = useState(false)
   const [error, setError] = useState({ errorName: null, errorImage: null })
 
   useEffect(() => {
@@ -82,10 +81,6 @@ const FormEditCategory = () => {
     setName(e.target.value)
     setError({ errorName: null })
   }
-  const onChangeProductPrice = (e) => {
-    setCategoryImage(e.target.value)
-    setError({ errorImage: null })
-  }
   const uploadProductImage = async (e) => {
     setLoading(true)
     setError({ errorImage: null })
@@ -94,10 +89,8 @@ const FormEditCategory = () => {
     if (typeof file !== "undefined") {
       let imageBase64 = await convertToBase64(file)
       setCategoryImage(imageBase64)
-      setClickImage(true)
       setLoading(false)
     } else {
-      setClickImage(true)
       setLoading(false)
     }
   }

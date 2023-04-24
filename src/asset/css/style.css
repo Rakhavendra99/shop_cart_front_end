@@ -1,3 +1,1779 @@
+/* Customer UI */
+:root {
+    --primary-color: #000000;
+    --secondary-color: #ffffff;
+    --daywise-order-bg: #EFECEC;
+    --seconday-text-color: #979393;
+    --cart-right-bg: #EEEEEE;
+}
+
+@font-face {
+    font-family: Poppins-regular;
+    src: url("../font/Poppins-Regular.ttf");
+}
+
+@font-face {
+    font-family: Poppins-semibold;
+    src: url("../font/Poppins-SemiBold.ttf");
+}
+
+@font-face {
+    font-family: Poppins-medium;
+    src: url("../font/Poppins-Medium.ttf");
+}
+
+@font-face {
+    font-family: Poppins-bold;
+    src: url("../font/Poppins-Bold.ttf");
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Poppins-regular !important;
+}
+
+body p {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+.leela_customer {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.leela_customer_body_content {
+    margin-top: 90px;
+    padding: 10px 120px;
+}
+
+.px-60 {
+    padding-left: 60px !important;
+    padding-right: 60px !important;
+}
+.homeBannerImage{
+    position: absolute;
+    right: 27vw;
+    bottom: 0;
+    width: 18%;
+}
+.header_banner_content{
+    position: relative;
+}
+.header_collapse,
+.cart_header_part {
+    position: relative;
+}
+
+.fs-11 {
+    font-size: 11px;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+.fs-13 {
+    font-size: 13px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.fs-15 {
+    font-size: 15px;
+}
+
+.fs-16 {
+    font-size: 16px;
+}
+
+.fs-17 {
+    font-size: 17px;
+}
+
+.fs-20 {
+    font-size: 20px;
+}
+
+.fs-26 {
+    font-size: 26px;
+}
+
+.fs-40 {
+    font-size: 35px;
+}
+
+.fs-60 {
+    font-size: 55px;
+}
+
+.f-reg {
+    font-family: Poppins-regular;
+}
+
+.f-med {
+    font-family: Poppins-medium;
+}
+
+.f-sbold {
+    font-family: Poppins-semibold;
+}
+
+.f-bold {
+    font-family: Poppins-bold;
+}
+
+/* header css start */
+
+.leela_customer_header {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    position: fixed;
+    top: 0;
+    z-index: 5;
+    width: 100%;
+    background-color: var(--secondary-color);
+}
+
+/* .leela_customer_header .navbar{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: var(--secondary-color);
+} */
+.header_banner {
+    position: relative;
+    margin-top: 0;
+}
+
+.header_banner .banner_content {
+    position: absolute;
+    top: 32%;
+    left: 4%;
+}
+
+.banner_content h5 {
+    max-width: 550px;
+    line-height: 60px;
+}
+
+.banner_content p {
+    margin-top: 22px;
+    max-width: 550px;
+}
+
+.leela_logo {
+    width: 10%;
+}
+
+.header_icons {
+    width: 65%;
+}
+
+.leela_customer_header .nav-link {
+    font-size: 14px !important;
+}
+
+.leela_customer_header .nav-link.active {
+    font-family: Poppins-semibold;
+}
+
+.header_icons_mob {
+    position: absolute;
+    right: 60px;
+    margin: auto;
+    top: 16px;
+}
+
+.cart_item_count {
+    position: absolute;
+    top: -6px;
+    right: -11px;
+    background-color: #D3D3D3;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--primary-color);
+}
+
+/* header css end */
+/* store closed */
+.store_closed_gif {
+    width: 450px;
+}
+
+.store_closed_text {
+    max-width: 700px;
+    display: block;
+    margin: 85px auto 0;
+    text-align: center;
+}
+
+/* menu start */
+
+.section_heading {
+    font-family: Poppins-bold;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.daywise_order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.daywise_order .weekdays {
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 17px;
+}
+
+.daywise_order p.active {
+    background-color: var(--daywise-order-bg);
+}
+
+.product_card {
+    border-radius: 20px !important;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border: none !important;
+    height: 100% !important;
+    transition: .4s;
+}
+
+.product_card:hover {
+    transform: scale(1.11);
+}
+
+.product_size {
+    height: 155px;
+    width: auto;
+    object-fit: cover;
+    border-radius: 20px 20px 0px 0px !important;
+}
+
+.product_name {
+    font-family: Poppins-semibold;
+    font-size: 15px;
+}
+
+.product_description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 12px;
+}
+
+.sku_id,
+.product_description,
+.category_head {
+    color: var(--seconday-text-color);
+}
+
+.order_date_show {
+    background-color: #F8F7F7;
+    width: 400px;
+    margin: auto;
+    text-align: center;
+    padding: 4px;
+    border-radius: 30px;
+    font-size: 16px;
+}
+
+.order_date_show .order_date {
+    font-size: 17px;
+    font-family: Poppins-semibold;
+}
+
+.add_btn {
+    background-color: var(--secondary-color);
+    border: 1px solid #8e8e8e;
+    width: 7vw;
+    /* padding: 1px 25px; */
+    border-radius: 18px;
+    margin: auto;
+    display: block;
+}
+
+.no_products_found_img {
+    width: 35%;
+}
+
+.menu_banner_text {
+    margin-left: 12vw;
+    margin-top: 4vw;
+}
+
+.menu_cart_footer {
+    border-radius: 0 0 20px 20px;
+    background-color: transparent !important;
+    border: none;
+}
+
+/* menu end */
+
+/* cart screen start */
+
+.empty_card {
+    width: 25%;
+    display: block;
+    margin: auto;
+}
+
+.cart_product_img {
+    width: 53px;
+    height: 49px !important;
+    object-fit: cover;
+    border-radius: 14px;
+}
+
+.quantity_increase {
+    background-color: #C9C9C9;
+    padding: 0px 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    /* margin: 0 7px; */
+    margin: auto;
+}
+
+.cart_align {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.shopping_cart_row {
+    border-bottom: 1px solid #d5d5d5;
+    position: relative;
+    /* padding: 15px 0px; */
+}
+
+.cart_border {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.cart_category {
+    color: #979393;
+}
+
+.cart_checkout_part {
+    background-color: var(--cart-right-bg);
+}
+
+.pickup_part {
+    text-transform: capitalize;
+}
+
+.pickup_address {
+    background-color: var(--secondary-color);
+}
+
+.checkout_border {
+    border-bottom: 1px solid #a2a2a2;
+}
+
+.common_btn {
+    width: 29vw;
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--secondary-color);
+    padding: 7px;
+    display: block;
+    margin: auto;
+}
+
+.cart_scroll {
+    max-height: 65vh;
+    overflow: auto;
+}
+
+.not_available {
+    color: #E70000;
+}
+
+.check_input_cart:checked {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: none !important;
+}
+
+.check_input_cart:focus {
+    box-shadow: none !important;
+    border-color: rgba(0, 0, 0, .25) !important;
+}
+
+.check_input_cart:checked[type="checkbox"] {
+    background-image: url(../image/check-lg.svg) !important;
+}
+
+.cart_products {
+    align-self: center;
+}
+
+.continue_shopping_btn {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 7px;
+    width: 15vw;
+}
+
+.between_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* cart screen end */
+
+/* popup start */
+
+.customer_popup {
+    display: flex !important;
+    justify-content: center;
+    padding-top: 10vh;
+    /* align-items: center; */
+    height: 100vh;
+}
+.cartRemovePopup{
+    display: flex !important;
+    justify-content: center;
+    padding-top: 30vh;
+    height: 100vh;
+}
+.customer_popup_content {
+    border-radius: 0 !important;
+}
+
+input[type="text"]::placeholder,
+input[type="number"]::placeholder,
+input[type="email"]::placeholder,
+textarea::placeholder,
+select option::placeholder {
+    font-size: 12px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus,
+select:focus {
+    box-shadow: none !important;
+}
+
+.popup_btn {
+    width: 15vw;
+}
+
+.close_part {
+    position: absolute;
+    right: -15px;
+    top: -14px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    padding: 2px;
+    border-radius: 50%;
+    border: 1px solid var(--primary-color);
+}
+
+.cancel_btn {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* popup end */
+/* home screen start */
+.work_section .work_section_content {
+    display: flex;
+    justify-content: center;
+}
+
+.work_section .work_section_icon {
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+}
+
+.work_section .work_section_content_start {
+    padding: 55px 0 80px 0;
+}
+
+.menu_section p {
+    display: block;
+    margin: 0 auto;
+    max-width: 750px;
+    padding: 10px;
+    line-height: 25px;
+}
+
+.menu_section {
+    background-color: #F5F5F5;
+}
+
+.menu_section .menu_section_content {
+    padding: 30px 0;
+}
+
+.menu_section_img {
+    width: 67vw;
+    padding: 30px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    transition: .4s;
+}
+
+.menu_section_img:hover {
+    transform: scale(1.08);
+}
+
+.menu_section .menu_section_btn {
+    background-color: #101010;
+    color: var(--secondary-color);
+    border: 1px solid #707070;
+    padding: 12px 35px;
+    display: block;
+    margin: 0 auto;
+}
+
+.readmore_btn {
+    padding: 9px 30px;
+    border: 1px solid #2b2b2b;
+    background-color: transparent;
+    margin-top: 20px;
+    transition: button-border 2s ease-in-out;
+}
+
+.work_section_content p {
+    text-transform: capitalize !important;
+}
+
+/* .line-animation {
+    width: 100%;
+    height: 1.5px;
+    background-color: rgb(141, 141, 141);
+    position: absolute;
+    bottom: -2px;
+    transform: translateY(-50%);
+    animation-name: line-animation;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+} */
+
+@keyframes line-animation {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+.carousel_banner {
+    height: 460px;
+    width: 100%;
+    object-fit: cover;
+    animation-name: zoom-in-banner;
+    animation-duration: 4s;
+    animation-fill-mode: forwards;
+    position: relative;
+    transform-origin: center center;
+}
+
+@keyframes zoom-in-banner {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}
+
+/* home screen end */
+/* footer start */
+.footer {
+    background-color: #f7f7f7;
+    padding: 50px 150px 20px 150px;
+}
+
+.footer_common {
+    padding: 50px 120px 20px;
+}
+
+
+.footer_title {
+    font-size: calc(1vh + 10px);
+    font-family: Poppins-bold;
+    margin-bottom: 20px;
+}
+
+.footer_small_text {
+    color: #707070;
+    margin-top: 5px;
+}
+
+.footer_mid .footer_mid_content {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.footer_mid .footer_mid_text {
+    font-size: calc(1vh + 6px);
+}
+
+.footer_right .footer_right_content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.footer_right .footer_right_icon {
+    font-size: 20px;
+}
+
+.footer_left_content .footer_left_text {
+    font-size: calc(1vh + 6px);
+    margin-top: 20px;
+    margin-bottom: 5px;
+    padding: 0 20px 0 0;
+}
+
+.fb_icon {
+    font-size: 30px;
+}
+
+.text_picked_address {
+    padding: 60px;
+    text-align: center;
+    font-family: poppins-semibold;
+}
+
+.footer_bottom {
+    background-color: var(--primary-color);
+    text-align: center;
+    color: var(--secondary-color);
+    padding: 10px;
+}
+
+
+.footer_logo {
+    width: 20%;
+}
+
+.footer_img {
+    width: 9vw;
+    height: 16vh;
+    object-fit: contain;
+}
+
+.footer_mid_content {
+    display: flex !important;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+/* footer end */
+/* feedback */
+.feedback_content .fb_input {
+    padding: 12px;
+    background-color: #F3F3F3;
+    border: none;
+    border-radius: 0;
+}
+
+.feedback_content .fb_input:focus {
+    padding: 12px;
+    background-color: #F3F3F3;
+    border: none;
+    border-radius: 0;
+}
+
+.feedback_content .feedback_star_content {
+    margin-top: 60px;
+}
+
+.feedback_content .feedback_star_icon {
+    font-size: 35px;
+    color: #FFC309;
+}
+
+.feedback_content .feedback_star_content .feedback_start {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.feedback_content .feedback_btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 10px 50px;
+}
+
+/* cancellation form */
+.cancellation_content .fb_input {
+    padding: 12px;
+    background-color: #F3F3F3;
+    border: none;
+    border-radius: 0;
+}
+
+.cancellation_content .fb_input:focus {
+    padding: 12px;
+    background-color: #F3F3F3;
+    border: none;
+    border-radius: 0;
+}
+
+.cancellation_content .cancellation_btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 10px 50px;
+    margin-top: 20px;
+}
+
+.cancellation_content .fb_textarea {
+    background-color: #F3F3F3;
+    height: 130px;
+    border-radius: 0;
+    border: none;
+}
+
+.cancellation_content .fb_textarea:focus {
+    background-color: #F3F3F3;
+}
+
+.cancellation_content .cancellation_click {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* about start */
+.about_client_img {
+    width: 285px;
+    height: 260px;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+}
+
+.client-about {
+    align-self: center;
+}
+
+.about_img_title {
+    font-size: calc(1vh + 14px);
+    font-family: poppins-bold;
+    margin-bottom: 25px;
+}
+
+/* .about_img_sub_text {
+    font-size: calc(1vh + 8px);
+    max-width: 700px;
+} */
+
+/* about end */
+/* party order */
+.party_order .input_box {
+    padding: 13px;
+    background-color: #F3F3F3;
+    border: none;
+    border-radius: 0;
+}
+
+.party_order .input_box:focus {
+    padding: 13px;
+    background-color: #F3F3F3;
+    border: none;
+    border-radius: 0;
+}
+
+.party_order .form-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.party_order .input_star {
+    width: 30px;
+}
+
+.party_order .input_label {
+    margin: 0;
+}
+
+.party_order .input_add_plus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.party_order .label_plus {
+    background-color: #F3F3F3;
+    padding: 2px 7px;
+    border: none;
+}
+
+.party_order .add_item_heading {
+    color: #6D6D6D;
+    margin-bottom: 10px;
+}
+
+.party_order .add_item_content {
+    /* max-height: 65vh; */
+    overflow: auto;
+    /* padding: 0 10px; */
+}
+
+.party_order .input_plus_icon {
+    font-size: 25px;
+}
+
+.party_order .add_item {
+    /* background-color: #F3F3F3; */
+    /* border: 1px solid #f3f3f3; */
+    padding: 25px 30px;
+    margin: 5px;
+    margin-bottom: 15px;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+}
+
+.party_order .add_item .add_input_box {
+    padding: 12px;
+    border-radius: 0;
+}
+
+/* .party_order .party_order_left,
+.party_order .party_order_right {
+    padding: 0 20px;
+} */
+
+.party_order .party_order_btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 10px 50px;
+    display: block;
+    margin: 0 auto;
+    border: none;
+}
+
+.party_order_edit_btn {
+    background-color: transparent;
+    border: none;
+}
+.partyOrder:hover{
+    cursor: pointer;
+}
+.additem_btn {
+    padding: 0px 15px !important;
+    display: block;
+    margin-right: 0;
+    margin: 0 !important;
+    border: none;
+    /* border: 1px solid var(--primary-color); */
+}
+
+.add_item_label {
+    background-color: #F3F3F3;
+    padding: 20px 10px;
+}
+
+.add_item_label_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.disabled-btn {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+}
+
+.party_order_item {
+    width: 100px;
+    height: 75px;
+}
+
+.divider {
+    border-top: 1px solid #000;
+}
+
+.available_item_img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.customized_item {
+    color: #bc2929 !important;
+}
+
+.available_item {
+    color: #29b332 !important
+}
+
+/* webkit scrollbar */
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #a2a2a2;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+.cartPopup {
+    display: block !important;
+}
+
+.close_part:hover {
+    cursor: pointer;
+}
+
+.errorMessage {
+    color: red;
+}
+
+.appLoader {
+    z-index: 1060 !important;
+}
+
+/* .loader {
+    z-index: 1057 !important;
+} */
+.productPopup{
+    border-radius: 3px !important;
+}
+.sub_heading{
+    font-weight: 600;
+}
+.product_subhead_row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.customer_info {
+    font-size: 15px;
+    font-weight: 600;
+    margin-left: 5px;
+}
+.productRow{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.heading{
+    font-size: 15px !important;
+}
+.productWrap {
+    word-wrap: break-word !important;
+    text-transform: capitalize;
+}
+.datePicker{
+    font-size: 12px !important;
+    height: 38px !important;
+}
+.product_not_found {
+    width: 40%;
+}
+.itemListData{
+    height: 100% !important;
+}
+/* webkit scrollbar end */
+.cartCanel{
+    margin-left: 10px;
+    border-radius: 4px;
+}
+.DisbaleLoadMore{
+    background-color: #999999;
+}
+.expiredOrder{
+    color: red !important;
+}
+
+@media (min-width: 1670px) {
+    .homeBannerImage {
+        position: absolute;
+        right: 31vw;
+        bottom: 0;
+        width: 9%;
+    }
+}   
+
+@media (min-width: 1440px) {
+
+   
+    .leela_logo {
+        width: 5%;
+    }
+
+    .footer_logo {
+        width: 13%;
+    }
+
+    .quantity_increase {
+        background-color: #C9C9C9;
+        padding: 2px 7px;
+        font-size: 18px;
+        border-radius: 5px;
+        /* margin: 0 7px; */
+        margin: auto;
+    }
+}
+
+@media (min-width: 1200px){
+    .party_order .add_item {
+        height: 330px;
+    }
+
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .footer_logo {
+        width: 15%;
+    }
+
+    .leela_customer_body_content {
+        margin-top: 90px;
+        padding: 10px 66px;
+    }
+
+    .footer_common {
+        padding: 50px 66px 20px;
+    }
+}
+
+@media only screen and (max-width: 991.98px) {
+
+    .fs-16 {
+        font-size: 16px;
+    }
+
+    .fs-22 {
+        font-size: 22px;
+    }
+
+    .fs-24 {
+        font-size: 24px;
+    }
+
+    .fs-35 {
+        font-size: 35px;
+    }
+
+    .leela_customer_body_content {
+        margin-top: 70px;
+        padding: 10px 60px;
+    }
+    
+    .continue_shopping_btn {
+        width: 30vw !important;
+    }
+
+    /* banner */
+    .header_banner {
+        position: relative;
+        margin-top: 0;
+    }
+
+    .banner_content h5 {
+        max-width: 427px;
+        line-height: 45px;
+    }
+
+    .banner_content p {
+        margin-top: 15px;
+        max-width: 600px;
+    }
+
+    .header_icons_mob {
+        position: absolute;
+        right: 140px;
+        margin: auto;
+        top: 11px;
+    }
+
+    /* store closed */
+    .store_closed_gif {
+        width: 450px;
+    }
+
+    /* footer */
+    .footer {
+        background-color: #f7f7f7;
+    }
+
+    .footer_logo {
+        width: 110px;
+    }
+
+    .fb_icon {
+        font-size: 30px;
+    }
+
+    .footer_title {
+        font-size: calc(1vh + 20px);
+        font-family: Poppins-bold;
+        margin-bottom: 20px;
+    }
+
+    .footer_mid .footer_mid_text {
+        font-size: calc(1vh + 10px);
+    }
+
+    .footer_small_text {
+        color: #707070;
+        margin-top: 5px;
+        font-size: calc(1vh + 10px);
+    }
+
+    .footer_left_content .footer_left_text {
+        font-size: calc(1vh + 12px);
+        margin-top: 20px;
+        margin-bottom: 5px;
+        padding: 0;
+    }
+
+    .footer_right .footer_right_icon {
+        font-size: 30px;
+    }
+
+    .footer_right .footer_right_text {
+        font-size: calc(1vh + 12px);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .homeBannerImage {
+        position: absolute;
+        right: 23vw;
+        bottom: 0;
+        width: 18%;
+    }
+
+    .fs-13 {
+        font-size: 12px;
+    }
+
+    .fs-15, .fs-17 {
+        font-size: 14px;
+    }
+
+    .fs-20 {
+        font-size: 15px;
+    }
+
+    .fs-24 {
+        font-size: 16px;
+    }
+
+    .shopping_quantity {
+        margin: 0 7px !important;
+    }
+
+    .quantity_increase {
+        font-size: 13px;
+    }
+
+    .product_not_found {
+        width: 85%;
+    }
+
+    .leela_customer_body_content {
+        margin-top: 100px;
+        padding: 10px 20px;
+    }
+
+    .leela_logo {
+        width: 15%;
+    }
+
+    .order_date_show {
+        width: 100%;
+        margin-top: 30px !important;
+        margin-bottom: 20px;
+    }
+
+    .header_icons {
+        width: 70%;
+    }
+
+    .header_icons_mob {
+        position: absolute;
+        right: 99px;
+        top: 8px;
+    }
+
+    .px-60 {
+        padding-left: 25px !important;
+        padding-right: 25px !important;
+    }
+
+    .cart_scroll {
+        max-height: 50vh;
+    }
+
+    .common_btn {
+        width: 70vw;
+    }
+
+    .cart_product_img {
+        width: 50px;
+        height: 46px !important;
+    }
+
+    .close_part {
+        right: -8px;
+        top: -8px;
+    }
+
+    .popup_footer {
+        display: block !important;
+        margin: auto;
+    }
+
+    .popup_btn,
+    .common_btn {
+        padding: 12px 10px;
+    }
+
+    .cancel_btn {
+        padding: 5px 10px;
+    }
+
+    .check_input_cart {
+        width: 1.3em !important;
+        height: 1.3em !important;
+    }
+/* 
+    .continue_shopping_btn {
+        width: 40vw;
+    } */
+
+    /* home screen */
+    .work_section .work_section_content_start {
+        padding: 30px 0;
+    }
+
+    .menu_section_img {
+        width: 80vw;
+        padding: 20px 0;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .menu_section .menu_section_content {
+        padding: 35px 0 20px 0;
+    }
+
+    .text_picked_address {
+        padding: 45px;
+        text-align: center;
+        font-family: poppins-semibold;
+    }
+
+    /* about */
+    .about_img_title {
+        font-size: calc(1vh + 14px);
+        font-family: poppins-bold;
+        margin-bottom: 25px;
+        margin-top: 20px;
+    }
+
+    .empty_cart {
+        width: 25%;
+    }
+
+    .h-500 {
+        height: auto !important;
+    }
+
+    .menu_section {
+        margin-top: 30px;
+    }
+
+    .footer_content {
+        padding: 50px 20px 10px;
+    }
+
+    .footer_bottom {
+        padding: 12px 10px;
+    }
+
+    .no_products_found_img {
+        width: 45%;
+    }
+
+    .party_order .add_item {
+        padding: 15px 19px;
+        margin-bottom: 15px;
+    }
+
+    .header_banner .banner_content {
+        top: 27%;
+    }
+
+    .empty_card {
+        width: 35%;
+    }
+
+    .party_order_item {
+        width: 65px;
+        height: 70px;
+    }
+
+    .selected_item_scroll {
+        max-height: 350px;
+        overflow: auto;
+    }
+
+    .carousel_banner {
+        height: 320px;
+    }
+
+    .add_btn {
+        width: 20vw;
+    }
+
+    .footer_common {
+        padding: 20px 20px;
+    }
+
+    .shopping_cart_close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin-top: auto;
+        margin-bottom: auto;
+        /* top: 35px; */
+        padding: 9px 0 0;
+    }
+      
+    .cart_total_price {
+        padding-left: 48px !important;
+        /* position: absolute;
+        right: 22px;
+        top: 37px;
+        padding: 0; */
+    }
+
+}
+
+@media only screen and (min-width:481px) and (max-width:768px) {
+
+    .fs-16 {
+        font-size: 16px;
+    }
+
+    /* store closed */
+    .store_closed_gif {
+        width: 400px;
+    }
+
+    /* footer */
+    .footer {
+        background-color: #f7f7f7;
+        padding: 35px 20px 20px 20px;
+    }
+
+    .footer_logo {
+        width: 150px;
+    }
+
+    .fb_icon {
+        font-size: 30px;
+    }
+
+    .footer_title {
+        font-size: calc(1vh + 12px);
+        font-family: Poppins-bold;
+        margin-bottom: 20px;
+    }
+
+    .footer_left_content .footer_left_text {
+        font-size: calc(1vh + 8px);
+        margin-top: 20px;
+        margin-bottom: 5px;
+        padding: 0;
+    }
+
+    .footer_mid .footer_mid_text {
+        font-size: calc(1vh + 8px);
+    }
+
+    .footer_small_text {
+        color: #707070;
+        margin-top: 5px;
+        font-size: calc(1vh + 8px);
+    }
+
+    .footer_right .footer_right_icon {
+        font-size: 30px;
+    }
+
+    .footer_right .footer_right_text {
+        font-size: calc(1vh + 8px);
+    }
+
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Remove the increment and decrement symbol */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.deleivery_date{
+    color: rgb(255, 82, 82);
+    font-weight: 700;
+    font-size: 12px;
+}
+.deleiveryDatePopup{
+    color: rgb(255, 82, 82);
+    font-weight: 700;
+    font-size: 14px;
+}
+.product_description{
+    font-weight: 700;
+    font-size: 13px;
+    margin-top: 1px !important;
+}
+.menuProductDescription{
+    color: rgb(136, 135, 135);
+    font-weight: 500 !important;
+    font-size: 14px;
+    margin-top: 1px !important;
+}
+.sku_id{
+    font-size: 12px !important;
+}
+
+.cancelationPolicy{
+    text-align: justify;
+}
+.cancelationPolicyView{
+    opacity: 0.4;
+    text-align: justify;
+}
+@media (min-width:320px) and (max-width:480px) {
+
+    .homeBannerImage {
+        position: absolute;
+        right: 19vw;
+        bottom: 0;
+        width: 19%;
+    }
+
+    .leela_logo {
+        width: 20% !important;
+    }
+
+    /* home */
+    .fs-12 {
+        font-size: 12px;
+    }
+
+    .fs-14 {
+        font-size: 14px;
+    }
+
+    .fs-16 {
+        font-size: 16px;
+    }
+
+    .fs-25 {
+        font-size: 25px;
+    }
+
+    .fs-35 {
+        font-size: 27px;
+    }
+
+    .between_content {
+        display: block;
+    }
+
+    .continue_shopping_btn {
+        width: 100% !important;
+        margin: 20px 0 ;
+    }
+
+    /* banner */
+    .leela_customer_header .banner_content {
+        position: absolute;
+        top: 10%;
+        left: 4%;
+    }
+
+    .banner_content h5 {
+        max-width: 230px;
+        line-height: 35px;
+    }
+
+    .banner_content p {
+        margin-top: 10px;
+        max-width: 230px;
+    }
+
+    .carousel_banner {
+        height: 260px;
+        width: 100%;
+        object-fit: cover;
+        animation-name: zoom-in-banner;
+        animation-duration: 2s;
+        animation-fill-mode: forwards;
+        position: relative;
+        transform-origin: center center;
+    }
+
+    @keyframes zoom-in-banner {
+        from {
+            transform: scale(1);
+        }
+
+        to {
+            transform: scale(1.2);
+        }
+    }
+
+    .menu_banner {
+        height: 200px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .work_section .work_section_icon {
+        height: 85px;
+        width: 85px;
+        object-fit: contain;
+    }
+
+    .menu_section .menu_section_btn {
+        background-color: #3D3C3C;
+        color: var(--secondary-color);
+        border: 1px solid #707070;
+        padding: 10px 25px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .leela_customer_body_content {
+        margin-top: 40px;
+        padding: 10px 20px !important;
+    }
+
+    .section_heading {
+        margin-bottom: 10px !important;
+    }
+
+    .add_btn {
+        width: 20vw !important;
+    }
+
+    /* store closed */
+    .store_closed_gif {
+        width: 300px;
+    }
+
+    /* party order */
+    .party_order .party_order_left,
+    .party_order .party_order_right {
+        padding: 0 15px;
+    }
+
+    .add_item_label {
+        background-color: #F3F3F3;
+        padding: 10px;
+    }
+
+    /* footer */
+    .footer {
+        background-color: #f7f7f7;
+        padding: 25px 15px 20px 15px;
+    }
+
+    .footer_logo {
+        width: 95px;
+    }
+
+    .footer_left_content .footer_left_text {
+        font-size: calc(1vh + 6px);
+        margin-top: 20px;
+        margin-bottom: 5px;
+        padding: 0;
+    }
+
+    .fb_icon {
+        font-size: 20px;
+    }
+
+    .footer_title {
+        font-size: calc(1vh + 10px);
+        font-family: Poppins-bold;
+        margin-bottom: 8px;
+    }
+
+    .footer_mid .footer_mid_text {
+        font-size: calc(1vh + 6px);
+    }
+
+    .footer_small_text {
+        color: #707070;
+        margin-top: 5px;
+        font-size: calc(1vh + 5px);
+    }
+
+    .footer_right .footer_right_content {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .footer_right .footer_right_icon {
+        font-size: 20px;
+    }
+
+    .footer_right .footer_right_text {
+        font-size: calc(1vh + 6px);
+    }
+
+    .empty_card {
+        width: 50%;
+    }
+    
+    .per_item_count {
+        display: block;
+    }
+
+}
+
+@media (max-width: 320px) {
+
+    .fs-12 {
+        font-size: 10px;
+    }
+
+    .fs-13 {
+        font-size: 11px;
+    }
+
+    .fs-15 {
+        font-size: 11.5px;
+    }
+
+    .fs-20 {
+        font-size: 17px;
+    }
+
+    .fs-24 {
+        font-size: 16px;
+    }
+
+    .cart_total_price {
+        padding-left: 38px !important;
+        /* position: absolute;
+        right: 22px;
+        top: 37px;
+        padding: 0; */
+    }
+
+    .empty_card {
+        width: 46%;
+    }
+
+    .quantity_increase {
+        font-size: 13px;
+    }
+
+    .footer_common p{
+        font-size: 13px !important;
+    }
+
+    .menu_banner {
+        height: 210px;
+    }
+
+    .carousel_banner {
+        height: 300px;
+    }
+
+    .party_order_item {
+        width: 50px;
+        height: 60px;
+    }
+
+    .leela_logo {
+        width: 23%;
+    }
+
+    .footer_common {
+        padding: 20px 10px 20px;
+    }
+
+    .menu_banner {
+        height: 180px;
+    }
+
+    .leela_customer_body_content {
+        margin-top: 40px;
+    }
+
+    .footer_logo {
+        width: 100px;
+    }
+
+    .fb_icon {
+        font-size: 25px;
+    }
+
+    .footer_right .footer_right_icon {
+        font-size: 20px;
+    }
+}
+/* Ended Customer UI */
+
 .loader {
 	position: fixed;
 	z-index: 999999;

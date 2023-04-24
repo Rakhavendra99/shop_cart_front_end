@@ -16,7 +16,6 @@ const FormEditProduct = () => {
   const [availableQuantity, setAvailableQuantity] = useState("");
   const [image, setProductImage] = useState("");
   const [description, setDescription] = useState("");
-  const [isClickableImage, setClickImage] = useState(false)
   const [productCategory, setProductCategory] = useState(false)
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
@@ -144,10 +143,8 @@ const FormEditProduct = () => {
     if (typeof file !== "undefined") {
       let imageBase64 = await convertToBase64(file)
       setProductImage(imageBase64)
-      setClickImage(true)
       setLoading(false)
     } else {
-      setClickImage(true)
       setLoading(false)
     }
   }

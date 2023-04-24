@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Login from "./components/Login";
 import Users from "./pages/Users";
@@ -7,19 +7,38 @@ import AddUser from "./pages/AddUser";
 import EditUser from "./pages/EditUser";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
+import Home from "./pages/Home";
 import "../src/asset/css/style.css"
+import './index.css';
 import { ToastContainer } from 'react-toastify';
 import Category from "./pages/Category";
 import AddCategory from "./pages/AddCategory";
 import EditCategory from "./pages/EditCategory";
 import SocketMessage from "./SocketMessage"
+import Header from "./pages/Header";
+import BannerComponent from "./pages/BannerComponent";
+import Footer from "./pages/Footer";
+import Menu from "./pages/Menu";
+import ShoppingCart from "./pages/ShoppingCart";
 
 function App() {
+  const Layout = () => {
+    return (
+      <div className="leela_customer">
+        <Header />
+        <BannerComponent />
+        <div className="leela_customer_body_content">
+          <Outlet />
+        </div>
+        <Footer />
+      </div>
+    )
+  }
   return (
     <div>
-      <BrowserRouter>
+      <ToastContainer />
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/add" element={<AddProduct />} />
@@ -40,10 +59,14 @@ function App() {
           <Route path="/admin/category" element={<Category />} />
           <Route path="/admin/category/add" element={<AddCategory />} />
           <Route path="/admin/category/edit/:id" element={<EditCategory />} />
+
+          {/* -------------------CUSTOMER----------------------------- */}
+          <Route path='/' element={<Layout />}>
+            <Route path='/' element={<Menu />} />
+            <Route path='/cart' element={<ShoppingCart />} />
+          </Route>
         </Routes>
         <SocketMessage />
-        <ToastContainer />
-      </BrowserRouter>
     </div>
   );
 }

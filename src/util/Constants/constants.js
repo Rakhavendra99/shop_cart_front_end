@@ -15,7 +15,7 @@ module.exports = {
     //Api Base url
     API_BASE_URL: API_BASE_URL,
     BASE_URL_SOCKET_IO: BASE_URL_SOCKET_IO,
-    SOCKET_IO_PATH : "/socket/shop_cart",
+    SOCKET_IO_PATH: "/socket/shop_cart",
     //category
     CATEGORY_LIST: '/category',
     ADD_CATEGORY: '/category',
@@ -24,9 +24,9 @@ module.exports = {
     DELETE_CATEGORY: '/category',
 
     //product
-    PRODUCT_CATEGORY_LIST:'/products/category',
+    PRODUCT_CATEGORY_LIST: '/products/category',
     PRODUCT_LIST: '/products',
-    ADD_PRODCUT : '/products',
+    ADD_PRODCUT: '/products',
     PRODUCT_DETAILS: '/products',
     UPDATE_PRODUCT: '/products',
     DELETE_PRODUCT: '/products',
@@ -34,4 +34,12 @@ module.exports = {
     //Dashboard
     VENDOR_DASHBOARD: '/vendor/dashboard',
     ADMIN_DASHBOARD: '/admin/dashboard',
+
+    //Customer_product
+    CUSTOMER_PRODUCT_LIST: "/customer/products",
+    CUSTOMER_PRODUCT_DETAILS: '/customer/products',
+    //Customer_cart
+    CART_DETAILS: '/cart',
+    CART_ADD: '/cart',
+    CART_DELETE: '/cart'
 }
