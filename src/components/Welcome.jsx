@@ -79,6 +79,14 @@ const Welcome = () => {
             &nbsp;
             <div className="box">
               <div className="right-side">
+                <div className="box-topic">Total Stores</div>
+                <div className="number">{adminDashboard?.storesCount}</div>
+              </div>
+            </div>
+            &nbsp;
+            &nbsp;
+            <div className="box">
+              <div className="right-side">
                 <div className="box-topic">Total Vendor</div>
                 <div className="number">{adminDashboard?.vendorCount}</div>
               </div>
