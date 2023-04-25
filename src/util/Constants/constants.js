@@ -31,12 +31,14 @@ module.exports = {
     UPDATE_PRODUCT: '/products',
     DELETE_PRODUCT: '/products',
 
-     //store
-     STORE_LIST: '/stores',
-     ADD_STORE: '/stores',
-     STORE_DETAILS: '/stores',
-     UPDATE_STORE: '/stores',
-     DELETE_STORE: '/stores',
+    //store
+    STORE_ADD_VENDOR_LIST: '/stores/add/vendor',
+    STORE_UPDATE_VENDOR_LIST: '/stores/update/vendor',
+    STORE_LIST: '/stores',
+    ADD_STORE: '/stores',
+    STORE_DETAILS: '/stores',
+    UPDATE_STORE: '/stores',
+    DELETE_STORE: '/stores',
 
     //Dashboard
     VENDOR_DASHBOARD: '/vendor/dashboard',

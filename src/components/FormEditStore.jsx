@@ -20,8 +20,10 @@ const FormEditStore = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [isLoading, setLoading] = useState(false)
-  const [error, setError] = useState({ errorName: null, errorEmail: null, errorStoreAddress: null, errorGSTIN: null, errorRegisterNumber: null, errorImage: null, errorDescription: null })
+  const [error, setError] = useState({ errorName: null, errorEmail: null, errorStoreAddress: null, errorGSTIN: null, errorRegisterNumber: null, errorImage: null, errorDescription: null, errorVendorId: null })
   const { id } = useParams();
+  const [vendors, setVendors] = useState(false)
+  const [vendorId, setVendorId] = useState(false)
 
   useEffect(() => {
     const getStoreById = async () => {
@@ -35,6 +37,7 @@ const FormEditStore = () => {
         setDescription(response?.data?.description)
         setStoreImage(response?.data?.image)
         setEmail(response?.data?.email)
+        setVendorId(response?.data?.vendorId)
         setLoading(false)
       } catch (error) {
         if (error.response) {
@@ -44,7 +47,14 @@ const FormEditStore = () => {
       }
     };
     getStoreById();
+    getVendorsList();
   }, [id]);
+  const getVendorsList = async () => {
+    setLoading(true)
+    const response = await axios.get(constants.API_BASE_URL + constants.STORE_UPDATE_VENDOR_LIST);
+    setVendors(response.data);
+    setLoading(false)
+  };
   const updateStore = async (e) => {
     setLoading(true)
     e.preventDefault();
@@ -73,6 +83,9 @@ const FormEditStore = () => {
       } else if (!onlyNumbersRegex.test(registerNumber)) {
         setLoading(false)
         setError({ errorGSTIN: "Accept only Number Fields." })
+      } else if (!vendorId) {
+        setLoading(false)
+        setError({ errorVendorId: "Please Select Vendor Name." })
       } else if (!image) {
         setLoading(false)
         setError({ errorImage: "Please Select the Store Image" })
@@ -88,6 +101,7 @@ const FormEditStore = () => {
           gstIn: GSTIN,
           registerNumber: registerNumber,
           description: description,
+          vendorId: vendorId,
           openTime: "09:00",
           closeTime: "20:00"
         }).then((res) => {
@@ -134,6 +148,10 @@ const FormEditStore = () => {
   const onChangeRegisterNumber = (e) => {
     setRegisterNumber(e.target.value)
     setError({ errorRegisterNumber: null })
+  }
+  const handleStoreVendorId = (e) => {
+    setVendorId(e.target.value)
+    setError({ errorVendorId: null })
   }
   const onChangeDescription = (e) => {
     setDescription(e.target.value)
@@ -241,6 +259,26 @@ const FormEditStore = () => {
                   />
                 </div>
                 <p style={{ color: "red" }}>{error.errorRegisterNumber}</p>
+              </div>
+              <div className="field">
+                <label className="label">Vendor Name</label>
+                <div className="control">
+                  <select className="custom-select pointer-hover" id="inputGroupSelect01"
+                    value={vendorId}
+                    onChange={(event) => { handleStoreVendorId(event) }}
+                    disabled={id ? true : false}
+                  >
+                    <option hidden>Select Vendor Name</option>
+                    {vendors && vendors?.map((vendor, index) => {
+                      return (
+                        <option key={index}
+                          value={vendor?.id}
+                        >#{vendor?.id} - {vendor?.name}</option>
+                      )
+                    })}
+                  </select>
+                </div>
+                <p style={{ color: "red" }}>{error.errorVendorId}</p>
               </div>
               <div className="field">
                 <label className="label">Store Image</label>
