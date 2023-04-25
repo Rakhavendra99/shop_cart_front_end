@@ -6,36 +6,35 @@ import Loader from "../util/Loader/Loader";
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import constants from "../util/Constants/constants";
-import { convertToBase64 } from "../util";
+import { convertToBase64, onlyNumbersRegex, validateEmail } from "../util";
 import PlaceHolderImage from '../asset/image/no_image.png'
 const FormEditStore = () => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [categoryId, setCategoryId] = useState("");
-  const [GST, setGST] = useState("");
-  const [availableQuantity, setAvailableQuantity] = useState("");
-  const [image, setProductImage] = useState("");
+  const [storeName, setStoreName] = useState("");
+  const [address, setAddress] = useState("");
+  const [GSTIN, setGSTIN] = useState("");
+  const [registerNumber, setRegisterNumber] = useState("");
+  const [image, setStoreImage] = useState("");
   const [description, setDescription] = useState("");
-  const [productCategory, setProductCategory] = useState(false)
+  const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
-  const { id } = useParams();
   const { user } = useSelector((state) => state.auth);
-  const [isLoading, setLoading] = useState(true)
-  const [error, setError] = useState({ errorCategory: null, errorName: null, errorPrice: null, errorGST: null, errorAvailableQuantity: null, errorImage: null, errorDescription: null })
+  const [isLoading, setLoading] = useState(false)
+  const [error, setError] = useState({ errorName: null, errorEmail: null, errorStoreAddress: null, errorGSTIN: null, errorRegisterNumber: null, errorImage: null, errorDescription: null })
+  const { id } = useParams();
 
   useEffect(() => {
-    const getProductById = async () => {
+    const getStoreById = async () => {
       setLoading(true)
       try {
-        const response = await axios.get(constants.API_BASE_URL + constants.PRODUCT_DETAILS + `/${id}`);
-        setName(response?.data?.name);
-        setPrice(response?.data?.price);
-        setAvailableQuantity(response?.data?.availableQuantity)
-        setCategoryId(response?.data?.categoryId)
+        const response = await axios.get(constants.API_BASE_URL + constants.STORE_DETAILS + `/${id}`);
+        setStoreName(response?.data?.name);
+        setAddress(response?.data?.address);
+        setGSTIN(response?.data?.gstIn)
+        setRegisterNumber(response?.data?.registerNumber)
         setDescription(response?.data?.description)
-        setProductImage(response?.data?.image)
-        setGST(response?.data?.gst)
+        setStoreImage(response?.data?.image)
+        setEmail(response?.data?.email)
         setLoading(false)
       } catch (error) {
         if (error.response) {
@@ -44,65 +43,70 @@ const FormEditStore = () => {
         }
       }
     };
-    getProductById();
-    getProductCategoryList()
+    getStoreById();
   }, [id]);
-  const getProductCategoryList = async () => {
-    setLoading(true)
-    const response = await axios.get(constants.API_BASE_URL + constants.PRODUCT_CATEGORY_LIST);
-    setProductCategory(response.data);
-    setLoading(false)
-  };
-  const updateProduct = async (e) => {
+  const updateStore = async (e) => {
     setLoading(true)
     e.preventDefault();
     try {
-      if (!categoryId) {
+      if (!storeName) {
         setLoading(false)
-        setError({ errorCategory: "Please Select Category" })
-      } else if (!name) {
+        setError({ errorName: "Please Enter the Store Name" })
+      } else if (!email) {
         setLoading(false)
-        setError({ errorName: "Please Enter the Product Name" })
-      } else if (!price) {
+        setError({ errorEmail: "Please Enter the Store email" })
+      } else if (!validateEmail(email)) {
         setLoading(false)
-        setError({ errorPrice: "Please Enter the Product Price" })
-      } else if (!GST) {
+        setError({ errorEmail: "Please Enter the Valid Email" })
+      } else if (!address) {
         setLoading(false)
-        setError({ errorGST: "Please Enter the GST" })
-      } else if (!availableQuantity) {
+        setError({ errorStoreAddress: "Please Enter the Store Address" })
+      } else if (!GSTIN) {
         setLoading(false)
-        setError({ errorAvailableQuantity: "Please Enter the available quantity" })
+        setError({ errorGSTIN: "Please Enter the GST IN Number" })
+      } else if (!onlyNumbersRegex.test(GSTIN)) {
+        setLoading(false)
+        setError({ errorGSTIN: "Accept only Number Fields." })
+      } else if (!registerNumber) {
+        setLoading(false)
+        setError({ errorRegisterNumber: "Please Enter the register number" })
+      } else if (!onlyNumbersRegex.test(registerNumber)) {
+        setLoading(false)
+        setError({ errorGSTIN: "Accept only Number Fields." })
       } else if (!image) {
         setLoading(false)
-        setError({ errorImage: "Please Select the product Image" })
+        setError({ errorImage: "Please Select the Store Image" })
       } else if (!description) {
         setLoading(false)
         setError({ errorDescription: "Please Enter description" })
       } else {
-        await axios.patch(constants.API_BASE_URL + constants.UPDATE_PRODUCT + `/${id}`, {
-          name: name,
-          price: price,
-          gst: GST,
+        await axios.patch(constants.API_BASE_URL + constants.UPDATE_STORE + `/${id}`, {
+          name: storeName,
+          address: address,
           image: image,
-          availableQuantity: availableQuantity,
+          email: email,
+          gstIn: GSTIN,
+          registerNumber: registerNumber,
           description: description,
-          categoryId: categoryId
+          openTime: "09:00",
+          closeTime: "20:00"
         }).then((res) => {
           setLoading(false)
+          if (user?.role === "admin") {
+            navigate("/admin/stores");
+          } else {
+            navigate("/stores");
+          }
           toast.success("Successfully Updated", {
             position: toast.POSITION.TOP_RIGHT,
           })
-          if (user?.role === "admin") {
-            navigate("/admin/products");
-          } else {
-            navigate("/products");
-          }
         }).catch((err) => {
           setLoading(false)
           toast.error(err?.response?.data?.msg, {
             position: toast.POSITION.TOP_RIGHT,
           })
         });
+
       }
     } catch (error) {
       if (error.response) {
@@ -111,46 +115,46 @@ const FormEditStore = () => {
       }
     }
   };
-  const handleProductCategoryChange = (e) => {
-    setCategoryId(e.target.value)
-    setError({ errorCategory: null })
-  }
-  const onChangeProductName = (e) => {
-    setName(e.target.value)
+  const onChangeStoreName = (e) => {
+    setStoreName(e.target.value)
     setError({ errorName: null })
   }
-  const onChangeProductPrice = (e) => {
-    setPrice(e.target.value)
-    setError({ errorPrice: null })
+  const onChangeStoreEmail = (e) => {
+    setEmail(e.target.value)
+    setError({ errorEmail: null })
   }
-  const onChangeGST = (e) => {
-    setGST(e.target.value)
-    setError({ errorGST: null })
+  const onChangeStoreAddress = (e) => {
+    setAddress(e.target.value)
+    setError({ errorStoreAddress: null })
   }
-  const onChangeAvailableQuantity = (e) => {
-    setAvailableQuantity(e.target.value)
-    setError({ errorAvailableQuantity: null })
+  const onChangeGSTIN = (e) => {
+    setGSTIN(e.target.value)
+    setError({ errorGSTIN: null })
+  }
+  const onChangeRegisterNumber = (e) => {
+    setRegisterNumber(e.target.value)
+    setError({ errorRegisterNumber: null })
   }
   const onChangeDescription = (e) => {
     setDescription(e.target.value)
     setError({ errorDescription: null })
   }
-  const uploadProductImage = async (e) => {
+  const uploadStoreImage = async (e) => {
     setLoading(true)
     setError({ errorImage: null })
     e.preventDefault();
     let file = e.target.files[0];
     if (typeof file !== "undefined") {
       let imageBase64 = await convertToBase64(file)
-      setProductImage(imageBase64)
+      setStoreImage(imageBase64)
       setLoading(false)
     } else {
       setLoading(false)
     }
   }
-  const removeCategoryImage = async (value) => {
+  const removeStoreImage = async (value) => {
     setLoading(true)
-    setProductImage("")
+    setStoreImage("")
     document.getElementById('exampleFormControlFile1').value = "";
     setLoading(false)
   }
@@ -159,109 +163,100 @@ const FormEditStore = () => {
   }
   return (
     <div>
-      <h1 className="title">Products</h1>
-      <h2 className="subtitle">Edit Product</h2>
+      <h1 className="title">Stores</h1>
+      <h2 className="subtitle">Edit Store</h2>
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
             {
               isLoading && (<Loader />)
             }
-            <form onSubmit={updateProduct}>
+            <form onSubmit={updateStore}>
               <p className="has-text-centered" style={{ color: "red" }}>{msg}</p>
               <div className="field">
-                <label className="label">Category</label>
-                <div className="control">
-                  <select className="custom-select pointer-hover" id="inputGroupSelect01"
-                    value={categoryId}
-                    onChange={(event) => { handleProductCategoryChange(event) }}
-                    disabled={id ? true : false}
-                  >
-                    <option hidden>Select Category</option>
-                    {productCategory && productCategory?.map((category, index) => {
-                      return (
-                        <option key={index}
-                          value={category?.id}
-                        >#{category?.id} - {category?.name}</option>
-                      )
-                    })}
-                  </select>
-                </div>
-                <p style={{ color: "red" }}>{error.errorCategory}</p>
-              </div>
-              <div className="field">
-                <label className="label">Name</label>
+                <label className="label">Store Name</label>
                 <div className="control">
                   <input
                     type="text"
                     className="input"
-                    value={name}
-                    onChange={(e) => onChangeProductName(e)}
-                    placeholder="Enter Product Name"
+                    value={storeName}
+                    onChange={(e) => onChangeStoreName(e)}
+                    placeholder="Enter Store Name"
                   />
                 </div>
                 <p style={{ color: "red" }}>{error.errorName}</p>
               </div>
               <div className="field">
-                <label className="label">Price</label>
+                <label className="label">Store Email</label>
                 <div className="control">
                   <input
                     type="text"
                     className="input"
-                    value={price}
-                    maxLength="7"
-                    pattern="[+-]?\d+(?:[.,]\d+)?"
-                    onChange={(e) => onChangeProductPrice(e)}
-                    placeholder="Enter Product Price"
+                    value={email}
+                    onChange={(e) => onChangeStoreEmail(e)}
+                    placeholder="Enter Store email"
                   />
                 </div>
-                <p style={{ color: "red" }}>{error.errorPrice}</p>
+                <p style={{ color: "red" }}>{error.errorEmail}</p>
               </div>
               <div className="field">
-                <label className="label">GST (%)</label>
+                <label className="label">Store Address</label>
                 <div className="control">
                   <input
                     type="text"
                     className="input"
-                    value={GST}
-                    maxLength='5'
-                    pattern="[+-]?\d+(?:[.,]\d+)?"
-                    onChange={(e) => onChangeGST(e)}
-                    placeholder="Enter Product GST"
+                    value={address}
+                    onChange={(e) => onChangeStoreAddress(e)}
+                    placeholder="Enter Store Address"
                   />
                 </div>
-                <p style={{ color: "red" }}>{error.errorGST}</p>
+                <p style={{ color: "red" }}>{error.errorStoreAddress}</p>
               </div>
               <div className="field">
-                <label className="label">Available Quantity</label>
+                <label className="label">GST IN Number</label>
                 <div className="control">
                   <input
-                    type="text"
+                    type="number"
                     className="input"
-                    value={availableQuantity}
-                    maxLength="7"
+                    value={GSTIN}
+                    maxLength='12'
                     pattern="[+-]?\d+(?:[.,]\d+)?"
-                    onChange={(e) => onChangeAvailableQuantity(e)}
-                    placeholder="Enter Available Quantity"
+                    onChange={(e) => onChangeGSTIN(e)}
+                    placeholder="Enter Store GST IN Number"
                   />
                 </div>
-                <p style={{ color: "red" }}>{error.errorAvailableQuantity}</p>
+                <p style={{ color: "red" }}>{error.errorGSTIN}</p>
               </div>
               <div className="field">
-                <label className="label">Product Image</label>
+                <label className="label">Register Number</label>
+                <div className="control">
+                  <input
+                    type="number"
+                    className="input"
+                    value={registerNumber}
+                    maxLength="12"
+                    pattern="[+-]?\d+(?:[.,]\d+)?"
+                    onChange={(e) => onChangeRegisterNumber(e)}
+                    placeholder="Enter Store Register Number"
+                  />
+                </div>
+                <p style={{ color: "red" }}>{error.errorRegisterNumber}</p>
+              </div>
+              <div className="field">
+                <label className="label">Store Image</label>
                 <div className="img-wraps">
-                  <img style={{ width: '48px', height: '48px', marginBottom: '4px' }} alt="Product" src={image ? image : (PlaceHolderImage)} />
+                  <img style={{ width: '48px', height: '48px', marginBottom: '4px' }} alt="Store" src={image ? image : (PlaceHolderImage)} />
                   {image &&
                     <span className="closes" title="Delete"
-                      onClick={() => removeCategoryImage()}
+                      onClick={() => removeStoreImage()}
                     >×</span>
                   }
                 </div>
                 <input
                   type="file"
                   className="form-control-file"
-                  onChange={(e) => uploadProductImage(e)}
-                  placeholder="Select Product"
+                  onChange={(e) => uploadStoreImage(e)}
+                  placeholder="Select Store image"
                   accept="image/*"
                   id="exampleFormControlFile1"
                 />
@@ -280,7 +275,6 @@ const FormEditStore = () => {
                 </div>
                 <p style={{ color: "red" }}>{error.errorDescription}</p>
               </div>
-
               <div className="row">
                 <div className="col-sm-1">
                   <div className="flex-end">
@@ -295,7 +289,7 @@ const FormEditStore = () => {
                   <div className="field">
                     <div className="control">
                       <button type="submit" className="button is-success">
-                        Update
+                        Save
                       </button>
                     </div>
                   </div>

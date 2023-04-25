@@ -24,7 +24,7 @@ const StoreList = () => {
   };
 
   const deleteStore = async (storeId) => {
-    await axios.delete(constants.API_BASE_URL + constants.DELETE_PRODUCT + `/${storeId}`).then((res) => {
+    await axios.delete(constants.API_BASE_URL + constants.DELETE_STORE + `/${storeId}`).then((res) => {
       setLoading(false)
       toast.success("Successfully Deleted", {
         position: toast.POSITION.TOP_RIGHT,
@@ -42,7 +42,7 @@ const StoreList = () => {
   }
   const updateActive = async (e, obj) => {
     setLoading(true)
-    await axios.patch(constants.API_BASE_URL + constants.UPDATE_PRODUCT + `/${obj?.id}`, {
+    await axios.patch(constants.API_BASE_URL + constants.UPDATE_STORE + `/${obj?.id}`, {
       id: obj.id,
       isActive: e
     }).then((res) => {
