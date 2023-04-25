@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import logo from '../asset/image/leela_logo.png'
+import logo from '../asset/image/shop_cart.png'
 import cartIcon from '../asset/image/cart_icon.svg'
 import { useSelector } from 'react-redux'
 // import { getCartDetails } from "../../redux/reducer/CartReducer"
