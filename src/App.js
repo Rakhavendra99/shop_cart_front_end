@@ -20,6 +20,9 @@ import BannerComponent from "./pages/BannerComponent";
 import Footer from "./pages/Footer";
 import Menu from "./pages/Menu";
 import ShoppingCart from "./pages/ShoppingCart";
+import Stores from "./pages/Stores";
+import AddStore from "./pages/AddStore";
+import EditStore from "./pages/EditStore";
 
 function App() {
   const Layout = () => {
@@ -53,6 +56,9 @@ function App() {
           <Route path="/admin/products" element={<Products />} />
           <Route path="/admin/products/add" element={<AddProduct />} />
           <Route path="/admin/products/edit/:id" element={<EditProduct />} />
+          <Route path="/admin/stores" element={<Stores />} />
+          <Route path="/admin/stores/add" element={<AddStore />} />
+          <Route path="/admin/stores/edit/:id" element={<EditStore />} />
           <Route path="/admin/users" element={<Users />} />
           <Route path="/admin/users/add" element={<AddUser />} />
           <Route path="/admin/users/edit/:id" element={<EditUser />} />

@@ -70,6 +70,11 @@ const Sidebar = () => {
                 <IoPricetag /> Products
               </NavLink>
             </li>
+            <li>
+              <NavLink to={"/admin/stores"}>
+                <IoPricetag /> Stores
+              </NavLink>
+            </li>
           </ul>
           <div>
             <p className="menu-label">Admin</p>

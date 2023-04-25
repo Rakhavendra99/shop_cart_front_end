@@ -114,7 +114,7 @@ const FormEditCategory = () => {
               isLoading && (<Loader />)
             }
             <form onSubmit={updateProduct}>
-              <p className="has-text-centered">{msg}</p>
+              <p className="has-text-centered" style={{ color: "red" }}>{msg}</p>
               <div className="field">
                 <label className="label">Name</label>
                 <div className="control">

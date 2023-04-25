@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Loader from "../util/Loader/Loader"
+import Loader from "../util/Loader/Loader";
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import constants from "../util/Constants/constants";
 import { convertToBase64 } from "../util";
 import PlaceHolderImage from '../asset/image/no_image.png'
-const FormAddProduct = () => {
+const FormEditStore = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [categoryId, setCategoryId] = useState("");
@@ -16,23 +16,44 @@ const FormAddProduct = () => {
   const [availableQuantity, setAvailableQuantity] = useState("");
   const [image, setProductImage] = useState("");
   const [description, setDescription] = useState("");
-  const [isClickableImage, setClickImage] = useState(false)
   const [productCategory, setProductCategory] = useState(false)
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
+  const { id } = useParams();
   const { user } = useSelector((state) => state.auth);
-  const [isLoading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(true)
   const [error, setError] = useState({ errorCategory: null, errorName: null, errorPrice: null, errorGST: null, errorAvailableQuantity: null, errorImage: null, errorDescription: null })
+
   useEffect(() => {
-    getProductCategoryList();
-  }, []);
+    const getProductById = async () => {
+      setLoading(true)
+      try {
+        const response = await axios.get(constants.API_BASE_URL + constants.PRODUCT_DETAILS + `/${id}`);
+        setName(response?.data?.name);
+        setPrice(response?.data?.price);
+        setAvailableQuantity(response?.data?.availableQuantity)
+        setCategoryId(response?.data?.categoryId)
+        setDescription(response?.data?.description)
+        setProductImage(response?.data?.image)
+        setGST(response?.data?.gst)
+        setLoading(false)
+      } catch (error) {
+        if (error.response) {
+          setLoading(false)
+          setMsg(error.response.data.msg);
+        }
+      }
+    };
+    getProductById();
+    getProductCategoryList()
+  }, [id]);
   const getProductCategoryList = async () => {
     setLoading(true)
     const response = await axios.get(constants.API_BASE_URL + constants.PRODUCT_CATEGORY_LIST);
     setProductCategory(response.data);
     setLoading(false)
   };
-  const saveProduct = async (e) => {
+  const updateProduct = async (e) => {
     setLoading(true)
     e.preventDefault();
     try {
@@ -51,38 +72,37 @@ const FormAddProduct = () => {
       } else if (!availableQuantity) {
         setLoading(false)
         setError({ errorAvailableQuantity: "Please Enter the available quantity" })
-      }else if (!image) {
+      } else if (!image) {
         setLoading(false)
-        setError({ errorImage: "Please Select the Product Image" })
+        setError({ errorImage: "Please Select the product Image" })
       } else if (!description) {
         setLoading(false)
         setError({ errorDescription: "Please Enter description" })
       } else {
-        await axios.post(constants.API_BASE_URL + constants.ADD_PRODCUT, {
+        await axios.patch(constants.API_BASE_URL + constants.UPDATE_PRODUCT + `/${id}`, {
           name: name,
           price: price,
-          gst :GST,
+          gst: GST,
           image: image,
           availableQuantity: availableQuantity,
           description: description,
           categoryId: categoryId
         }).then((res) => {
           setLoading(false)
+          toast.success("Successfully Updated", {
+            position: toast.POSITION.TOP_RIGHT,
+          })
           if (user?.role === "admin") {
             navigate("/admin/products");
           } else {
             navigate("/products");
           }
-          toast.success("Successfully Added", {
-            position: toast.POSITION.TOP_RIGHT,
-          })
         }).catch((err) => {
           setLoading(false)
           toast.error(err?.response?.data?.msg, {
             position: toast.POSITION.TOP_RIGHT,
           })
         });
-
       }
     } catch (error) {
       if (error.response) {
@@ -123,10 +143,8 @@ const FormAddProduct = () => {
     if (typeof file !== "undefined") {
       let imageBase64 = await convertToBase64(file)
       setProductImage(imageBase64)
-      setClickImage(true)
       setLoading(false)
     } else {
-      setClickImage(true)
       setLoading(false)
     }
   }
@@ -142,14 +160,14 @@ const FormAddProduct = () => {
   return (
     <div>
       <h1 className="title">Products</h1>
-      <h2 className="subtitle">Add New Product</h2>
+      <h2 className="subtitle">Edit Product</h2>
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
             {
               isLoading && (<Loader />)
             }
-            <form onSubmit={saveProduct}>
+            <form onSubmit={updateProduct}>
               <p className="has-text-centered" style={{ color: "red" }}>{msg}</p>
               <div className="field">
                 <label className="label">Category</label>
@@ -157,6 +175,7 @@ const FormAddProduct = () => {
                   <select className="custom-select pointer-hover" id="inputGroupSelect01"
                     value={categoryId}
                     onChange={(event) => { handleProductCategoryChange(event) }}
+                    disabled={id ? true : false}
                   >
                     <option hidden>Select Category</option>
                     {productCategory && productCategory?.map((category, index) => {
@@ -261,6 +280,7 @@ const FormAddProduct = () => {
                 </div>
                 <p style={{ color: "red" }}>{error.errorDescription}</p>
               </div>
+
               <div className="row">
                 <div className="col-sm-1">
                   <div className="flex-end">
@@ -275,7 +295,7 @@ const FormAddProduct = () => {
                   <div className="field">
                     <div className="control">
                       <button type="submit" className="button is-success">
-                        Save
+                        Update
                       </button>
                     </div>
                   </div>
@@ -289,4 +309,4 @@ const FormAddProduct = () => {
   );
 };
 
-export default FormAddProduct;
+export default FormEditStore;
