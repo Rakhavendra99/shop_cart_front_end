@@ -4,15 +4,21 @@ import Loader from "../util/Loader/Loader"
 import constants from "../util/Constants/constants"
 import axios from "axios"
 import ProductPopup from "./ProductPopup"
+import { toast } from "react-toastify"
+import { useSelector } from "react-redux"
 
 const Menu = () => {
     const [isLoading, setLoading] = useState(false)
     const [products, setProducts] = useState([]);
     const [showProduct, setshowProduct] = useState(false)
+    const [carts, setCarts] = useState(false)
     const [popupDetails, setPopupDetails] = useState({})
-
+    const cartId = localStorage.getItem("cartId");
     useEffect(() => {
         getCustomerProducts()
+        if (cartId !== "null") {
+            getCartDetails(cartId)
+        }
     }, [])
     const getCustomerProducts = async () => {
         setLoading(true)
@@ -20,11 +26,88 @@ const Menu = () => {
         setProducts(response.data);
         setLoading(false)
     };
+    const getCartDetails = async (cartId) => {
+        setLoading(true)
+        const response = await axios.get(constants.API_BASE_URL + constants.CART_DETAILS + `/${cartId}`);
+        setCarts(response.data);
+        setLoading(false)
+    };
     const showProductDetails = (obj, data) => {
         let popupValue = { ...obj, data }
-        console.log("popupValue", popupValue);
         setPopupDetails(popupValue)
         setshowProduct(true)
+    }
+    const addCart = async (productdata) => {
+        let params = {
+            productId: productdata?.id,
+            quantity: 1,
+            storeId: productdata?.storeId
+        }
+        if (cartId) {
+            params.cartId = cartId
+        }
+        await axios.post(constants.API_BASE_URL + constants.CART_ADD, params).then((res) => {
+            if (res?.data?.msg?.cart?.id) {
+                localStorage.setItem("cartId", res?.data?.msg?.cart?.id);
+                setLoading(false)
+                toast.success("Successfully Added", {
+                    position: toast.POSITION.TOP_RIGHT,
+                })
+                getCartDetails(res?.data?.msg?.cart?.id)
+            }
+        }).catch((err) => {
+            setLoading(false)
+            toast.error(err?.response?.data?.msg, {
+                position: toast.POSITION.TOP_RIGHT,
+            })
+        });
+    }
+    const addProduct = async (params) => {
+        setLoading(true)
+        await axios.post(constants.API_BASE_URL + constants.CART_ADD, params).then((res) => {
+            if (res?.data?.msg?.cart?.id) {
+                if (params?.quantity === 0) {
+                    localStorage.setItem("cartId", null);
+                } else {
+                    localStorage.setItem("cartId", res?.data?.msg?.cart?.id);
+                }
+                setLoading(false)
+                toast.success("Successfully Added", {
+                    position: toast.POSITION.TOP_RIGHT,
+                })
+                getCartDetails(res?.data?.msg?.cart?.id)
+            }
+        }).catch((err) => {
+            setLoading(false)
+            toast.error(err?.response?.data?.msg, {
+                position: toast.POSITION.TOP_RIGHT,
+            })
+        });
+    }
+    const quantityIncreament = (obj, cartDetails) => {
+        console.log("obj, cartDetails",obj, cartDetails);
+        const { CartItems = [] } = cartDetails?.msg
+        let getCart = CartItems && CartItems.find((o) => o?.productId === obj?.id);
+        let params = {
+            productId: obj?.id,
+            quantity: getCart?.quantity + 1,
+            cartId: getCart?.cartId,
+            storeId: obj?.storeId
+        };
+        addProduct(params);
+    }
+
+    const quantityDecrement = (obj, cartDetails) => {
+        const { CartItems = [] } = cartDetails?.msg
+        let getCart = CartItems && CartItems.find((o) => o?.productId === obj?.id);
+
+        let params = {
+            productId: obj?.id,
+            quantity: getCart?.quantity - 1,
+            cartId: getCart?.cartId,
+            storeId: obj?.storeId
+        };
+        addProduct(params);
     }
     return (
         <>
@@ -39,6 +122,7 @@ const Menu = () => {
             <div className="row products_section px-lg-0 px-3">
                 {
                     products?.length > 0 ? products?.map((obj, index) => {
+                        let getCart = carts?.msg?.CartItems?.find((o) => o.productId === obj?.id);
                         return <React.Fragment key={index}>
                             <div className="col-xl-3 col-lg-4 col-md-6 col-12 mt-lg-5 mt-3 px-3">
                                 <div className="card product_card">
@@ -62,16 +146,18 @@ const Menu = () => {
                                         <p className="product_description menuProductDescription mt-1">{obj?.description}</p>
                                     </div>
                                     <div className="card-footer menu_cart_footer mb-2">
-
                                         <>
-                                            {/* <button className="add_btn mt-2">
-                                                <div className="fs-12 d-flex justify-content-around">
-                                                    <p onClick={() => ""}>-</p>
-                                                    <p className="fs-13 f-med">33</p>
-                                                    <p onClick={() => ""}>+</p>
-                                                </div>
-                                            </button> : */}
-                                            <button className="add_btn mt-2 p-0" onClick={() => ""}><span className="fs-12" >Add</span></button>
+                                            {getCart?.quantity > 0 ?
+                                                <button className="add_btn mt-2">
+                                                    <div className="fs-12 d-flex justify-content-around">
+                                                        <p><i className="bi bi-dash fs-14" onClick={() => quantityDecrement(obj, carts)}></i></p>
+                                                        <p className="fs-13 f-med">{getCart?.quantity}</p>
+                                                        <p><i className="bi bi-plus fs-14" onClick={() => quantityIncreament(obj, carts)}></i></p>
+                                                    </div>
+                                                </button>
+                                                :
+                                                <button className="add_btn mt-2 p-0" onClick={() => addCart(obj)}><span className="fs-12" >Add</span></button>
+                                            }
                                         </>
                                     </div>
                                 </div>

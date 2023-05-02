@@ -1,15 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import logo from '../asset/image/shop_cart.png'
 import cartIcon from '../asset/image/cart_icon.svg'
 import { useSelector } from 'react-redux'
+import constants from '../util/Constants/constants'
+import axios from 'axios'
 // import { getCartDetails } from "../../redux/reducer/CartReducer"
+const cartId = localStorage.getItem("cartId");
 
 const Header = () => {
     const location = useLocation()
-    // const cartDetails = useSelector({getCartDetails})
-
+    const [carts, setCarts] = useState(false)
+    useEffect(() => {
+        if (cartId !== "null") {
+            getCartDetails(cartId)
+        }
+    }, [])
+    const getCartDetails = async (cartId) => {
+        const response = await axios.get(constants.API_BASE_URL + constants.CART_DETAILS + `/${cartId}`);
+        setCarts(response.data);
+    };
     return (
         <div className="leela_customer_header">
             <nav className="navbar navbar-expand-lg navbar-light">
@@ -25,7 +36,7 @@ const Header = () => {
                             </div> */}
                             <div className="cart_header_part">
                                 <Link to={'/cart'} > <img src={cartIcon} className="img-fluid header_icons" alt='' />
-                                {/* {cartDetails?.CartItems?.length > 0 ? <p className="cart_item_count f-sbold">{cartDetails?.totalItems}</p> : ''} */}
+                                {/* {carts?.msg?.CartItems?.length > 0 ? <p className="cart_item_count f-sbold">{carts?.msg?.totalItems}</p> : ''} */}
                                 </Link>
                             </div>
                         </div>

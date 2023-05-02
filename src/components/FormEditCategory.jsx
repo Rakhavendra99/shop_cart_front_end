@@ -42,7 +42,6 @@ const FormEditCategory = () => {
     setLoading(true)
     e.preventDefault();
     try {
-      console.log("im", image);
       if (!name) {
         setLoading(false)
         setError({ errorName: "Please Enter the Category Name" })

@@ -32,7 +32,6 @@ const FormAddCategory = () => {
           name: name,
           image: image,
         }).then((res) => {
-          console.log("res", res)
           setLoading(false)
           if (user?.role === "admin") {
             navigate("/admin/category");
