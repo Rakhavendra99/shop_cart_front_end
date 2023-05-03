@@ -29,6 +29,9 @@ const Menu = () => {
     const getCartDetails = async (cartId) => {
         setLoading(true)
         const response = await axios.get(constants.API_BASE_URL + constants.CART_DETAILS + `/${cartId}`);
+        if (response?.data?.msg?.CartItems?.length == 0) {
+            localStorage.setItem("cartId", null);
+        }
         setCarts(response.data);
         setLoading(false)
     };

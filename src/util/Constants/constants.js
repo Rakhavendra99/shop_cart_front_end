@@ -50,5 +50,7 @@ module.exports = {
     //Customer_cart
     CART_DETAILS: '/cart',
     CART_ADD: '/cart',
-    CART_DELETE: '/cart'
+    CART_DELETE: '/cart',
+
+    PLACE_ORDER :'/customer/order'
 }

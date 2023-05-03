@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { ContactValidation, isValidEmail, validatemaxLength, validateminLength, validateMobileNumnber } from "../util/Validations";
 import Loader from "../util/Loader/Loader";
+import constants from "../util/Constants/constants";
+import axios from "axios";
 
 export const CartPopup = ({ setShowCartPopup, cartId }) => {
     const [formDetails, setFormDetails] = useState({});
@@ -22,44 +24,48 @@ export const CartPopup = ({ setShowCartPopup, cartId }) => {
     const handlechange = (e) => {
         setFormDetails({ ...formDetails, [e.target.name]: e.target.value })
     }
-    const proceedPayment = () => {
+    const proceedPayment = async () => {
+        setLoading(true)
         if (!formDetails?.name) {
+            setLoading(false)
             setErrors({ ...errors, name: "Please enter the name" })
         } else if (!formDetails?.email || !isValidEmail(formDetails?.email)) {
+            setLoading(false)
             setErrors({ ...errors, email: "Please enter the email" })
         } else if (!formDetails?.phone || !validateMobileNumnber(formDetails?.phone)) {
+            setLoading(false)
             setErrors({ ...errors, phone: "Please enter the valid phone number" })
         } else if (!formDetails?.address || (!validateminLength(formDetails?.address) || validatemaxLength(formDetails?.address))) {
+            setLoading(false)
             setErrors({ ...errors, address: "Please enter the address" })
         } else {
-            const callBack = (response) => {
-                setLoading(false)
-                if (response?.response_code !== 0) {
-                    toast.error(response?.response_message)
-
-                } else {
-                    setShowCartPopup(false)
-                    setLoading(false)
-                    const checkoutUrl = response?.response;
-                    const newTab = window.open(checkoutUrl, '_blank');
-
-                    window.addEventListener('message', function (event) {
-                        if (event.data.type === 'payment_complete') {
-                            newTab.close();
-                        }
-                    });
-                }
-            }
+            setLoading(false)
             let params = {
                 cartId: cartId,
                 name: formDetails?.name,
-                orderType: 2,
+                orderType: 1,
                 phone: formDetails?.phone,
                 email: formDetails?.email,
                 storeId: 1,
-                address: formDetails?.address
+                address: formDetails?.address,
             }
-            setLoading(true)
+            await axios.post(constants.API_BASE_URL + constants.PLACE_ORDER, params).then((res) => {
+                if (res?.data?.msg?.id) {
+                    if (res?.data?.msg?.id) {
+                        localStorage.setItem("cartId", null);
+                    }
+                    setLoading(false)
+                    toast.success("Successfully Placed", {
+                        position: toast.POSITION.TOP_RIGHT,
+                    })
+                    setShowCartPopup(false)
+                }
+            }).catch((err) => {
+                setLoading(false)
+                toast.error(err?.response?.data?.msg, {
+                    position: toast.POSITION.TOP_RIGHT,
+                })
+            });
         }
     }
     return (

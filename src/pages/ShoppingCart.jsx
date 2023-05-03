@@ -35,6 +35,9 @@ const ShoppingCart = () => {
     const getCartDetails = async (id) => {
         setLoading(true)
         const response = await axios.get(constants.API_BASE_URL + constants.CART_DETAILS + `/${id}`);
+        if (response?.data?.msg?.CartItems?.length == 0) {
+            localStorage.setItem("cartId", null);
+        }
         setCartDetails(response.data);
         setLoading(false)
     };
