@@ -65,7 +65,7 @@ const ProductList = () => {
       }
       <h1 className="title">Products</h1>
       <h2 className="subtitle">List of Products</h2>
-      <Link to={user?.role === "admin" ? "/admin/products/add" : "/products/add"} className="button is-primary mb-2">
+      <Link to={user?.role === "admin" ? "/admin/products/add" : "/products/add"} className="button is-dark mb-2">
         Add New
       </Link>
       <table className="table is-striped is-fullwidth">

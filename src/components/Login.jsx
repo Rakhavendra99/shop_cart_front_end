@@ -66,7 +66,7 @@ const Login = () => {
                 <div className="field mt-5">
                   <button
                     type="submit"
-                    className="button is-success is-fullwidth"
+                    className="button is-dark is-fullwidth"
                   >
                     {isLoading ? "Loading..." : "Login"}
                   </button>

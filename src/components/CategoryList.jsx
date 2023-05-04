@@ -65,7 +65,7 @@ const CategoryList = () => {
       }
       <h1 className="title">Categorys</h1>
       <h2 className="subtitle">List of Categorys</h2>
-      <Link to={user?.role === "admin" ? "/admin/category/add" : "/category/add"} className="button is-primary mb-2">
+      <Link to={user?.role === "admin" ? "/admin/category/add" : "/category/add"} className="button is-dark mb-2">
         Add New
       </Link>
       <table className="table is-striped is-fullwidth">

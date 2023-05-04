@@ -23,6 +23,8 @@ import ShoppingCart from "./pages/ShoppingCart";
 import Stores from "./pages/Stores";
 import AddStore from "./pages/AddStore";
 import EditStore from "./pages/EditStore";
+import Orders from "./pages/Orders";
+import ViewOrder from "./pages/ViewOrders";
 
 function App() {
   const Layout = () => {
@@ -49,6 +51,8 @@ function App() {
           <Route path="/category" element={<Category />} />
           <Route path="/category/add" element={<AddCategory />} />
           <Route path="/category/edit/:id" element={<EditCategory />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/view/:id" element={<ViewOrder />} />
 
           {/* -------------------ADMIN--------------------------------- */}
           <Route path="/admin" element={<Login />} />

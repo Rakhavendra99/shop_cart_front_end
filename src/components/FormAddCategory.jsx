@@ -148,7 +148,7 @@ const FormAddCategory = () => {
                 <div className="col-sm-2">
                   <div className="field">
                     <div className="control">
-                      <button type="submit" className="button is-success">
+                      <button type="submit" className="button is-dark">
                         Save
                       </button>
                     </div>

@@ -31,6 +31,10 @@ module.exports = {
     UPDATE_PRODUCT: '/products',
     DELETE_PRODUCT: '/products',
 
+    //Order
+    ORDER_LIST: '/order',
+    ORDER_DETAILS: '/order',
+
     //store
     STORE_ADD_VENDOR_LIST: '/stores/add/vendor',
     STORE_UPDATE_VENDOR_LIST: '/stores/update/vendor',

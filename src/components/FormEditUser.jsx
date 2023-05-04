@@ -187,7 +187,7 @@ const FormEditUser = () => {
               </div>
               <div className="field">
                 <div className="control">
-                  <button type="submit" className="button is-success">
+                  <button type="submit" className="button is-dark">
                     Update
                   </button>
                 </div>

@@ -5,6 +5,10 @@
     --daywise-order-bg: #EFECEC;
     --seconday-text-color: #979393;
     --cart-right-bg: #EEEEEE;
+    --pending-status-color: #E88A0E;
+    --accepted-status-color: #17AA34;
+    --reject-status-color: #DF2727;
+    --order-received-color: #0E90E8;
 }
 
 @font-face {
@@ -27,6 +31,27 @@
     src: url("../font/Poppins-Bold.ttf");
 }
 
+.status_text {
+    margin-bottom: 0;
+    padding: 5px 8px;
+    border-radius: 10px;
+    font-family: Poppins-semibold;
+}
+
+.pending_status {
+    color: var(--pending-status-color);
+    border: 1px solid var(--pending-status-color);
+}
+
+.accepted_status {
+    color: var(--accepted-status-color);
+    border: 1px solid var(--accepted-status-color);
+}
+
+.rejected_status {
+    color: var(--reject-status-color);
+    border: 1px solid var(--reject-status-color);
+}
 body {
     margin: 0;
     padding: 0;
@@ -1777,7 +1802,7 @@ input[type=number] {
 .loader {
 	position: fixed;
 	z-index: 999999;
-	background: rgba(255, 255, 255, 0.58);
+	background: var(--seconday-text-color);
 	width: 100%;
 	height: 100%;
 }
@@ -1804,10 +1829,10 @@ input[type=number] {
 	top: -10px;
 	right: -10px;
 	z-index: 100;
-	background-color: #FFF;
+	background-color: var(--secondary-color);
 	padding: 4px 3px;
 
-	color: #000;
+	color: var(--primary-color);
 	font-weight: bold;
 	cursor: pointer;
 
@@ -2069,3 +2094,215 @@ input[type=number] {
 		margin: 0;
 	}
 }
+/* popup content start  */
+
+.popup_content {
+    width: 90%;
+    height: 100%;
+    margin: auto;
+}
+
+.upload_image {
+    display: flex;
+    justify-content: center;
+}
+
+.Upload_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 27px 80px;
+    border: 1.5px dashed #a3a0a0;
+}
+
+.upload_icon {
+    font-size: 25px;
+}
+
+.text_align {
+    cursor: pointer;
+    text-align: center;
+}
+
+.popup_body {
+    position: relative;
+}
+
+
+.button_close {
+    width: 0.4em !important;
+    height: 0.4em !important;
+    opacity: 1 !important;
+}
+
+.view_btn {
+    background-color: transparent;
+    border: none;
+}
+
+.popup_table {
+    margin: 0;
+}
+
+.popup_left {
+    margin-top: 22px;
+}
+
+.popup_left_card {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    padding: 10px 20px;
+    border-radius: 0;
+    border: none;
+}
+
+.popup_left_card .heading {
+    font-size: calc(1vh + 7px);
+    font-family: Poppins-regular;
+    margin: 0;
+    padding: 8px 0;
+}
+
+.popup_right {
+    margin-top: 22px;
+}
+
+.popup_right .card-body {
+    padding: 0;
+}
+
+.popup_right .card {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border: none;
+}
+
+.popup_right .card-footer {
+    display: flex;
+    justify-content: end;
+    background-color: transparent;
+}
+
+.popup_footer_text {
+    font-size: calc(1vh + 8px);
+    margin: 0;
+    padding: 8px;
+}
+
+.popup_footer_subtext {
+    font-size: calc(1vh + 8px);
+    font-family: poppins-semibold;
+    margin: 0;
+    padding: 8px 3px;
+}
+
+.refund_popup_card .card-footer {
+    background-color: transparent;
+    padding: 10px 0;
+}
+
+.refund_popup_card .card-footer p {
+    font-weight: bolder;
+}
+
+.refund_popup_card .refund_btn {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.popup_main {
+    display: block;
+    /* margin: 3vh auto; */
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+.popup_dialog{
+    margin: 3vh auto;
+}
+
+.popup_product_img{
+    width: 30vw;
+    height: 27vh;
+    object-fit: contain;
+}
+
+.popup_product_card{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border: none !important;
+}
+
+.decline_textarea{
+    height: 14vh !important;
+}
+
+.reason_popup{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reason_popup_dialog{
+    width: 40vw !important;
+}
+
+/* popup content end */
+
+/* common btn start */
+
+.common_btn {
+    background-color: var(--common-btn-bg);
+    padding: 10px 21px;
+    border: 1px solid var(--common-btn-bg);
+    border-radius: 3px;
+}
+
+/* .common_btn:hover {
+    border: 1px solid var(--common-btn-bg);
+} */
+
+.common_active_btn {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
+}
+
+/* .common_active_btn:hover {
+    border: 1px solid var(--secondary-color);
+} */
+
+.decline_btn,
+.accept_btn {
+    background-color: var(--reject-status-color);
+    color: var(--primary-color);
+    font-family: 'poppins-semibold';
+    border: none;
+    padding: 10px 20px;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.decline_icon,
+.accept_icon {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    align-self: center;
+}
+
+.accept_btn {
+    background-color: var(--accepted-status-color);
+}
+
+.acceptanddeclin_btn {
+    display: flex;
+    gap: 40px;
+}
+
+/* common btn end */

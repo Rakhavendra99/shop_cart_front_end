@@ -5,7 +5,6 @@ import { useSelector } from "react-redux"
 // import image from '../asset/img/imagePlaceholder.png'
 // import { CartPopup } from "../components/HOC/CartPopup"
 import { startSocketConnect } from "../socket"
-import moment from "moment"
 // import DeleteCartPopup from "../components/DeleteCartPopup"
 import { toast } from "react-toastify"
 import Loader from "../util/Loader/Loader"
