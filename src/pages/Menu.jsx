@@ -88,7 +88,6 @@ const Menu = () => {
         });
     }
     const quantityIncreament = (obj, cartDetails) => {
-        console.log("obj, cartDetails",obj, cartDetails);
         const { CartItems = [] } = cartDetails?.msg
         let getCart = CartItems && CartItems.find((o) => o?.productId === obj?.id);
         let params = {

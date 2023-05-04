@@ -102,12 +102,12 @@ const StoreList = () => {
                   <span className="switch-label" data-on="On" data-off="Off"></span>
                   <span className="switch-handle"></span>
                 </label>
-                <button
+                {/* <button
                   onClick={() => deleteStore(store.id)}
                   className="button is-small is-danger"
                 >
                   Delete
-                </button>
+                </button> */}
               </td>
             </tr>
           ))}

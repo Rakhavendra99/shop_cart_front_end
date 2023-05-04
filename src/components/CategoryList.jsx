@@ -102,12 +102,12 @@ const CategoryList = () => {
                   <span className="switch-label" data-on="On" data-off="Off"></span>
                   <span className="switch-handle"></span>
                 </label>
-                <button
+                {/* <button
                   onClick={() => deleteCategory(category.id)}
                   className="button is-small is-danger"
                 >
                   Delete
-                </button>
+                </button> */}
               </td>
             </tr>
           ))}

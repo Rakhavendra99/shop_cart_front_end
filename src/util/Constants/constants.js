@@ -34,6 +34,7 @@ module.exports = {
     //Order
     ORDER_LIST: '/order',
     ORDER_DETAILS: '/order',
+    UPDATE_ORDER: '/order',
 
     //store
     STORE_ADD_VENDOR_LIST: '/stores/add/vendor',
@@ -43,6 +44,12 @@ module.exports = {
     STORE_DETAILS: '/stores',
     UPDATE_STORE: '/stores',
     DELETE_STORE: '/stores',
+
+    //user
+    LIST_USER: '/users',
+    ADD_USER: "/users",
+    UPDATE_USER: "/users",
+    DELETE_USER: '/users',
 
     //Dashboard
     VENDOR_DASHBOARD: '/vendor/dashboard',

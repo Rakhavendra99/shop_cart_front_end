@@ -43,7 +43,7 @@ function App() {
     <div>
       <ToastContainer />
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/vendor" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/add" element={<AddProduct />} />

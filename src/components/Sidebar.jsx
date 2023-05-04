@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { IoPerson, IoPricetag, IoHome, IoLogOut } from "react-icons/io5";
+import { IoPerson, IoPricetag, IoHome, IoLogOut, IoAppsSharp, IoBarChart, IoGitMerge, IoServerSharp, IoReader, IoBagAdd } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../features/authSlice";
 import { stopSocketConnect } from '../socket'
@@ -32,22 +32,22 @@ const Sidebar = () => {
           <ul className="menu-list">
             <li>
               <NavLink to={"/dashboard"}>
-                <IoHome /> Dashboard
+                <IoBarChart /> Dashboard
               </NavLink>
             </li>
             <li>
               <NavLink to={"/category"}>
-                <IoPricetag /> Category
+                <IoGitMerge /> Category
               </NavLink>
             </li>
             <li>
               <NavLink to={"/products"}>
-                <IoPricetag /> Products
+                <IoReader /> Products
               </NavLink>
             </li>
             <li>
               <NavLink to={"/orders"}>
-                <IoPricetag /> Orders
+                <IoServerSharp /> Orders
               </NavLink>
             </li>
           </ul>
@@ -67,17 +67,17 @@ const Sidebar = () => {
           <ul className="menu-list">
             <li>
               <NavLink to={"/admin/dashboard"}>
-                <IoHome /> Dashboard
+                <IoBarChart /> Dashboard
               </NavLink>
             </li>
             <li>
               <NavLink to={"/admin/products"}>
-                <IoPricetag /> Products
+                <IoReader /> Products
               </NavLink>
             </li>
             <li>
               <NavLink to={"/admin/stores"}>
-                <IoPricetag /> Stores
+                <IoBagAdd /> Stores
               </NavLink>
             </li>
           </ul>

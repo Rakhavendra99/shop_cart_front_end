@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../util/Loader/Loader";
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import constants from "../util/Constants/constants";
 const FormAddUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -38,7 +39,7 @@ const FormAddUser = () => {
         setLoading(false)
         setError({ errorRole: "Please Select the Role" })
       } else {
-        await axios.post("http://localhost:5000/users", {
+        await axios.post(constants.API_BASE_URL + constants.ADD_USER, {
           name: name,
           email: email,
           password: password,
@@ -85,6 +86,9 @@ const FormAddUser = () => {
   const onchangeRole = (e) => {
     setRole(e.target.value)
     setError({ errorRole: null })
+  }
+  const goBack = () => {
+    window.history.back()
   }
   return (
     <div>
@@ -160,16 +164,30 @@ const FormAddUser = () => {
                     >
                       <option value="admin">Admin</option>
                       <option value="vendor">Vendor</option>
+                      <option value="customer">Customer</option>
                     </select>
                   </div>
                 </div>
                 <p style={{ color: "red" }}>{error.errorRole}</p>
               </div>
-              <div className="field">
-                <div className="control">
-                  <button type="submit" className="button is-dark">
-                    Save
-                  </button>
+              <div className="row">
+                <div className="col-sm-1">
+                  <div className="flex-end">
+                    <div className="control">
+                      <button type="button" className="button is-dark" onClick={() => goBack()}>
+                        Back
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-sm-2">
+                  <div className="field">
+                    <div className="control">
+                      <button type="submit" className="button is-dark">
+                        Save
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>

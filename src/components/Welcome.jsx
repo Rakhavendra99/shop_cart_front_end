@@ -10,8 +10,11 @@ const Welcome = () => {
   const [vendorDashboard, setVendorDashboard] = useState([]);
   const [adminDashboard, setAdminDashboard] = useState([]);
   useEffect(() => {
-    getVendorDashboard();
-    getAdmindashboard();
+    if (user?.role === "vendor") {
+      getVendorDashboard();
+    } else {
+      getAdmindashboard();
+    }
   }, []);
   const getVendorDashboard = async () => {
     setLoading(true)

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import logo from "../logo.png";
+import logo from "../asset/image/shop_cart.png";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../features/authSlice";
 import Loader from "../util/Loader/Loader";
@@ -41,9 +41,8 @@ const Navbar = () => {
       >
         <div className="navbar-brand">
           <NavLink to={user?.role === "admin" ? "/admin/dashboard" : "/dashboard"} className="navbar-item">
-            <img src={logo} width="112" height="28" alt="logo" />
+            <img src={logo} width="125" height="150" alt="logo" />
           </NavLink>
-
           <a
             href="!#"
             role="button"

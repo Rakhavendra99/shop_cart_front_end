@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../util/Loader/Loader";
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import constants from "../util/Constants/constants";
 const FormEditUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -59,7 +60,7 @@ const FormEditUser = () => {
         setLoading(false)
         setError({ errorRole: "Please Select the Role" })
       } else {
-        await axios.patch(`http://localhost:5000/users/${id}`, {
+        await axios.patch(constants.API_BASE_URL + constants.UPDATE_USER + `/${id}`, {
           name: name,
           email: email,
           password: password,
@@ -106,6 +107,9 @@ const FormEditUser = () => {
   const onchangeRole = (e) => {
     setRole(e.target.value)
     setError({ errorRole: null })
+  }
+  const goBack = () => {
+    window.history.back()
   }
   return (
     <div>
@@ -176,20 +180,35 @@ const FormEditUser = () => {
                 <div className="control">
                   <div className="select is-fullwidth">
                     <select
+                      disabled={id ? true : false}
                       value={role}
                       onChange={(e) => onchangeRole(e)}
                     >
                       <option value="admin">Admin</option>
                       <option value="vendor">Vendor</option>
+                      <option value="customer">Customer</option>
                     </select>
                   </div>
                 </div>
               </div>
-              <div className="field">
-                <div className="control">
-                  <button type="submit" className="button is-dark">
-                    Update
-                  </button>
+              <div className="row">
+                <div className="col-sm-1">
+                  <div className="flex-end">
+                    <div className="control">
+                      <button type="button" className="button is-dark" onClick={() => goBack()}>
+                        Back
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-sm-2">
+                  <div className="field">
+                    <div className="control">
+                      <button type="submit" className="button is-dark">
+                        Update
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>

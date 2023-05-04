@@ -198,6 +198,7 @@ const FormEditProduct = () => {
                     value={name}
                     onChange={(e) => onChangeProductName(e)}
                     placeholder="Enter Product Name"
+                    disabled={user?.role === "admin"}
                   />
                 </div>
                 <p style={{ color: "red" }}>{error.errorName}</p>
@@ -213,6 +214,7 @@ const FormEditProduct = () => {
                     pattern="[+-]?\d+(?:[.,]\d+)?"
                     onChange={(e) => onChangeProductPrice(e)}
                     placeholder="Enter Product Price"
+                    disabled={user?.role === "admin"}
                   />
                 </div>
                 <p style={{ color: "red" }}>{error.errorPrice}</p>
@@ -228,6 +230,7 @@ const FormEditProduct = () => {
                     pattern="[+-]?\d+(?:[.,]\d+)?"
                     onChange={(e) => onChangeGST(e)}
                     placeholder="Enter Product GST"
+                    disabled={user?.role === "admin"}
                   />
                 </div>
                 <p style={{ color: "red" }}>{error.errorGST}</p>
@@ -243,6 +246,7 @@ const FormEditProduct = () => {
                     pattern="[+-]?\d+(?:[.,]\d+)?"
                     onChange={(e) => onChangeAvailableQuantity(e)}
                     placeholder="Enter Available Quantity"
+                    disabled={user?.role === "admin"}
                   />
                 </div>
                 <p style={{ color: "red" }}>{error.errorAvailableQuantity}</p>
@@ -251,7 +255,7 @@ const FormEditProduct = () => {
                 <label className="label">Product Image</label>
                 <div className="img-wraps">
                   <img style={{ width: '48px', height: '48px', marginBottom: '4px' }} alt="Product" src={image ? image : (PlaceHolderImage)} />
-                  {image &&
+                  {(image && user?.role === "vendor") &&
                     <span className="closes" title="Delete"
                       onClick={() => removeCategoryImage()}
                     >×</span>
@@ -264,6 +268,7 @@ const FormEditProduct = () => {
                   placeholder="Select Product"
                   accept="image/*"
                   id="exampleFormControlFile1"
+                  disabled={user?.role === "admin"}
                 />
                 <p style={{ color: "red" }}>{error.errorImage}</p>
               </div>
@@ -276,6 +281,7 @@ const FormEditProduct = () => {
                     onChange={(e) => onChangeDescription(e)}
                     placeholder="Enter Description"
                     style={{ height: "95px", overflow: "auto" }}
+                    disabled={user?.role === "admin"}
                   />
                 </div>
                 <p style={{ color: "red" }}>{error.errorDescription}</p>
@@ -294,7 +300,7 @@ const FormEditProduct = () => {
                 <div className="col-sm-2">
                   <div className="field">
                     <div className="control">
-                      <button type="submit" className="button is-dark">
+                      <button type="submit" className="button is-dark" disabled={user?.role === "admin"}>
                         Update
                       </button>
                     </div>

@@ -9,6 +9,7 @@ import constants from "../util/Constants/constants";
 import PlaceHolderImage from '../asset/image/no_image.png'
 import image from '../asset/image/imagePlaceholder.png'
 import moment from "moment";
+
 const header = [
   "Product Image",
   "Product Name",
@@ -21,6 +22,8 @@ const FormViewOrder = () => {
   const [isLoading, setLoading] = useState(false)
   const [showDeclinePopup, setShowDeclinePopup] = useState(false)
   const { id } = useParams();
+  const navigate = useNavigate();
+
   useEffect(() => {
     getOrders();
   }, []);
@@ -30,6 +33,25 @@ const FormViewOrder = () => {
     setOrderList(response.data);
     setLoading(false)
   };
+  const updateOrder = async (status) => {
+    let params = {
+      status: status
+    }
+    await axios.patch(constants.API_BASE_URL + constants.UPDATE_ORDER + `/${id}`, params
+    ).then((res) => {
+      setLoading(false)
+      toast.success("Successfully Updated", {
+        position: toast.POSITION.TOP_RIGHT,
+      })
+      setLoading(false)
+      navigate("/orders");
+    }).catch((err) => {
+      setLoading(false)
+      toast.error(err?.response?.data?.msg, {
+        position: toast.POSITION.TOP_RIGHT,
+      })
+    });
+  }
   const decline = () => {
     setShowDeclinePopup(true)
   }
@@ -63,12 +85,22 @@ const FormViewOrder = () => {
                       </button>
                     </>
                     &nbsp;&nbsp;
-                    <div className="">
-                      <button className="decline_btn" onClick={() => "decline()"}><i className="bi bi-x decline_icon"></i>Decline</button>
-                    </div>
-                    <div className="">
-                      <button className="accept_btn ms-3" onClick={() => "updateOrder(true)"}><i className="bi bi-check-lg accept_icon"></i>Accept</button>
-                    </div>
+                    {orderListData?.status === 1 ?
+                      <>
+                        <div className="">
+                          <button className="decline_btn" disabled={orderListData?.status == 2 || orderListData?.status == 3} onClick={() => updateOrder(3)}><i className="bi bi-x decline_icon"></i>Decline</button>
+                        </div>
+                        <div className="">
+                          <button className="accept_btn ms-3" disabled={orderListData?.status == 2 || orderListData?.status == 3} onClick={() => updateOrder(2)}><i className="bi bi-check-lg accept_icon"></i>Accept</button>
+                        </div>
+                      </> : orderListData?.status === 2 ?
+                        <div className="">
+                          <button className="accept_btn ms-3" disabled={orderListData?.status == 2 || orderListData?.status == 3} onClick={() => updateOrder(2)}><i className="bi bi-check-lg accept_icon"></i>Accepted</button>
+                        </div> :
+                        <div className="">
+                          <button className="decline_btn" disabled={orderListData?.status == 2 || orderListData?.status == 3} onClick={() => updateOrder(3)}><i className="bi bi-x decline_icon"></i>Declined</button>
+                        </div>
+                    }
                   </div>
                 </div>
               </div>

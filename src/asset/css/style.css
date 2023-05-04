@@ -2306,3 +2306,7 @@ input[type=number] {
 }
 
 /* common btn end */
+
+.column{
+    padding: 1.75rem !important;
+}
