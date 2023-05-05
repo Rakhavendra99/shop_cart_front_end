@@ -8,6 +8,7 @@ import { toast } from "react-toastify"
 import { useSelector } from "react-redux"
 import { getMe } from "../features/authSlice"
 import { useDispatch } from "react-redux"
+import PlaceHolderImage from '../asset/image/no_image.png'
 
 const Menu = () => {
     const dispatch = useDispatch();
@@ -149,6 +150,17 @@ const Menu = () => {
                                                 <p className="category_name fs-13 ">{obj?.category?.name}</p>
                                             </div>
                                         </div>
+                                        {/* <div className="row mt-1 mb-1">
+                                            <div className="col-lg-5 col-6 pe-0">
+                                                <p className="category_head fs-13">Image:</p>
+                                            </div>
+                                            <div className="col-lg-7 col-6 ps-0 text-start">
+                                                <img
+                                                    style={{ width: '48px', height: '48px' }} alt="Category"
+                                                    src={obj?.category?.image ? obj?.category?.image : PlaceHolderImage}
+                                                />
+                                            </div>
+                                        </div> */}
                                         <p className="product_description menuProductDescription mt-1">{obj?.description}</p>
                                     </div>
                                     <div className="card-footer menu_cart_footer mb-2">

@@ -1,4 +1,5 @@
 import image from '../asset/image/imagePlaceholder.png'
+import PlaceHolderImage from '../asset/image/no_image.png'
 const ProductPopup = ({ setshowProduct, popupDetails }) => {
     return (
         <>
@@ -37,6 +38,17 @@ const ProductPopup = ({ setshowProduct, popupDetails }) => {
                                         </div>
                                         <div className="col-8">
                                             <p className="customer_info productWrap">₹ {popupDetails?.data?.price}</p>
+                                        </div>
+                                    </div>
+                                    <div className="row productRow">
+                                        <div className="col-4">
+                                            <p className="heading">Category Image:</p>
+                                        </div>
+                                        <div className="col-8">
+                                            <img className="customer_info productWrap"
+                                                style={{ width: '70px', height: '70px' }} alt="Category"
+                                                src={popupDetails?.data?.category?.image ? popupDetails?.data?.category?.image : PlaceHolderImage}
+                                            />
                                         </div>
                                     </div>
                                     <div className="row productRow ">

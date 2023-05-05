@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoginUser, reset } from "../features/authSlice";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, isError, isSuccess, isLoading, message } = useSelector(
@@ -55,12 +57,20 @@ const Login = () => {
                   <label className="label">Password</label>
                   <div className="control">
                     <input
-                      type="password"
-                      className="input"
+                      type={showPassword ? 'text' : 'password'}
+                      className="input1"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="******"
                     />
+                    <button className="btn"
+                      onClick={() => setShowPassword(!showPassword)}
+                      type="button"
+                      id="view-pass">
+                      <FontAwesomeIcon
+                        style={{ cursor: 'pointer' }}
+                        icon={showPassword ? faEye : faEyeSlash} />
+                    </button>
                   </div>
                 </div>
                 <div className="field mt-5">
