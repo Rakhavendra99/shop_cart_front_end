@@ -1,5 +1,6 @@
 import IO from 'socket.io-client';
 import { BASE_URL_SOCKET_IO, SOCKET_IO_PATH } from '../util/Constants/constants';
+import { useSelector } from 'react-redux';
 
 let socket;
 
@@ -51,9 +52,23 @@ export const startSocketConnect = (callback, props) => {
   socket.on('connect_timeout', data => {
     console.log('************ connect_timeout ************');
   });
+  // const { user } = useSelector((state) => state.auth);
 
+  // console.log("user",user);
   socket.on(
-    `/SOCKET/VENDOR/${1}`,
+    `/SOCKET/ADMIN/${1}`,
+    data => {
+      console.log('------>>>> Socket notification', data);
+      callback(data)
+    })
+  socket.on(
+    `/SOCKET/VENDOR/${2}`,
+    data => {
+      console.log('------>>>> Socket notification', data);
+      callback(data)
+    })
+  socket.on(
+    `/SOCKET/CUSTOMER/${3}`,
     data => {
       console.log('------>>>> Socket notification', data);
       callback(data)

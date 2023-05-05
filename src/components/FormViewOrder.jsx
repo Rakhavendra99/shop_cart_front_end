@@ -74,17 +74,11 @@ const FormViewOrder = () => {
                   <p className="">Customer Name:<label className="customer_info">{orderListData?.user?.name ? orderListData?.user?.name : "-"}</label></p>
                   <p className="">Phone:<label className="customer_info">{orderListData?.user?.phone ? orderListData?.user?.phone : "-"}</label></p>
                   <p className="">Email:<label className="customer_info">{orderListData?.user?.email ? orderListData?.user?.email : "-"}</label></p>
-                  <p className="">Address:<label className="customer_info">{orderListData?.user?.address ? orderListData?.user?.address : "-"}</label></p>
+                  <p className="">Address:<label className="customer_info">{orderListData?.address ? orderListData?.address : "-"}</label></p>
                 </div>
                 <br />
                 <div className="">
                   <div className="d-flex">
-                    <>
-                      <button className="button is-dark" onClick={() => goBack()}>
-                        Back
-                      </button>
-                    </>
-                    &nbsp;&nbsp;
                     {orderListData?.status === 1 ?
                       <>
                         <div className="">
@@ -102,6 +96,14 @@ const FormViewOrder = () => {
                         </div>
                     }
                   </div>
+                  <br />
+                  <>
+                    <div className="d-flex">
+                      <button className="button is-dark" onClick={() => goBack()}>
+                        Back
+                      </button>
+                    </div>
+                  </>
                 </div>
               </div>
               <div className="col-md-12 col-lg-8 popup_right">

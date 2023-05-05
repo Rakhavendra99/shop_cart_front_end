@@ -514,9 +514,9 @@ select:focus {
 }
 
 .cancel_btn {
-    background-color: var(--secondary-color);
+    /* background-color: var(--secondary-color); */
     border: 1px solid var(--primary-color);
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
 }
 
 /* popup end */
@@ -2254,7 +2254,7 @@ input[type=number] {
 /* common btn start */
 
 .common_btn {
-    background-color: var(--common-btn-bg);
+    /* background-color: var(--common-btn-bg); */
     padding: 10px 21px;
     border: 1px solid var(--common-btn-bg);
     border-radius: 3px;

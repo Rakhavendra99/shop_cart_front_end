@@ -54,11 +54,12 @@ export const CartPopup = ({ setShowCartPopup, cartId }) => {
                     if (res?.data?.msg?.id) {
                         localStorage.setItem("cartId", null);
                     }
-                    setLoading(false)
                     toast.success("Successfully Placed", {
                         position: toast.POSITION.TOP_RIGHT,
                     })
                     setShowCartPopup(false)
+                    setLoading(false)
+                    window.location.reload()
                 }
             }).catch((err) => {
                 setLoading(false)
@@ -130,7 +131,7 @@ export const CartPopup = ({ setShowCartPopup, cartId }) => {
                             </div>
                             <div className="modal-footer justify-content-center border-0 pt-0 popup_footer">
                                 <button className="common_btn mt-3 popup_btn cancel_btn" onClick={() => setShowCartPopup(false)}><span className="fs-13 pickup_part f-med">Cancel</span></button>
-                                <button className="common_btn mt-3 popup_btn" onClick={() => proceedPayment()}><span className="fs-13 pickup_part f-med">Proceed to payment</span></button>
+                                <button className="common_btn mt-3 popup_btn" onClick={() => proceedPayment()}><span className="fs-13 pickup_part f-med">Place Order</span></button>
                             </div>
                         </div>
                     </div>

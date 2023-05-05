@@ -16,16 +16,17 @@ const DeleteCartPopup = ({ setRemovePopuop, setLoading, cartObj }) => {
         setLoading(true)
         await axios.post(constants.API_BASE_URL + constants.CART_ADD, params).then((res) => {
             if (res?.data?.msg?.cart?.id) {
-                if (params?.quantity === 0) {
-                    localStorage.setItem("cartId", null);
-                } else {
-                    localStorage.setItem("cartId", res?.data?.msg?.cart?.id);
-                }
+                // if (params?.quantity === 0) {
+                //     localStorage.setItem("cartId", null);
+                // } else {
+                //     localStorage.setItem("cartId", res?.data?.msg?.cart?.id);
+                // }
                 setLoading(false)
-                toast.success("Successfully Added", {
+                toast.success("Successfully Removed", {
                     position: toast.POSITION.TOP_RIGHT,
                 })
                 setRemovePopuop(false)
+                window.location.reload()
             }
         }).catch((err) => {
             setLoading(false)

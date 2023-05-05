@@ -16,7 +16,6 @@ class SocketMessage extends React.Component {
 
 
     showToastMessage(socketObj) {
-        // this.props.chatMessage()
         const toastId = Date.now()
         toast.success(socketObj?.message, {
             position: toast.POSITION.TOP_RIGHT,
@@ -24,10 +23,20 @@ class SocketMessage extends React.Component {
             onClick: () => this.navToaster(socketObj, toastId),
             toastId
         });
+
+        const currentScreenId = window.location.pathname  
+        console.log("currentScreenId", currentScreenId);
+        if (socketObj?.type === "NEW_ORDER") {
+            if (currentScreenId === "/orders") {
+                window.location.reload();
+            }
+        }
     }
 
     navToaster(socketObj, toastId) {
-
+        if(socketObj?.type === "NEW_ORDER"){
+            this.props.history.push("/orders")
+        }
     }
 
     render() {

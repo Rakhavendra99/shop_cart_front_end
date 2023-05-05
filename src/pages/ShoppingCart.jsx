@@ -50,7 +50,7 @@ const ShoppingCart = () => {
                     localStorage.setItem("cartId", res?.data?.msg?.cart?.id);
                 }
                 setLoading(false)
-                toast.success("Successfully Added", {
+                toast.success("Successfully Updated", {
                     position: toast.POSITION.TOP_RIGHT,
                 })
                 getCartDetails(res?.data?.msg?.cart?.id)

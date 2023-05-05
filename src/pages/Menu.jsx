@@ -6,8 +6,11 @@ import axios from "axios"
 import ProductPopup from "./ProductPopup"
 import { toast } from "react-toastify"
 import { useSelector } from "react-redux"
+import { getMe } from "../features/authSlice"
+import { useDispatch } from "react-redux"
 
 const Menu = () => {
+    const dispatch = useDispatch();
     const [isLoading, setLoading] = useState(false)
     const [products, setProducts] = useState([]);
     const [showProduct, setshowProduct] = useState(false)
@@ -19,7 +22,8 @@ const Menu = () => {
         if (cartId !== "null") {
             getCartDetails(cartId)
         }
-    }, [])
+        // dispatch(getMe());
+    }, [dispatch])
     const getCustomerProducts = async () => {
         setLoading(true)
         const response = await axios.get(constants.API_BASE_URL + constants.CUSTOMER_PRODUCT_LIST);
@@ -174,7 +178,7 @@ const Menu = () => {
                         </div>
                 }
             </div>
-            <button className={`common_btn mt-3 cartCanel popup_btn d-block mx-auto ${(10 * 1) > 0 && ' DisbaleLoadMore'}`} onClick={() => ''}>load more</button>
+            {/* <button className={`common_btn mt-3 cartCanel popup_btn d-block mx-auto ${(10 * 1) > 0 && ' DisbaleLoadMore'}`} onClick={() => ''}>load more</button> */}
             {
                 showProduct && <ProductPopup popupDetails={popupDetails} setshowProduct={setshowProduct} />
             }
