@@ -6,7 +6,7 @@ import Loader from "../util/Loader/Loader";
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import constants from "../util/Constants/constants";
-import { convertToBase64 } from "../util";
+import { convertToBase64, formatSizeUnits, formatSizeUnitsCondition } from "../util";
 import PlaceHolderImage from '../asset/image/no_image.png'
 const FormEditProduct = () => {
   const [name, setName] = useState("");
@@ -56,6 +56,11 @@ const FormEditProduct = () => {
   const updateProduct = async (e) => {
     setLoading(true)
     e.preventDefault();
+    let file = document.getElementById('file').files[0]
+    let fsize
+    if (typeof file !== "undefined") {
+      fsize = file.size
+    }
     try {
       if (!categoryId) {
         setLoading(false)
@@ -75,6 +80,9 @@ const FormEditProduct = () => {
       } else if (!image) {
         setLoading(false)
         setError({ errorImage: "Please Select the product Image" })
+      } else if (fsize && formatSizeUnitsCondition(fsize)) {
+        setLoading(false)
+        setError({ errorImage: `Please upload less then 40 KB, uploaded file size ${formatSizeUnits(fsize)}` })
       } else if (!description) {
         setLoading(false)
         setError({ errorDescription: "Please Enter description" })
@@ -141,6 +149,10 @@ const FormEditProduct = () => {
     e.preventDefault();
     let file = e.target.files[0];
     if (typeof file !== "undefined") {
+      let fsize = document.getElementById('file').files[0].size
+      if (formatSizeUnitsCondition(fsize)) {
+        setError({ errorImage: `Please upload less then 40 KB, uploaded file size ${formatSizeUnits(fsize)}` })
+      }
       let imageBase64 = await convertToBase64(file)
       setProductImage(imageBase64)
       setLoading(false)
@@ -151,8 +163,9 @@ const FormEditProduct = () => {
   const removeCategoryImage = async (value) => {
     setLoading(true)
     setProductImage("")
-    document.getElementById('exampleFormControlFile1').value = "";
+    document.getElementById('file').value = "";
     setLoading(false)
+    setError({ errorImage: "" })
   }
   const goBack = () => {
     window.history.back()
@@ -252,7 +265,7 @@ const FormEditProduct = () => {
                 <p style={{ color: "red" }}>{error.errorAvailableQuantity}</p>
               </div>
               <div className="field">
-                <label className="label">Product Image</label>
+                <label className="label">Product Image (* Upload file size less then 40KB)</label>
                 <div className="img-wraps">
                   <img style={{ width: '48px', height: '48px', marginBottom: '4px' }} alt="Product" src={image ? image : (PlaceHolderImage)} />
                   {(image && user?.role === "vendor") &&
@@ -267,7 +280,7 @@ const FormEditProduct = () => {
                   onChange={(e) => uploadProductImage(e)}
                   placeholder="Select Product"
                   accept="image/*"
-                  id="exampleFormControlFile1"
+                  id="file"
                   disabled={user?.role === "admin"}
                 />
                 <p style={{ color: "red" }}>{error.errorImage}</p>

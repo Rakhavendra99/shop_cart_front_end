@@ -6,7 +6,7 @@ import Loader from "../util/Loader/Loader"
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import PlaceHolderImage from '../asset/image/no_image.png'
-import { convertToBase64 } from "../util";
+import { convertToBase64, formatSizeUnits, formatSizeUnitsCondition } from "../util";
 import constants from "../util/Constants/constants";
 const FormAddCategory = () => {
   const [name, setName] = useState("");
@@ -20,6 +20,11 @@ const FormAddCategory = () => {
   const saveCategory = async (e) => {
     setLoading(true)
     e.preventDefault();
+    let file = document.getElementById('file').files[0]
+    let fsize
+    if (typeof file !== "undefined") {
+      fsize = file.size
+    }
     try {
       if (!name) {
         setLoading(false)
@@ -27,6 +32,9 @@ const FormAddCategory = () => {
       } else if (!image) {
         setLoading(false)
         setError({ errorImage: "Please Select the Category Image" })
+      } else if (formatSizeUnitsCondition(fsize)) {
+        setLoading(false)
+        setError({ errorImage: `Please upload less then 40 KB, uploaded file size ${formatSizeUnits(fsize)}` })
       } else {
         await axios.post(constants.API_BASE_URL + constants.ADD_CATEGORY, {
           name: name,
@@ -70,6 +78,10 @@ const FormAddCategory = () => {
     e.preventDefault();
     let file = e.target.files[0];
     if (typeof file !== "undefined") {
+      let fsize = document.getElementById('file').files[0].size
+      if (formatSizeUnitsCondition(fsize)) {
+        setError({ errorImage: `Please upload less then 40 KB, uploaded file size ${formatSizeUnits(fsize)}` })
+      }
       let imageBase64 = await convertToBase64(file)
       setCategoryImage(imageBase64)
       setClickImage(true)
@@ -82,8 +94,9 @@ const FormAddCategory = () => {
   const removeCategoryImage = async (value) => {
     setLoading(true)
     setCategoryImage("")
-    document.getElementById('exampleFormControlFile1').value = "";
+    document.getElementById('file').value = "";
     setLoading(false)
+    setError({ errorImage: "" })
   }
   const goBack = () => {
     window.history.back()
@@ -115,7 +128,7 @@ const FormAddCategory = () => {
                 <p style={{ color: "red" }}>{error.errorName}</p>
               </div>
               <div className="field">
-                <label className="label">Image</label>
+                <label className="label">Image (* Upload file size less then 40KB)</label>
                 <div className="img-wraps">
                   <img style={{ width: '48px', height: '48px', marginBottom: '4px' }} alt="Product" src={image ? image : (PlaceHolderImage)} />
                   {image &&
@@ -130,7 +143,7 @@ const FormAddCategory = () => {
                   onChange={(e) => uploadProductImage(e)}
                   placeholder="Select Category"
                   accept="image/*"
-                  id="exampleFormControlFile1"
+                  id="file"
                 />
                 <p style={{ color: "red" }}>{error.errorImage}</p>
               </div>

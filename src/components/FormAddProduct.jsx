@@ -6,7 +6,7 @@ import Loader from "../util/Loader/Loader"
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import constants from "../util/Constants/constants";
-import { convertToBase64 } from "../util";
+import { convertToBase64, formatSizeUnits, formatSizeUnitsCondition } from "../util";
 import PlaceHolderImage from '../asset/image/no_image.png'
 const FormAddProduct = () => {
   const [name, setName] = useState("");
@@ -35,6 +35,11 @@ const FormAddProduct = () => {
   const saveProduct = async (e) => {
     setLoading(true)
     e.preventDefault();
+    let file = document.getElementById('file').files[0]
+    let fsize
+    if (typeof file !== "undefined") {
+      fsize = file.size
+    }
     try {
       if (!categoryId) {
         setLoading(false)
@@ -51,9 +56,12 @@ const FormAddProduct = () => {
       } else if (!availableQuantity) {
         setLoading(false)
         setError({ errorAvailableQuantity: "Please Enter the available quantity" })
-      }else if (!image) {
+      } else if (!image) {
         setLoading(false)
         setError({ errorImage: "Please Select the Product Image" })
+      } else if (formatSizeUnitsCondition(fsize)) {
+        setLoading(false)
+        setError({ errorImage: `Please upload less then 40 KB, uploaded file size ${formatSizeUnits(fsize)}` })
       } else if (!description) {
         setLoading(false)
         setError({ errorDescription: "Please Enter description" })
@@ -61,7 +69,7 @@ const FormAddProduct = () => {
         await axios.post(constants.API_BASE_URL + constants.ADD_PRODCUT, {
           name: name,
           price: price,
-          gst :GST,
+          gst: GST,
           image: image,
           availableQuantity: availableQuantity,
           description: description,
@@ -121,6 +129,10 @@ const FormAddProduct = () => {
     e.preventDefault();
     let file = e.target.files[0];
     if (typeof file !== "undefined") {
+      let fsize = document.getElementById('file').files[0].size
+      if (formatSizeUnitsCondition(fsize)) {
+        setError({ errorImage: `Please upload less then 40 KB, uploaded file size ${formatSizeUnits(fsize)}` })
+      }
       let imageBase64 = await convertToBase64(file)
       setProductImage(imageBase64)
       setClickImage(true)
@@ -133,8 +145,9 @@ const FormAddProduct = () => {
   const removeCategoryImage = async (value) => {
     setLoading(true)
     setProductImage("")
-    document.getElementById('exampleFormControlFile1').value = "";
+    document.getElementById('file').value = "";
     setLoading(false)
+    setError({ errorImage: "" })
   }
   const goBack = () => {
     window.history.back()
@@ -229,7 +242,7 @@ const FormAddProduct = () => {
                 <p style={{ color: "red" }}>{error.errorAvailableQuantity}</p>
               </div>
               <div className="field">
-                <label className="label">Product Image</label>
+                <label className="label">Product Image (* Upload file size less then 40KB)</label>
                 <div className="img-wraps">
                   <img style={{ width: '48px', height: '48px', marginBottom: '4px' }} alt="Product" src={image ? image : (PlaceHolderImage)} />
                   {image &&
@@ -244,7 +257,7 @@ const FormAddProduct = () => {
                   onChange={(e) => uploadProductImage(e)}
                   placeholder="Select Product"
                   accept="image/*"
-                  id="exampleFormControlFile1"
+                  id="file"
                 />
                 <p style={{ color: "red" }}>{error.errorImage}</p>
               </div>
