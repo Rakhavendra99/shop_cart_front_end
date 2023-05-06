@@ -19,6 +19,7 @@ const ShoppingCart = () => {
     const [cartDetails, setCartDetails] = useState(false)
     const [isLoading, setLoading] = useState(false)
     const cartId = localStorage.getItem("cartId");
+    const storeId = localStorage.getItem("storeId");
     const [isPolicy, setPolicy] = useState(false)
     const [cartObj, setCartObj] = useState({})
     const [removePopup, setRemovePopuop] = useState(false)
@@ -46,8 +47,10 @@ const ShoppingCart = () => {
             if (res?.data?.msg?.cart?.id) {
                 if (params?.quantity === 0) {
                     localStorage.setItem("cartId", null);
+                    localStorage.setItem("storeId", null);
                 } else {
                     localStorage.setItem("cartId", res?.data?.msg?.cart?.id);
+                    localStorage.setItem("storeId", res?.data?.msg?.cart?.storeId);
                 }
                 setLoading(false)
                 toast.success("Successfully Updated", {
@@ -188,7 +191,7 @@ const ShoppingCart = () => {
                 </div>}
             </div>
             {
-                showCartPopup && <CartPopup cartId={cartId} setShowCartPopup={setShowCartPopup} />
+                showCartPopup && <CartPopup storeId={storeId} cartId={cartId} setShowCartPopup={setShowCartPopup} />
             }
             {
                 removePopup && <DeleteCartPopup setRemovePopuop={setRemovePopuop} setLoading={setLoading} cartObj={cartObj} />

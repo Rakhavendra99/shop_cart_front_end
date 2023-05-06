@@ -6,7 +6,7 @@ import Loader from "../util/Loader/Loader";
 import constants from "../util/Constants/constants";
 import axios from "axios";
 
-export const CartPopup = ({ setShowCartPopup, cartId }) => {
+export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
     const [formDetails, setFormDetails] = useState({});
     const [errors, setErrors] = useState();
     const [isLoading, setLoading] = useState(false)
@@ -46,7 +46,7 @@ export const CartPopup = ({ setShowCartPopup, cartId }) => {
                 orderType: 1,
                 phone: formDetails?.phone,
                 email: formDetails?.email,
-                storeId: 1,
+                storeId: storeId,
                 address: formDetails?.address,
             }
             await axios.post(constants.API_BASE_URL + constants.PLACE_ORDER, params).then((res) => {

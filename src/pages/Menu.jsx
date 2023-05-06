@@ -57,6 +57,7 @@ const Menu = () => {
         await axios.post(constants.API_BASE_URL + constants.CART_ADD, params).then((res) => {
             if (res?.data?.msg?.cart?.id) {
                 localStorage.setItem("cartId", res?.data?.msg?.cart?.id);
+                localStorage.setItem("storeId", res?.data?.msg?.cart?.storeId);
                 setLoading(false)
                 toast.success("Successfully Added", {
                     position: toast.POSITION.TOP_RIGHT,
@@ -76,8 +77,10 @@ const Menu = () => {
             if (res?.data?.msg?.cart?.id) {
                 if (params?.quantity === 0) {
                     localStorage.setItem("cartId", null);
+                    localStorage.setItem("storeId", null);
                 } else {
                     localStorage.setItem("cartId", res?.data?.msg?.cart?.id);
+                    localStorage.setItem("storeId", res?.data?.msg?.cart?.storeId);
                 }
                 setLoading(false)
                 toast.success("Successfully Added", {

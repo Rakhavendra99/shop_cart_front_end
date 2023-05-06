@@ -73,6 +73,7 @@ const ProductList = () => {
           <tr>
             <th>Id</th>
             <th>Product Name</th>
+            {user?.role === "admin" && <th>Store Name</th>}
             <th>Price</th>
             <th>Image</th>
             <th>Actions</th>
@@ -83,6 +84,7 @@ const ProductList = () => {
             <tr key={product.id}>
               <td>{product?.id}</td>
               <td>{product?.name}</td>
+              {user?.role === "admin" && <td>{product?.store?.name}</td>}
               <td>{product?.price}</td>
               <img
                 style={{ width: '48px', height: '48px' }} alt="Category"
