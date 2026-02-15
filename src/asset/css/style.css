@@ -210,6 +210,10 @@ body p {
     font-size: 14px !important;
 }
 
+.leela_customer_header .navbar .container-fluid {
+    flex-wrap: wrap;
+}
+
 .leela_customer_header .nav-link.active {
     font-family: Poppins-semibold;
 }
@@ -279,6 +283,12 @@ body p {
 
 .product_card:hover {
     transform: scale(1.11);
+}
+
+@media (max-width: 991.98px) {
+    .product_card:hover {
+        transform: scale(1.02);
+    }
 }
 
 .product_size {
@@ -1216,6 +1226,52 @@ select:focus {
     }
 }
 
+@media (max-width: 575.98px) {
+    .cartPopup .modal-dialog {
+        margin: 0.5rem;
+        max-width: calc(100vw - 1rem);
+    }
+    .customer_popup_content .modal-title,
+    .cartPopup .modal-title {
+        font-size: 14px !important;
+        padding-right: 1.5rem;
+    }
+    .customer_popup_content .close_part {
+        right: 0;
+        top: -8px;
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+    .popup_footer .popup_btn,
+    .cartCanel.popup_btn {
+        width: 100% !important;
+        min-width: unset;
+    }
+    .popup_footer {
+        flex-direction: column;
+    }
+    .cartRemovePopup .d-flex {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+    }
+    .cartRemovePopup .d-flex .popup_btn {
+        width: 100% !important;
+    }
+    .productPopup .productRow .col-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .productPopup .productRow .col-8 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .productPopup .product_size {
+        height: 180px;
+    }
+}
+
 @media (max-width: 768px) {
 
     .homeBannerImage {
@@ -1423,18 +1479,41 @@ select:focus {
         bottom: 0;
         margin-top: auto;
         margin-bottom: auto;
-        /* top: 35px; */
         padding: 9px 0 0;
     }
 
     .cart_total_price {
         padding-left: 48px !important;
-        /* position: absolute;
-        right: 22px;
-        top: 37px;
-        padding: 0; */
     }
 
+    .row.cart_border {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+}
+
+/* Cart row – extra small: reduce padding and font for fit */
+@media (max-width: 480px) {
+    .shopping_cart_row {
+        flex-wrap: wrap;
+        padding-bottom: 0.75rem !important;
+    }
+    .shopping_cart_row .col-2.cart_align:first-child {
+        flex: 0 0 auto;
+    }
+    .shopping_cart_row .cart_products {
+        flex: 1 1 auto;
+        min-width: 0;
+        padding-left: 0.5rem !important;
+    }
+    .shopping_cart_row .cart_product_img {
+        width: 45px;
+        height: 42px !important;
+    }
+    .section_heading {
+        font-size: 1.25rem;
+    }
 }
 
 @media only screen and (min-width:481px) and (max-width:768px) {
@@ -1507,9 +1586,6 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-}
 
 .deleivery_date {
     color: rgb(255, 82, 82);
@@ -1549,6 +1625,132 @@ input[type=number] {
     text-align: justify;
 }
 
+/* ========== Customer UI – Responsive (all devices + popups) ========== */
+.leela_customer {
+    min-width: 280px;
+    overflow-x: hidden;
+}
+
+
+/* Popups – responsive for all devices */
+.cartPopup.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1055;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+    -webkit-overflow-scrolling: touch;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.cartPopup .modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 0.5rem;
+    max-width: calc(100vw - 1rem);
+    pointer-events: none;
+}
+
+.cartPopup .modal-dialog .modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    max-height: calc(100vh - 1rem);
+    overflow: hidden;
+}
+
+.cartPopup .modal-dialog .modal-content .modal-body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.customer_popup,
+.cartRemovePopup {
+    min-height: 100%;
+    align-items: flex-start !important;
+    padding-top: 1rem !important;
+    padding-bottom: 2rem !important;
+}
+
+.customer_popup .modal-dialog,
+.cartRemovePopup .modal-dialog {
+    margin: 0.5rem auto;
+}
+
+.cartPopup .productPopup .modal-dialog {
+    max-width: 540px;
+}
+
+.product_popup_wrapper {
+    min-height: 100%;
+    padding: 0.5rem 0 2rem;
+    align-items: flex-start;
+}
+
+@media (min-width: 576px) {
+    .product_popup_wrapper {
+        padding-top: 2rem;
+    }
+}
+
+.customer_popup_content .modal-header {
+    position: relative;
+    padding-right: 2.5rem;
+}
+
+.customer_popup_content .close_part {
+    right: 0;
+    top: 0;
+}
+
+.popup_footer {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.popup_footer .popup_btn {
+    min-width: 120px;
+}
+
+@media (min-width:576px) {
+    .cartPopup .modal-dialog {
+        margin: 1.75rem auto;
+        max-width: 500px;
+    }
+    .cartPopup .productPopup .modal-dialog {
+        max-width: 540px;
+    }
+    .customer_popup,
+    .cartRemovePopup {
+        padding-top: 5vh !important;
+    }
+}
+
+@media (min-width:768px) {
+    .cartPopup .modal-dialog {
+        max-width: 520px;
+    }
+    .popup_btn {
+        width: 15vw;
+        min-width: 140px;
+    }
+}
+
+@media (min-width:992px) {
+    .customer_popup {
+        padding-top: 10vh !important;
+    }
+    .cartRemovePopup {
+        padding-top: 30vh !important;
+    }
+}
+
 @media (min-width:320px) and (max-width:480px) {
 
     .homeBannerImage {
@@ -1585,6 +1787,16 @@ input[type=number] {
 
     .between_content {
         display: block;
+    }
+
+    .between_content .d-flex.gap-2 {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .between_content .d-flex.gap-2 .continue_shopping_btn {
+        width: 100% !important;
+        margin: 0 0 8px 0;
     }
 
     .continue_shopping_btn {

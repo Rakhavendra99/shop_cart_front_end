@@ -74,20 +74,19 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
             {
                 isLoading && <Loader />
             }
-            <div className="modal cartPopup" id="exampleModal">
+            <div className="modal cartPopup" id="exampleModal" aria-modal="true" role="dialog">
                 <div className="customer_popup">
-                    <div className="modal-dialog">
-                        <div className="modal-content customer_popup_content py-3 px-2">
-                            <div className="modal-header border-0 d-block">
-                                <p className="modal-title text-center fs-16 f-sbold" id="exampleModalLabel">Please fill your details for
-                                    checkout</p>
-                                <div className="close_part" onClick={() => setShowCartPopup(false)}>
+                    <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div className="modal-content customer_popup_content py-3 px-3 px-sm-2">
+                            <div className="modal-header border-0 d-block position-relative">
+                                <p className="modal-title text-center fs-16 f-sbold mb-0" id="exampleModalLabel">Please fill your details for checkout</p>
+                                <button type="button" className="close_part border-0 bg-transparent" onClick={() => setShowCartPopup(false)} aria-label="Close">
                                     <i className="bi bi-x-lg"></i>
-                                </div>
+                                </button>
                             </div>
-                            <div className="modal-body pb-0 pt-0">
-                                <div className="row">
-                                    <div className="col-md-6 mt-lg-3 mt-2">
+                            <div className="modal-body pb-0 pt-0 overflow-auto">
+                                <div className="row g-2">
+                                    <div className="col-12 col-md-6 mt-lg-3 mt-2">
                                         <div className="mb-3">
                                             <label className="form-label fs-14">Name</label>
                                             <input type="text" className="form-control" name="name" placeholder="Please enter the name" onChange={handlechange} required />
@@ -97,7 +96,7 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
                                             }
                                         </div>
                                     </div>
-                                    <div className="col-md-6 mt-lg-3 mt-2">
+                                    <div className="col-12 col-md-6 mt-lg-3 mt-2">
                                         <div className="mb-3">
                                             <label className="form-label fs-14">Email</label>
                                             <input type="email" className="form-control" name="email" placeholder="Please enter the email" onChange={handlechange} required />
@@ -107,7 +106,7 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
                                             }
                                         </div>
                                     </div>
-                                    <div className="col-md-6 mt-lg-3 mt-2">
+                                    <div className="col-12 col-md-6 mt-lg-3 mt-2">
                                         <div className="mb-3">
                                             <label className="form-label fs-14">Mobile No</label>
                                             <input type="number" className="form-control" name="phone" placeholder="Please enter the mobile number" onChange={handlechange} required />
@@ -117,7 +116,7 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
                                             }
                                         </div>
                                     </div>
-                                    <div className="col-md-6 mt-lg-3 mt-2">
+                                    <div className="col-12 col-md-6 mt-lg-3 mt-2">
                                         <div className="mb-3">
                                             <label className="form-label fs-14">Address</label>
                                             <textarea className="form-control" name="address" placeholder="Please enter the address" onChange={handlechange}></textarea>
@@ -129,9 +128,9 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="modal-footer justify-content-center border-0 pt-0 popup_footer">
-                                <button className="common_btn mt-3 popup_btn cancel_btn" onClick={() => setShowCartPopup(false)}><span className="fs-13 pickup_part f-med">Cancel</span></button>
-                                <button className="common_btn mt-3 popup_btn" onClick={() => proceedPayment()}><span className="fs-13 pickup_part f-med">Place Order</span></button>
+                            <div className="modal-footer justify-content-center border-0 pt-0 popup_footer d-flex flex-column flex-sm-row gap-2">
+                                <button type="button" className="common_btn mt-3 popup_btn cancel_btn" onClick={() => setShowCartPopup(false)}><span className="fs-13 pickup_part f-med">Cancel</span></button>
+                                <button type="button" className="common_btn mt-3 popup_btn" onClick={() => proceedPayment()}><span className="fs-13 pickup_part f-med">Place Order</span></button>
                             </div>
                         </div>
                     </div>

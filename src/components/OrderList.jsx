@@ -6,31 +6,61 @@ import Loader from "../util/Loader/Loader"
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import constants from "../util/Constants/constants";
-import PlaceHolderImage from '../asset/image/no_image.png'
 import moment from "moment";
+
+const getTodayStr = () => moment().format("YYYY-MM-DD");
+
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
   const { user } = useSelector((state) => state.auth);
-  const [isLoading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useState(true);
+  const [fromDate, setFromDate] = useState(getTodayStr);
+  const [toDate, setToDate] = useState(getTodayStr);
 
   useEffect(() => {
     getOrders();
-  }, []);
+  }, [fromDate, toDate]);
 
   const getOrders = async () => {
-    setLoading(true)
-    const response = await axios.get(constants.API_BASE_URL + constants.ORDER_LIST);
-    setOrders(response.data);
-    setLoading(false)
+    setLoading(true);
+    try {
+      const params = new URLSearchParams({ fromDate, toDate });
+      const response = await axios.get(constants.API_BASE_URL + constants.ORDER_LIST + "?" + params.toString());
+      setOrders(response.data);
+    } catch (err) {
+      if (axios.isAxiosError(err)) toast.error(err?.response?.data?.msg || "Failed to load orders");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div>
-      {
-        isLoading && (<Loader />)
-      }
+      {isLoading && <Loader />}
       <h1 className="title">Orders</h1>
       <h2 className="subtitle">List of Orders</h2>
+      <div className="mb-3 d-flex flex-wrap align-items-center gap-2">
+        <label className="d-flex align-items-center gap-1">
+          <span className="fs-14">From</span>
+          <input
+            type="date"
+            className="form-control form-control-sm"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+            max={toDate}
+          />
+        </label>
+        <label className="d-flex align-items-center gap-1">
+          <span className="fs-14">To</span>
+          <input
+            type="date"
+            className="form-control form-control-sm"
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
+            min={fromDate}
+          />
+        </label>
+      </div>
       <table className="table is-striped is-fullwidth">
         <thead>
           <tr>

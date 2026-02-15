@@ -35,8 +35,10 @@ const ShoppingCart = () => {
     const getCartDetails = async (id) => {
         setLoading(true)
         const response = await axios.get(constants.API_BASE_URL + constants.CART_DETAILS + `/${id}`);
-        if (response?.data?.msg?.CartItems?.length == 0) {
+        const msg = response?.data?.msg
+        if (!msg?.CartItems?.length || !msg?.id) {
             localStorage.setItem("cartId", null);
+            localStorage.setItem("storeId", null);
         }
         setCartDetails(response.data);
         setLoading(false)
@@ -117,16 +119,40 @@ const ShoppingCart = () => {
     const checkout = () => {
         setShowCartPopup(true)
     }
+
+    const clearCart = async () => {
+        if (!cartId || cartId === "null") return
+        setLoading(true)
+        try {
+            await axios.delete(constants.API_BASE_URL + constants.CART_DELETE + `/${cartId}`)
+            localStorage.setItem("cartId", null)
+            localStorage.setItem("storeId", null)
+            setCartDetails({ msg: { CartItems: [] } })
+            toast.success("Cart cleared", { position: toast.POSITION.TOP_RIGHT })
+        } catch (err) {
+            toast.error(err?.response?.data?.msg || "Failed to clear cart", { position: toast.POSITION.TOP_RIGHT })
+        } finally {
+            setLoading(false)
+        }
+    }
+
     return (
         <>
             {isLoading && <Loader />}
             <div className="between_content mt-5">
                 <h5 className="section_heading text-start m-0">Shopping cart</h5>
-                <button className="continue_shopping_btn" onClick={() => navigate('/')}><span className="fs-13 pickup_part f-med">Continue shopping</span></button>
+                <div className="d-flex gap-2">
+                    {cartDetails?.msg?.CartItems?.length > 0 && (
+                        <button type="button" className="continue_shopping_btn" onClick={clearCart}>
+                            <span className="fs-13 pickup_part f-med">Clear cart</span>
+                        </button>
+                    )}
+                    <button className="continue_shopping_btn" onClick={() => navigate('/')}><span className="fs-13 pickup_part f-med">Continue shopping</span></button>
+                </div>
             </div>
             <div className="row cart_border p-0 mt-3 mx-0">
 
-                <div className={`${cartDetails?.msg?.CartItems?.length > 0 ? 'col-lg-7' : 'col-lg-12'} px-lg-4 px-sm-2 py-lg-4 pt-3 pb-0`}>
+                <div className={`col-12 ${cartDetails?.msg?.CartItems?.length > 0 ? 'col-lg-7' : 'col-lg-12'} px-lg-4 px-sm-2 py-lg-4 pt-3 pb-0`}>
                     {cartDetails?.msg?.CartItems?.length > 0 && <p className="text-end fs-13">{cartDetails?.totalItems > 1 ? 'Total items' : 'Total item'} : <span className="ms-2 fs-15 f-sbold">{cartDetails?.totalItems}</span></p>}
                     {cartDetails?.msg?.CartItems?.length > 0 ? cartDetails?.msg?.CartItems?.map((obj, index) => {
                         return (
@@ -166,7 +192,7 @@ const ShoppingCart = () => {
                     }
 
                 </div>
-                {cartDetails?.msg?.CartItems?.length > 0 && <div className="col-lg-5 cart_checkout_part px-lg-4 px-3 pt-lg-4 pt-4 pb-5">
+                {cartDetails?.msg?.CartItems?.length > 0 && <div className="col-12 col-lg-5 cart_checkout_part px-lg-4 px-3 pt-lg-4 pt-4 pb-5">
                     <p className="fs-15 f-sbold pickup_part">Pickup address</p>
                     <p className="pickup_address px-3 py-2 mt-3 fs-13">{cartDetails?.msg?.store?.address}</p>
                     <div className="form-check mt-3">

@@ -22,7 +22,7 @@ const FormEditUser = () => {
     setLoading(true)
     const getUserById = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/users/${id}`);
+        const response = await axios.get(`${constants.API_BASE_URL}/users/${id}`);
         setName(response.data.name);
         setEmail(response.data.email);
         setRole(response.data.role);
