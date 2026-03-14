@@ -18,6 +18,8 @@ const Login = () => {
     if (user || isSuccess) {
       if (user?.role === "admin") {
         navigate("/admin/dashboard")
+      } else if (user?.role === "cooking_vendor" || (user?.role === "vendor" && user?.vendorType === "cooking_vendor")) {
+        navigate("/cooking-vendor/dashboard");
       } else if (user?.role === "vendor") {
         navigate("/dashboard");
       } else {

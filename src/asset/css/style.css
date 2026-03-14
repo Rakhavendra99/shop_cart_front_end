@@ -307,7 +307,7 @@ body p {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    /* -webkit-line-clamp: 2; */
     -webkit-box-orient: vertical;
     font-size: 12px;
 }
@@ -533,6 +533,79 @@ select:focus {
     /* background-color: var(--secondary-color); */
     border: 1px solid var(--primary-color);
     /* color: var(--primary-color); */
+}
+
+/* Payment options */
+.payment-option-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.payment-option-card:hover {
+    border-color: var(--primary-color);
+    background-color: #fafafa;
+}
+
+.payment-option-card.selected {
+    border-color: var(--primary-color);
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.payment-option-card input[type="radio"] {
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+.payment-option-label {
+    flex: 1;
+}
+
+.stripe-payment-form .payment-option-label small {
+    font-size: 12px;
+}
+
+/* Enhanced checkout popup */
+
+.cartPopup-elevated {
+    border-radius: 18px !important;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.22);
+    border: 0;
+}
+
+.checkout-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.checkout-card {
+    background-color: #fafafa;
+    border-radius: 14px;
+    padding: 14px 16px;
+    border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.stripe-payment-shell {
+    background-color: #ffffff;
+    border-radius: 14px;
+    padding: 14px 16px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+}
+
+.stripe-payment-element-wrapper {
+    border-radius: 10px;
+    padding: 8px 6px;
+    background: #f9fafb;
+}
+
+.stripe-payment-header .badge {
+    font-weight: 500;
 }
 
 /* popup end */
@@ -1643,7 +1716,7 @@ input::-webkit-inner-spin-button {
     overflow-x: hidden;
     overflow-y: auto;
     outline: 0;
-    -webkit-overflow-scrolling: touch;
+    /* -webkit-overflow-scrolling: touch; */
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
@@ -1667,7 +1740,7 @@ input::-webkit-inner-spin-button {
 
 .cartPopup .modal-dialog .modal-content .modal-body {
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    /* -webkit-overflow-scrolling: touch; */
 }
 
 .customer_popup,

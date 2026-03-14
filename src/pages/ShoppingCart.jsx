@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useSelector } from "react-redux"
 // import image from '../asset/img/imagePlaceholder.png'
 // import { CartPopup } from "../components/HOC/CartPopup"
@@ -16,6 +16,7 @@ import { CartPopup } from "../components/CartPopup"
 const ShoppingCart = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [searchParams, setSearchParams] = useSearchParams()
     const [cartDetails, setCartDetails] = useState(false)
     const [isLoading, setLoading] = useState(false)
     const cartId = localStorage.getItem("cartId");
@@ -32,6 +33,16 @@ const ShoppingCart = () => {
         }
         startSocketConnect()
     }, [cartId, dispatch])
+
+    useEffect(() => {
+        if (searchParams.get("payment") === "success") {
+            toast.success("Payment successful! Your order has been placed.", { position: toast.POSITION.TOP_RIGHT })
+            localStorage.setItem("cartId", null)
+            localStorage.setItem("storeId", null)
+            navigate("/cart", { replace: true })
+            window.location.reload()
+        }
+    }, [searchParams, navigate])
     const getCartDetails = async (id) => {
         setLoading(true)
         const response = await axios.get(constants.API_BASE_URL + constants.CART_DETAILS + `/${id}`);

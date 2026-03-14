@@ -16,6 +16,8 @@ const FormAddStore = () => {
   const [image, setStoreImage] = useState("");
   const [description, setDescription] = useState("");
   const [email, setEmail] = useState("");
+  const [openTime, setOpenTime] = useState("09:00");
+  const [closeTime, setCloseTime] = useState("20:00");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
@@ -88,8 +90,8 @@ const FormAddStore = () => {
           registerNumber: registerNumber,
           description: description,
           vendorId: vendorId,
-          openTime: "09:00",
-          closeTime: "20:00"
+          openTime: openTime,
+          closeTime: closeTime
         }).then((res) => {
           setLoading(false)
           if (user?.role === "admin") {
@@ -289,6 +291,28 @@ const FormAddStore = () => {
                   id="file"
                 />
                 <p style={{ color: "red" }}>{error.errorImage}</p>
+              </div>
+              <div className="field">
+                <label className="label">Open Time</label>
+                <div className="control">
+                  <input
+                    type="time"
+                    className="input"
+                    value={openTime}
+                    onChange={(e) => setOpenTime(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Close Time</label>
+                <div className="control">
+                  <input
+                    type="time"
+                    className="input"
+                    value={closeTime}
+                    onChange={(e) => setCloseTime(e.target.value)}
+                  />
+                </div>
               </div>
               <div className="field">
                 <label className="label">Description</label>

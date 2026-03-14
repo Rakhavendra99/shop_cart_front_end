@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import { useSearchParams } from "react-router-dom"
 import image from '../asset/image/imagePlaceholder.png'
 import Loader from "../util/Loader/Loader"
 import constants from "../util/Constants/constants"
@@ -12,12 +13,23 @@ import PlaceHolderImage from '../asset/image/no_image.png'
 
 const Menu = () => {
     const dispatch = useDispatch();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [isLoading, setLoading] = useState(false)
     const [products, setProducts] = useState([]);
     const [showProduct, setshowProduct] = useState(false)
     const [carts, setCarts] = useState(false)
     const [popupDetails, setPopupDetails] = useState({})
     const cartId = localStorage.getItem("cartId");
+
+    useEffect(() => {
+        if (searchParams.get("payment") === "success") {
+            toast.success("Payment successful! Your order has been placed.", { position: toast.POSITION.TOP_RIGHT });
+            localStorage.setItem("cartId", null);
+            localStorage.setItem("storeId", null);
+            setSearchParams({}, { replace: true });
+        }
+    }, [searchParams, setSearchParams]);
+
     useEffect(() => {
         getCustomerProducts()
         if (cartId !== "null") {

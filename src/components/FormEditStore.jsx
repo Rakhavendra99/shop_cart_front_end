@@ -16,6 +16,8 @@ const FormEditStore = () => {
   const [image, setStoreImage] = useState("");
   const [description, setDescription] = useState("");
   const [email, setEmail] = useState("");
+  const [openTime, setOpenTime] = useState("09:00");
+  const [closeTime, setCloseTime] = useState("20:00");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
@@ -26,6 +28,14 @@ const FormEditStore = () => {
   const [vendorId, setVendorId] = useState(false)
 
   useEffect(() => {
+    const formatTimeForInput = (time) => {
+      if (!time) return "";
+      if (typeof time === "string") {
+        return time.slice(0, 5);
+      }
+      return "";
+    };
+
     const getStoreById = async () => {
       setLoading(true)
       try {
@@ -38,6 +48,8 @@ const FormEditStore = () => {
         setStoreImage(response?.data?.image)
         setEmail(response?.data?.email)
         setVendorId(response?.data?.vendorId)
+        setOpenTime(formatTimeForInput(response?.data?.openTime) || "09:00");
+        setCloseTime(formatTimeForInput(response?.data?.closeTime) || "20:00");
         setLoading(false)
       } catch (error) {
         if (error.response) {
@@ -110,8 +122,8 @@ const FormEditStore = () => {
           registerNumber: registerNumber,
           description: description,
           vendorId: vendorId,
-          openTime: "09:00",
-          closeTime: "20:00"
+          openTime: openTime,
+          closeTime: closeTime
         }).then((res) => {
           setLoading(false)
           if (user?.role === "admin") {
@@ -312,6 +324,28 @@ const FormEditStore = () => {
                   id="file"
                 />
                 <p style={{ color: "red" }}>{error.errorImage}</p>
+              </div>
+              <div className="field">
+                <label className="label">Open Time</label>
+                <div className="control">
+                  <input
+                    type="time"
+                    className="input"
+                    value={openTime}
+                    onChange={(e) => setOpenTime(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Close Time</label>
+                <div className="control">
+                  <input
+                    type="time"
+                    className="input"
+                    value={closeTime}
+                    onChange={(e) => setCloseTime(e.target.value)}
+                  />
+                </div>
               </div>
               <div className="field">
                 <label className="label">Description</label>

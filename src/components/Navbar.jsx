@@ -20,7 +20,7 @@ const Navbar = () => {
     if (user?.role === "admin") {
       setLoading(false)
       navigate('/admin')
-    } else if (user?.role === "vendor") {
+    } else if (user?.role === "vendor" || user?.role === "cooking_vendor") {
       setLoading(false)
       navigate("/vendor");
     } else {
@@ -40,7 +40,7 @@ const Navbar = () => {
         aria-label="main navigation"
       >
         <div className="navbar-brand">
-          <NavLink to={user?.role === "admin" ? "/admin/dashboard" : "/dashboard"} className="navbar-item">
+          <NavLink to={user?.role === "admin" ? "/admin/dashboard" : (user?.role === "cooking_vendor" || (user?.role === "vendor" && user?.vendorType === "cooking_vendor") ? "/cooking-vendor/dashboard" : "/dashboard")} className="navbar-item">
             <img src={logo} width="125" height="150" alt="logo" />
           </NavLink>
           <a

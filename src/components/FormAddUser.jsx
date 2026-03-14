@@ -164,6 +164,7 @@ const FormAddUser = () => {
                     >
                       <option value="admin">Admin</option>
                       <option value="vendor">Vendor</option>
+                      <option value="cooking_vendor">Cooking Vendor</option>
                       <option value="customer">Customer</option>
                     </select>
                   </div>

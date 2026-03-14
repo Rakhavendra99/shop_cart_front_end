@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Users from "./pages/Users";
 import Products from "./pages/Products";
 import AddUser from "./pages/AddUser";
+import AddCookingVendor from "./pages/AddCookingVendor";
 import EditUser from "./pages/EditUser";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
@@ -25,6 +26,7 @@ import AddStore from "./pages/AddStore";
 import EditStore from "./pages/EditStore";
 import Orders from "./pages/Orders";
 import ViewOrder from "./pages/ViewOrders";
+import CookingVendorRateSettings from "./pages/CookingVendorRateSettings";
 
 function App() {
   const Layout = () => {
@@ -41,7 +43,7 @@ function App() {
   }
   return (
     <div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
         <Routes>
           <Route path="/vendor" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -66,9 +68,24 @@ function App() {
           <Route path="/admin/users" element={<Users />} />
           <Route path="/admin/users/add" element={<AddUser />} />
           <Route path="/admin/users/edit/:id" element={<EditUser />} />
+          <Route path="/admin/vendors/add" element={<AddCookingVendor />} />
           <Route path="/admin/category" element={<Category />} />
           <Route path="/admin/category/add" element={<AddCategory />} />
           <Route path="/admin/category/edit/:id" element={<EditCategory />} />
+
+          {/* Cooking vendor specific */}
+          <Route
+            path="/cooking-vendor/dashboard"
+            element={<CookingVendorRateSettings />}
+          />
+          <Route
+            path="/cooking-vendor/requests"
+            element={<CookingVendorRateSettings />}
+          />
+          <Route
+            path="/cooking-vendor/rate-settings"
+            element={<CookingVendorRateSettings />}
+          />
 
           {/* -------------------CUSTOMER----------------------------- */}
           <Route path='/' element={<Layout />}>

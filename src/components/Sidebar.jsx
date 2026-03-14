@@ -15,7 +15,7 @@ const Sidebar = () => {
     if (user?.role === "admin") {
       navigate('/admin')
       window.location.reload()
-    } else if (user?.role === "vendor") {
+    } else if (user?.role === "vendor" || user?.role === "cooking_vendor") {
       navigate("/");
       window.location.reload()
     } else {
@@ -26,7 +26,42 @@ const Sidebar = () => {
 
   return (
     <div>
-      {user && user.role === "vendor" && (
+      {user && (user.role === "cooking_vendor" || (user.role === "vendor" && user.vendorType === "cooking_vendor")) && (
+        <aside className="menu pl-2 has-shadow">
+          <p className="menu-label">Cooking Vendor</p>
+          <ul className="menu-list">
+            <li>
+              <NavLink to={"/cooking-vendor/dashboard"}>
+                <IoBarChart /> Dashboard
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/cooking-vendor/requests"}>
+                <IoServerSharp /> Cooking requests
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/orders"}>
+                <IoServerSharp /> Order history
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/cooking-vendor/rate-settings"}>
+                <IoPricetag /> Rate settings
+              </NavLink>
+            </li>
+          </ul>
+          <p className="menu-label">Settings</p>
+          <ul className="menu-list">
+            <li>
+              <button onClick={logout} className="button is-white">
+                <IoLogOut /> Logout
+              </button>
+            </li>
+          </ul>
+        </aside>
+      )}
+      {user && user.role === "vendor" && user.vendorType !== "cooking_vendor" && (
         <aside className="menu pl-2 has-shadow">
           <p className="menu-label">General</p>
           <ul className="menu-list">
@@ -87,6 +122,11 @@ const Sidebar = () => {
               <li>
                 <NavLink to={"/admin/users"}>
                   <IoPerson /> Users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={"/admin/vendors/add"}>
+                  <IoAppsSharp /> Add Cooking Vendor
                 </NavLink>
               </li>
             </ul>

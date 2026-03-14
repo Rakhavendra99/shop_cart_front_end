@@ -1,15 +1,15 @@
-let API_BASE_URL = "http://localhost:5000"
-let BASE_URL_SOCKET_IO = "http://localhost:5006/"
+let API_BASE_URL = "https://8ncmcnrx-5000.inc1.devtunnels.ms"
+let BASE_URL_SOCKET_IO = "https://8ncmcnrx-5006.inc1.devtunnels.ms"
 
 if (window.location.hostname === "localhost") {
-    API_BASE_URL = "http://localhost:5000";
-    BASE_URL_SOCKET_IO = "http://localhost:5006/";
+    API_BASE_URL = "https://8ncmcnrx-5000.inc1.devtunnels.ms";
+    BASE_URL_SOCKET_IO = "https://8ncmcnrx-5006.inc1.devtunnels.ms";
 } else if (window.location.hostname === "dev") {
     API_BASE_URL = "https://api.shopcart.com";
     BASE_URL_SOCKET_IO = "https://socket.shopcart.com/";
 } else {
-    API_BASE_URL = ""
-    BASE_URL_SOCKET_IO = ""
+    API_BASE_URL = "https://8ncmcnrx-5000.inc1.devtunnels.ms"
+    BASE_URL_SOCKET_IO = "https://8ncmcnrx-5006.inc1.devtunnels.ms"
 }
 module.exports = {
     //Api Base url
@@ -51,6 +51,11 @@ module.exports = {
     UPDATE_USER: "/users",
     DELETE_USER: '/users',
 
+    //vendor / cooking vendor
+    VENDOR_TYPES_LIST: '/vendor-types',
+    VENDORS: '/vendors',
+    COOKING_VENDOR_RATE: '/vendor/cooking-rate',
+
     //Dashboard
     VENDOR_DASHBOARD: '/vendor/dashboard',
     ADMIN_DASHBOARD: '/admin/dashboard',
@@ -63,5 +68,6 @@ module.exports = {
     CART_ADD: '/cart',
     CART_DELETE: '/cart',
 
-    PLACE_ORDER :'/customer/order'
+    PLACE_ORDER: '/customer/order',
+    CREATE_PAYMENT_INTENT: '/payment/create-payment-intent',
 }
