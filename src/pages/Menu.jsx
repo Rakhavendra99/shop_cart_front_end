@@ -23,7 +23,7 @@ const Menu = () => {
 
     useEffect(() => {
         if (searchParams.get("payment") === "success") {
-            toast.success("Payment successful! Your order has been placed.", { position: toast.POSITION.TOP_RIGHT });
+            // toast.success("Payment successful! Your order has been placed.", { position: toast.POSITION.TOP_RIGHT });
             localStorage.setItem("cartId", null);
             localStorage.setItem("storeId", null);
             setSearchParams({}, { replace: true });
