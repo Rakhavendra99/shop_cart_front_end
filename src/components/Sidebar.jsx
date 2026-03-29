@@ -36,7 +36,7 @@ const Sidebar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to={"/cooking-vendor/requests"}>
+              <NavLink to={"/cooking-vendor/orders"}>
                 <IoServerSharp /> Cooking requests
               </NavLink>
             </li>
@@ -113,6 +113,11 @@ const Sidebar = () => {
             <li>
               <NavLink to={"/admin/stores"}>
                 <IoBagAdd /> Stores
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/admin/orders"}>
+                <IoServerSharp /> Orders
               </NavLink>
             </li>
           </ul>

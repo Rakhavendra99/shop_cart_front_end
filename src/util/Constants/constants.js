@@ -1,15 +1,15 @@
-let API_BASE_URL = "https://8ncmcnrx-5000.inc1.devtunnels.ms"
-let BASE_URL_SOCKET_IO = "https://8ncmcnrx-5006.inc1.devtunnels.ms"
+let API_BASE_URL = "https://2mk92k1h-5000.inc1.devtunnels.ms"
+let BASE_URL_SOCKET_IO = "https://2mk92k1h-5006.inc1.devtunnels.ms"
 
 if (window.location.hostname === "localhost") {
-    API_BASE_URL = "https://8ncmcnrx-5000.inc1.devtunnels.ms";
-    BASE_URL_SOCKET_IO = "https://8ncmcnrx-5006.inc1.devtunnels.ms";
+    API_BASE_URL = "https://2mk92k1h-5000.inc1.devtunnels.ms";
+    BASE_URL_SOCKET_IO = "https://2mk92k1h-5006.inc1.devtunnels.ms";
 } else if (window.location.hostname === "dev") {
     API_BASE_URL = "https://api.shopcart.com";
     BASE_URL_SOCKET_IO = "https://socket.shopcart.com/";
 } else {
-    API_BASE_URL = "https://8ncmcnrx-5000.inc1.devtunnels.ms"
-    BASE_URL_SOCKET_IO = "https://8ncmcnrx-5006.inc1.devtunnels.ms"
+    API_BASE_URL = "https://2mk92k1h-5000.inc1.devtunnels.ms"
+    BASE_URL_SOCKET_IO = "https://2mk92k1h-5006.inc1.devtunnels.ms"
 }
 module.exports = {
     //Api Base url
@@ -35,6 +35,7 @@ module.exports = {
     ORDER_LIST: '/order',
     ORDER_DETAILS: '/order',
     UPDATE_ORDER: '/order',
+    COOKING_VENDOR_ORDERS: '/cooking-vendor/orders',
 
     //store
     STORE_ADD_VENDOR_LIST: '/stores/add/vendor',

@@ -14,6 +14,10 @@ const CookingVendorRateSettings = () => {
     dispatch(getMe());
   }, [dispatch]);
 
+  const isCookingVendorUser =
+    user?.role === "cooking_vendor" ||
+    (user?.role === "vendor" && user?.vendorType === "cooking_vendor");
+
   useEffect(() => {
     if (isError) {
       if (user?.role === "admin") {
@@ -24,10 +28,13 @@ const CookingVendorRateSettings = () => {
         navigate("/");
       }
     }
-    if (user && user.role !== "vendor") {
+    if (user && user.role !== "vendor" && user?.role !== "cooking_vendor") {
       navigate("/dashboard");
     }
-  }, [isError, user, navigate]);
+    if (user && user.role === "vendor" && !isCookingVendorUser) {
+      navigate("/dashboard");
+    }
+  }, [isError, user, navigate, isCookingVendorUser]);
 
   return (
     <Layout>

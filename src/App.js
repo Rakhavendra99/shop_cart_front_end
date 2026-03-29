@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Login from "./components/Login";
 import Users from "./pages/Users";
@@ -27,6 +27,7 @@ import EditStore from "./pages/EditStore";
 import Orders from "./pages/Orders";
 import ViewOrder from "./pages/ViewOrders";
 import CookingVendorRateSettings from "./pages/CookingVendorRateSettings";
+import CookingVendorRequests from "./pages/CookingVendorRequests";
 
 function App() {
   const Layout = () => {
@@ -69,6 +70,8 @@ function App() {
           <Route path="/admin/users/add" element={<AddUser />} />
           <Route path="/admin/users/edit/:id" element={<EditUser />} />
           <Route path="/admin/vendors/add" element={<AddCookingVendor />} />
+          <Route path="/admin/orders" element={<Orders />} />
+          <Route path="/admin/orders/view/:id" element={<ViewOrder />} />
           <Route path="/admin/category" element={<Category />} />
           <Route path="/admin/category/add" element={<AddCategory />} />
           <Route path="/admin/category/edit/:id" element={<EditCategory />} />
@@ -78,10 +81,9 @@ function App() {
             path="/cooking-vendor/dashboard"
             element={<CookingVendorRateSettings />}
           />
-          <Route
-            path="/cooking-vendor/requests"
-            element={<CookingVendorRateSettings />}
-          />
+          <Route path="/cooking-vendor/requests" element={<CookingVendorRequests />} />
+          <Route path="/cooking-vendor/orders" element={<CookingVendorRequests />} />
+          <Route path="/cooking-vendor/order" element={<Navigate to="/cooking-vendor/orders" replace />} />
           <Route
             path="/cooking-vendor/rate-settings"
             element={<CookingVendorRateSettings />}

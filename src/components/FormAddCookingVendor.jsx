@@ -15,6 +15,7 @@ const FormAddCookingVendor = () => {
   const [confPassword, setConfPassword] = useState("");
   const [location, setLocation] = useState("");
   const [availableTimeSlots, setAvailableTimeSlots] = useState("");
+  const [cookingDescription, setCookingDescription] = useState("");
   const [rateType, setRateType] = useState("per_order");
   const [rateAmount, setRateAmount] = useState("");
   const [currency, setCurrency] = useState("INR");
@@ -115,6 +116,7 @@ const FormAddCookingVendor = () => {
             vendorTypeId,
             location,
             availableTimeSlots,
+            cookingDescription,
             rateType,
             rateAmount,
             currency,
@@ -258,6 +260,18 @@ const FormAddCookingVendor = () => {
                     onChange={(e) => setAvailableTimeSlots(e.target.value)}
                     placeholder="e.g. 09:00-12:00, 18:00-21:00"
                     style={{ height: "80px", overflow: "auto" }}
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">What you cook (shown to customers)</label>
+                <div className="control">
+                  <textarea
+                    className="input"
+                    value={cookingDescription}
+                    onChange={(e) => setCookingDescription(e.target.value)}
+                    placeholder="Describe cuisines, dishes, or specialties"
+                    style={{ height: "100px", overflow: "auto" }}
                   />
                 </div>
               </div>

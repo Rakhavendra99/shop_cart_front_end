@@ -32,7 +32,7 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
         const fetchCookingVendors = async () => {
             try {
                 const res = await axios.get(constants.API_BASE_URL + constants.CUSTOMER_COOKING_VENDOR_LIST);
-                const list = res.data || [];
+                const list = Array.isArray(res.data) ? res.data : [];
                 setCookingVendors(list);
                 const savedId = localStorage.getItem("cookingVendorId");
                 if (savedId) {
@@ -41,8 +41,11 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
                         setSelectedCookingVendorId(found.id);
                     }
                 }
-            } catch {
-                // non-blocking
+            } catch (err) {
+                console.error("Cooking vendors list failed:", err?.response?.data || err?.message);
+                toast.error("Could not load cooking partners. Check API connection.", {
+                    position: toast.POSITION.TOP_RIGHT,
+                });
             }
         };
         fetchCookingVendors();
@@ -277,10 +280,34 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
                                                     ))}
                                                 </select>
                                             </div>
+                                            {selectedCookingVendorId &&
+                                                (() => {
+                                                    const v = cookingVendors.find(
+                                                        (x) => String(x.id) === String(selectedCookingVendorId)
+                                                    );
+                                                    if (!v) return null;
+                                                    return (
+                                                        <div className="fs-12 text-muted mb-2 border rounded p-2 bg-light">
+                                                            {v.cookingDescription && (
+                                                                <p className="mb-2 text-dark">{v.cookingDescription}</p>
+                                                            )}
+                                                            <p className="mb-0">
+                                                                <strong>Payment split:</strong> Cart total (products + tax) is paid
+                                                                now via your chosen method. Cooking fee
+                                                                {v.rate?.rateAmount != null
+                                                                    ? ` of ₹${v.rate.rateAmount}`
+                                                                    : ""}{" "}
+                                                                is collected when food is ready (store will confirm).
+                                                            </p>
+                                                        </div>
+                                                    );
+                                                })()}
 
                                             <p className="fs-14 f-sbold mb-2 mt-2">Payment method</p>
                                             <p className="fs-12 text-muted mb-3">
                                                 Choose your preferred option. Online payments are handled securely via Stripe.
+                                                {selectedCookingVendorId &&
+                                                    " Card payment covers products + tax only; cooking balance is separate."}
                                             </p>
                                             <div className="d-flex flex-column gap-2">
                                                 <label
