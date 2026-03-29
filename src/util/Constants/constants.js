@@ -55,6 +55,7 @@ module.exports = {
     VENDOR_TYPES_LIST: '/vendor-types',
     VENDORS: '/vendors',
     COOKING_VENDOR_RATE: '/vendor/cooking-rate',
+    CUSTOMER_COOKING_VENDOR_LIST: '/customer/cooking-vendors',
 
     //Dashboard
     VENDOR_DASHBOARD: '/vendor/dashboard',

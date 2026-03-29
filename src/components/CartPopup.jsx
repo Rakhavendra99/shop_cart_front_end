@@ -18,6 +18,8 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
     const [paymentMethod, setPaymentMethod] = useState(PAYMENT_METHODS.COD);
     const [clientSecret, setClientSecret] = useState(null);
     const [showStripeForm, setShowStripeForm] = useState(false);
+    const [cookingVendors, setCookingVendors] = useState([]);
+    const [selectedCookingVendorId, setSelectedCookingVendorId] = useState(null);
 
     useEffect(() => {
         if (Object.keys(formDetails)?.length !== 0) {
@@ -25,6 +27,26 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
             if (validatedError) setErrors(validatedError);
         }
     }, [formDetails]);
+
+    useEffect(() => {
+        const fetchCookingVendors = async () => {
+            try {
+                const res = await axios.get(constants.API_BASE_URL + constants.CUSTOMER_COOKING_VENDOR_LIST);
+                const list = res.data || [];
+                setCookingVendors(list);
+                const savedId = localStorage.getItem("cookingVendorId");
+                if (savedId) {
+                    const found = list.find((v) => String(v.id) === String(savedId));
+                    if (found) {
+                        setSelectedCookingVendorId(found.id);
+                    }
+                }
+            } catch {
+                // non-blocking
+            }
+        };
+        fetchCookingVendors();
+    }, []);
 
     const handlechange = (e) => {
         setFormDetails({ ...formDetails, [e.target.name]: e.target.value });
@@ -65,6 +87,7 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
             storeId,
             address: formDetails?.address,
             payment_method: PAYMENT_METHODS.COD,
+            cookingVendorId: selectedCookingVendorId || null,
         };
         try {
             const res = await axios.post(constants.API_BASE_URL + constants.PLACE_ORDER, params);
@@ -95,6 +118,7 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
             email: formDetails?.email,
             storeId,
             address: formDetails?.address,
+            cookingVendorId: selectedCookingVendorId || null,
         };
         try {
             const res = await axios.post(constants.API_BASE_URL + constants.CREATE_PAYMENT_INTENT, params);
@@ -224,7 +248,37 @@ export const CartPopup = ({ setShowCartPopup, cartId, storeId }) => {
                                         </div>
 
                                         <div className="checkout-card mt-3">
-                                            <p className="fs-14 f-sbold mb-2">Payment method</p>
+                                            <p className="fs-14 f-sbold mb-2">Choose your cooking partner (optional)</p>
+                                            <p className="fs-12 text-muted mb-3">
+                                                Select a cooking vendor to prepare your order, or leave it unselected to let us assign one.
+                                            </p>
+                                            <div className="mb-3">
+                                                <select
+                                                    className="form-select fs-13"
+                                                    value={selectedCookingVendorId || ""}
+                                                    onChange={(e) => {
+                                                        const val = e.target.value || null;
+                                                        setSelectedCookingVendorId(val ? Number(val) : null);
+                                                        if (val) {
+                                                            localStorage.setItem("cookingVendorId", val);
+                                                        } else {
+                                                            localStorage.removeItem("cookingVendorId");
+                                                        }
+                                                    }}
+                                                >
+                                                    <option value="">No preference</option>
+                                                    {cookingVendors.map((v) => (
+                                                        <option key={v.id} value={v.id}>
+                                                            {v.name}
+                                                            {v.rate && v.rate.rateAmount
+                                                                ? ` – ₹${v.rate.rateAmount} (${v.rate.rateType})`
+                                                                : ""}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+
+                                            <p className="fs-14 f-sbold mb-2 mt-2">Payment method</p>
                                             <p className="fs-12 text-muted mb-3">
                                                 Choose your preferred option. Online payments are handled securely via Stripe.
                                             </p>

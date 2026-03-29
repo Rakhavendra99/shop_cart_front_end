@@ -229,7 +229,7 @@ const FormAddCookingVendor = () => {
                     type="text"
                     className="input"
                     value="Cooking Vendor"
-                    disabled
+                    // disabled
                   />
                 </div>
               </div>
